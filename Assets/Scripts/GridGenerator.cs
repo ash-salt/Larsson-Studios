@@ -4,8 +4,8 @@ public class TileGenerator : MonoBehaviour
 {
     public GameObject tilePrefab;
 
-    public int width = 10;
-    public int height = 10;
+    public int width = 5;
+    public int height = 5;
     public float tileSize = 1f;
 
     private Tile[,] tiles;
