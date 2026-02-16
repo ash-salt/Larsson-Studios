@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Security;
 using UnityEngine;
 
@@ -5,6 +6,7 @@ public class GameStateManager : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private string state;
+    private List<EntityScript> gameEntities = new List<EntityScript>();
     void Start()
     {
         state = "prep";
@@ -37,5 +39,13 @@ public class GameStateManager : MonoBehaviour
     void endActionPhase()
     {
         state = "prep";
+    }
+
+    void executeActions()
+    {
+        foreach (EntityScript entity in gameEntities)
+        {
+            //entity.DequeueAction().execute(entity);
+        }
     }
 }

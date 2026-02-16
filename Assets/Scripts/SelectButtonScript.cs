@@ -1,3 +1,4 @@
+using Assets.Scripts.player_actions;
 using System.Diagnostics;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ public class SelectButtonScript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Texture2D cursor;
+    [SerializeField] private PlayerScript player;
+    IAction action;
     void Start()
     {
     }
@@ -19,6 +22,7 @@ public class SelectButtonScript : MonoBehaviour
     {
         
         print("Clicked!");
+        player.EnqueueAction(action);
 
     }
     void OnMouseEnter()
