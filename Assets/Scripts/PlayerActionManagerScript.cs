@@ -23,11 +23,11 @@ public class PlayerActionManagerScript : MonoBehaviour
         currentAction = action;
     }
 
-    public void AddToActionQueue(Tile tile)
+    public void AddToActionQueue(Vector3 tilePosition)
     {
 
-        IAction action = currentAction;
-        //action.SetTarget(tile);
+        //IAction action = currentAction;
+        //action.SetTarget(tilePosition);
 
         playerScript.Enqueue(action);
     }
