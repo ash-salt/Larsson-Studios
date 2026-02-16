@@ -18,4 +18,9 @@ public class PlayerScript : MonoBehaviour
     {
         
     }
+
+    public void Enqueue(IAction action)
+    {
+        actions.Enqueue(action);
+    }
 }

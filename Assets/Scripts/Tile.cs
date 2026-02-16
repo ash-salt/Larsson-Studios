@@ -12,4 +12,10 @@ public class Tile : MonoBehaviour
     void OnTriggerEnter (Collider ent) {
         objectsOnTile.Add(ent);
     }
+
+    void OnMouseDown() {
+        Debug.Log("Tile Clicked at" + gridPosition);
+    }
+
+    
 }

@@ -4,7 +4,9 @@ using UnityEngine;
 public class PlayerActionManagerScript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    Queue<Action> ActionQueue = new Queue<Action>();
+    PlayerScript playerScript;
+    IAction currentAction;
+
     void Start()
     {
         
@@ -16,8 +18,17 @@ public class PlayerActionManagerScript : MonoBehaviour
         
     }
 
-    void AddToActionQueue(Action action)
+    public void setAction(IAction action)
     {
-        ActionQueue.Enqueue(action);
+        currentAction = action;
+    }
+
+    public void AddToActionQueue(Tile tile)
+    {
+
+        IAction action = currentAction;
+        //action.SetTarget(tile);
+
+        playerScript.Enqueue(action);
     }
 }
