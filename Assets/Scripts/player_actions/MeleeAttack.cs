@@ -1,5 +1,6 @@
+using Assets.Scripts;
 using UnityEngine;
-/*
+
 public class MeleeAttack : MonoBehaviour, IAction
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -12,7 +13,9 @@ public class MeleeAttack : MonoBehaviour, IAction
 
     public void execute(GameObject target)
     {
-        
+        if (target.TryGetComponent<GoblinScript>(out GoblinScript goblin))
+        {
+            goblin.damage(50);
+        }
     }
 }
-*/

@@ -25,5 +25,19 @@ namespace Assets.Scripts.player_actions
 		{
 			this.isBlocking = isBlocking;
 		}
+
+		public void damage(int amount)
+		{
+			this.currentHealth -= amount;
+			if (this.currentHealth <= 0)
+			{
+				Die();
+			}
+		}
+
+		private void Die()
+		{
+			
+		}
 	}
 }

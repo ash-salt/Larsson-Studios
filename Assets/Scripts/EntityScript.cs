@@ -4,8 +4,8 @@ using UnityEngine;
 public class EntityScript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    int maxHealth;
-    int currentHealth;
+    public int maxHealth;
+    public int currentHealth;
     Queue<IAction> actions = new Queue<IAction>();
     
     void Start()
