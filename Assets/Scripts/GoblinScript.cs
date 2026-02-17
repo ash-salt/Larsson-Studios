@@ -9,10 +9,10 @@ namespace Assets.Scripts
 	{
 
 		GameObject player;
-		int farAway = 10;
-		int mediumDistance = 6;
-		int shortDistance = 3;
-		int closeDistance = 1;
+		float farAway = 5f;
+		float mediumDistance = 4f;
+		float shortDistance = 2f;
+		float closeDistance = 0.5f;
 
         // Use this for initialization
         void Start()
@@ -23,7 +23,7 @@ namespace Assets.Scripts
 		// Update is called once per frame
 		void Update()
 		{
-
+			
 		}
 
 		public void PlanTurn()
