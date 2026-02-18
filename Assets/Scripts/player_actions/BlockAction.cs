@@ -24,7 +24,7 @@ namespace Assets.Scripts.player_actions
 			return 1;
 		}
 
-		public void execute(GameObject target)
+		public void execute(EntityScript target)
 		{
             if (target.TryGetComponent<PlayerScript>(out PlayerScript player))
             {

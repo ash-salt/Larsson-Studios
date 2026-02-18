@@ -8,8 +8,8 @@ namespace Assets.Scripts
 	public class GoblinScript: EntityScript
 	{
 
-		GameObject player;
-		float farAway = 5f;
+        [SerializeField] public GameObject player;
+        float farAway = 5f;
 		float mediumDistance = 4f;
 		float shortDistance = 2f;
 		float closeDistance = 0.5f;
@@ -17,8 +17,10 @@ namespace Assets.Scripts
         // Use this for initialization
         void Start()
 		{
+            GameStateManager.Instance.AddToEnemyList(this);
+			GameStateManager.Instance.AddToEntityList(this);
 
-		}
+        }
 
 		// Update is called once per frame
 		void Update()
@@ -44,7 +46,7 @@ namespace Assets.Scripts
 
 		private void Die()
 		{
-			
+			Destroy(gameObject);
 		}
 
     }

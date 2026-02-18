@@ -12,8 +12,8 @@ namespace Assets.Scripts.player_actions
 		// Use this for initialization
 		void Start()
 		{
-
-		}
+            GameStateManager.Instance.AddToEntityList(this);
+        }
 
 		// Update is called once per frame
 		void Update()

@@ -4,5 +4,5 @@ public interface IAction
 {
     int getCost();
 
-    void execute(GameObject target);
+    void execute(EntityScript target);
 }

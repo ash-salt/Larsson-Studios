@@ -7,7 +7,7 @@ public class SelectButtonScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Texture2D cursor;
     [SerializeField] private PlayerScript player;
-    IAction action;
+    IAction action = new MeleeAttack();
     void Start()
     {
     }

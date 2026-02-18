@@ -1,3 +1,4 @@
+using Assets.Scripts.player_actions;
 using System.Collections.Generic;
 using System.Security;
 using UnityEngine;
@@ -7,9 +8,18 @@ public class GameStateManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private string state;
     private List<EntityScript> gameEntities = new List<EntityScript>();
-    void Start()
+    private List<EntityScript> enemies = new List<EntityScript>();
+
+    [SerializeField] public GameObject slashPrefab;
+
+    public static GameStateManager Instance;
+    void Awake()
     {
         state = "prep";
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
 
     }
 
@@ -27,6 +37,12 @@ public class GameStateManager : MonoBehaviour
                executeActions();
             }
         }
+        state = "prep";
+    }
+
+    public GameObject GetSlashPrefab()
+    {
+        return slashPrefab;
     }
 
     public void startActionPhase()
@@ -44,9 +60,30 @@ public class GameStateManager : MonoBehaviour
 
     void executeActions()
     {
+
         foreach (EntityScript entity in gameEntities)
         {
-            //entity.DequeueAction().execute(entity);
+            if (entity is PlayerScript)
+            {
+                IAction action = entity.DequeueAction();
+                print(action);
+                action.execute(entity);
+            }
         }
+    }
+
+    public void AddToEnemyList(EntityScript obj)
+    {
+        enemies.Add(obj);
+    }
+
+    public List<EntityScript> GetEnemyList()
+    {
+        return enemies;
+    }
+
+    public void AddToEntityList(EntityScript obj)
+    {
+        gameEntities.Add(obj);
     }
 }
