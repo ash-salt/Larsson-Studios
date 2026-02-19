@@ -89,7 +89,7 @@ public class GameStateManager : MonoBehaviour
         }
         ResolveBlocks(currentActions);
         ResolveAttacks(currentActions);
-        //ResolveMove(currentActions);
+        ResolveMove(currentActions);
 
         foreach (EntityScript entity in gameEntities)
         {
@@ -142,13 +142,11 @@ public class GameStateManager : MonoBehaviour
 
     private void ResolveMove(Dictionary<EntityScript, IAction> queuedActions)
     {
-        return;
-        /*foreach (var a in queuedActions)
+        foreach (var a in queuedActions)
         {
             if (!(a.Value is MoveAction)) continue;
 
             a.Value.execute(a.Key);
         }
-        */
     }
 }

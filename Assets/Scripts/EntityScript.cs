@@ -8,6 +8,8 @@ public class EntityScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public int maxHealth;
     public int currentHealth;
+
+    public float maxMoveDistance = 3f;
     Queue<IAction> actions = new Queue<IAction>();
     public bool done = false;
     public bool isDead = false;

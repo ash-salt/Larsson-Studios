@@ -34,6 +34,11 @@ namespace Assets.Scripts.player_actions
 			}
 		}
 
+		public void QueueMove(Vector2 targetPos, float maxDistance = 3f)
+		{
+			EnqueueAction(new MoveAction(targetPos, maxDistance));
+		}
+
 	
 	}
 }
