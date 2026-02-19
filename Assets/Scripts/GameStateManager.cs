@@ -1,5 +1,6 @@
 using Assets.Scripts;
 using Assets.Scripts.player_actions;
+using System.Collections;
 using System.Collections.Generic;
 using System.Security;
 using UnityEngine;
@@ -76,7 +77,7 @@ public class GameStateManager : MonoBehaviour
         StartCoroutine(ExecuteActionsWithDelay());
     }
 
-    System.Collections.IEnumerator ExecuteActionsWithDelay()
+    IEnumerator ExecuteActionsWithDelay()
     {
         for (int i = 0; i < 3; i++)
         {
