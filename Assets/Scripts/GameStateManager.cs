@@ -18,6 +18,7 @@ public class GameStateManager : MonoBehaviour
 
     [SerializeField] public GameObject slashPrefab;
     [SerializeField] public GameObject goblinSlashPrefab;
+    [SerializeField] private float actionRoundDelay = 1f;
 
     public static GameStateManager Instance;
     void Awake()
@@ -72,11 +73,17 @@ public class GameStateManager : MonoBehaviour
         }
 
         state = "action";
+        StartCoroutine(ExecuteActionsWithDelay());
+    }
+
+    System.Collections.IEnumerator ExecuteActionsWithDelay()
+    {
         for (int i = 0; i < 3; i++)
         {
             executeActions();
-
-         } 
+            yield return new WaitForSeconds(actionRoundDelay);
+        }
+        state = "prep";
     }
 
     void executeActions()
