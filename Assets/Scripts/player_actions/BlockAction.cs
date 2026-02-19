@@ -4,7 +4,7 @@ using UnityEngine.Rendering;
 
 namespace Assets.Scripts.player_actions
 {
-	public class BlockAction: MonoBehaviour, IAction
+	public class BlockAction: IAction
 	{
 
 		// Use this for initialization

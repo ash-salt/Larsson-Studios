@@ -53,6 +53,11 @@ public class GameStateManager : MonoBehaviour
         return slashPrefab;
     }
 
+    public GameObject GetGoblinSlashPrefab()
+    {
+        return slashPrefab;
+    }
+
     public void startActionPhase()
     {
         state = "action";
