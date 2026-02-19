@@ -2,6 +2,7 @@ using Assets.Scripts.player_actions;
 using System.Collections.Generic;
 using System.Security;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class GameStateManager : MonoBehaviour
     private string state;
     private List<EntityScript> gameEntities = new List<EntityScript>();
     private List<EntityScript> enemies = new List<EntityScript>();
+
+    public Dictionary<EntityScript, CharacterSnapshot> snapshot;
+
+    private Dictionary<EntityScript, IAction> currentActions;
 
     [SerializeField] public GameObject slashPrefab;
 
@@ -26,18 +31,21 @@ public class GameStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (state == "prep")
+    }
+
+    void CreateSnapshot()
+    {
+        snapshot = new Dictionary<EntityScript, CharacterSnapshot>();
+
+        foreach (var c in gameEntities)
         {
-            
-        }
-        else if (state == "action")
-        {
-            for (int i = 0; i < 3; i++)
+            snapshot[c] = new CharacterSnapshot
             {
-               executeActions();
-            }
+                position = c.transform.position,
+                hp = c.currentHealth,
+                isBlocking = c.isBlocking
+            };
         }
-        state = "prep";
     }
 
     public GameObject GetSlashPrefab()
@@ -48,6 +56,12 @@ public class GameStateManager : MonoBehaviour
     public void startActionPhase()
     {
         state = "action";
+        for (int i = 0; i < 3; i++)
+        {
+            executeActions();
+
+        }
+        state = "prep";
     }
 
     public void endActionPhase()
@@ -60,14 +74,25 @@ public class GameStateManager : MonoBehaviour
 
     void executeActions()
     {
+        currentActions = new Dictionary<EntityScript, IAction>();
+        CreateSnapshot();
 
         foreach (EntityScript entity in gameEntities)
         {
-            if (entity is PlayerScript)
+            IAction action = entity.DequeueAction();
+            currentActions[entity] = action;
+        }
+        ResolveBlocks(currentActions);
+        ResolveAttacks(currentActions);
+        //ResolveMove(currentActions);
+
+        foreach (EntityScript entity in gameEntities)
+        {
+            print("we are in the check dead loop");
+            if (entity.isDead)
             {
-                IAction action = entity.DequeueAction();
-                print(action);
-                action.execute(entity);
+                print("DIE!!!!");
+                Destroy(entity.gameObject);
             }
         }
     }
@@ -85,5 +110,40 @@ public class GameStateManager : MonoBehaviour
     public void AddToEntityList(EntityScript obj)
     {
         gameEntities.Add(obj);
+    }
+
+
+    private void ResolveAttacks(Dictionary<EntityScript, IAction> queuedActions)
+    {
+        foreach (var a in queuedActions)
+        {
+            if (!(a.Value is MeleeAttack)) continue;
+
+            a.Value.execute(a.Key);
+        }
+        return;
+    }
+
+    private void ResolveBlocks(Dictionary<EntityScript, IAction> queuedActions)
+    {
+        foreach (var a in queuedActions)
+        {
+            if (!(a.Value is BlockAction)) continue;
+
+            a.Value.execute(a.Key);
+        }
+        return;
+    }
+
+    private void ResolveMove(Dictionary<EntityScript, IAction> queuedActions)
+    {
+        return;
+        /*foreach (var a in queuedActions)
+        {
+            if (!(a.Value is MoveAction)) continue;
+
+            a.Value.execute(a.Key);
+        }
+        */
     }
 }

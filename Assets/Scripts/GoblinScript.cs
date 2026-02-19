@@ -40,14 +40,11 @@ namespace Assets.Scripts
 			this.currentHealth -= amount;
 			if (currentHealth <= 0)
 			{
+				print("goblin is dead ez ez ez");
 				Die();
 			}
 		}
 
-		private void Die()
-		{
-			Destroy(gameObject);
-		}
 
     }
 }

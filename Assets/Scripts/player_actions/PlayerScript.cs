@@ -6,7 +6,6 @@ namespace Assets.Scripts.player_actions
 {
 	public class PlayerScript: EntityScript
 	{
-		Boolean isBlocking = false;
 
 
 		// Use this for initialization
@@ -35,9 +34,6 @@ namespace Assets.Scripts.player_actions
 			}
 		}
 
-		private void Die()
-		{
-			
-		}
+	
 	}
 }

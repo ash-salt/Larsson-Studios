@@ -1,7 +1,7 @@
 using Assets.Scripts;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
+//using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class MeleeAttack :  IAction
 {
@@ -45,6 +45,8 @@ public class MeleeAttack :  IAction
 
             }
             SlashAttack(minDistance, player);
+            player.doneWithAction();
+            MonoBehaviour.print("Done with attack trust");
         }
     }
 }

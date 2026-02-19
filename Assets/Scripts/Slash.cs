@@ -23,6 +23,11 @@ public class Slash : MonoBehaviour
         if (goblin != null)
         {
             goblin.damage(50);
+            var rb = goblin.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 public class EntityScript : MonoBehaviour
@@ -7,6 +9,10 @@ public class EntityScript : MonoBehaviour
     public int maxHealth;
     public int currentHealth;
     Queue<IAction> actions = new Queue<IAction>();
+    public bool done = false;
+    public bool isDead = false;
+
+    public bool isBlocking = false;
     
     void Start()
     {
@@ -21,12 +27,31 @@ public class EntityScript : MonoBehaviour
 
     public IAction DequeueAction()
     {
-        IAction a = actions.Dequeue();
-        return a;
+        try {
+            IAction a = actions.Dequeue();
+            return a;
+        }
+        catch (Exception e)
+        {
+            print("no action here");
+            return null;
+        }
     }
 
     public void EnqueueAction(IAction a)
     {
         actions.Enqueue(a);
+    }
+
+    public void doneWithAction()
+	{
+		done = true;
+        print("we are done!!!!");
+	}
+
+    public void Die()
+    {
+        print("now we are in the Die() method");
+        isDead = true;
     }
 }
