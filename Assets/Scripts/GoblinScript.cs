@@ -12,7 +12,7 @@ namespace Assets.Scripts
         float farAway = 5f;
 		float mediumDistance = 4f;
 		float shortDistance = 2f;
-		float closeDistance = 0.5f;
+		float attackDistance = 0.5f;
 
         // Use this for initialization
         void Start()
@@ -31,7 +31,28 @@ namespace Assets.Scripts
 		public void PlanTurn()
 		{
 			float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-			EnqueueAction(null);
+
+			if (distanceToPlayer < attackDistance)
+			{
+				EnqueueAction(new GoblinAttackAction());
+			}
+			else if (shortDistance > distanceToPlayer && distanceToPlayer > attackDistance)
+			{
+				QueueMove(player.transform.position);
+                EnqueueAction(new GoblinAttackAction());
+            }
+            else if (mediumDistance > distanceToPlayer && distanceToPlayer > shortDistance)
+			{
+                QueueMove(player.transform.position);
+                QueueMove(player.transform.position);
+                EnqueueAction(new GoblinAttackAction());
+            }
+            else if (farAway > distanceToPlayer && distanceToPlayer > mediumDistance)
+            {
+                QueueMove(player.transform.position);
+                QueueMove(player.transform.position);
+                QueueMove(player.transform.position);
+            }
 
         }
 
@@ -44,6 +65,11 @@ namespace Assets.Scripts
 				Die();
 			}
 		}
+
+        public void QueueMove(Vector2 targetPos, float maxDistance = 2f)
+        {
+            EnqueueAction(new MoveAction(targetPos, maxDistance));
+        }
 
 
     }

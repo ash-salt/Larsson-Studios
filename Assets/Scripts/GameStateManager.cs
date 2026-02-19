@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using Assets.Scripts.player_actions;
 using System.Collections.Generic;
 using System.Security;
@@ -16,6 +17,7 @@ public class GameStateManager : MonoBehaviour
     private Dictionary<EntityScript, IAction> currentActions;
 
     [SerializeField] public GameObject slashPrefab;
+    [SerializeField] public GameObject goblinSlashPrefab;
 
     public static GameStateManager Instance;
     void Awake()
@@ -55,26 +57,26 @@ public class GameStateManager : MonoBehaviour
 
     public GameObject GetGoblinSlashPrefab()
     {
-        return slashPrefab;
+        return goblinSlashPrefab;
     }
 
     public void startActionPhase()
     {
+        foreach (EntityScript entity in gameEntities)
+        {
+            if (entity is GoblinScript)
+            {
+                GoblinScript goblin = (GoblinScript)entity;
+                goblin.PlanTurn();
+            }
+        }
+
         state = "action";
         for (int i = 0; i < 3; i++)
         {
             executeActions();
 
-        }
-        state = "prep";
-    }
-
-    public void endActionPhase()
-    {
-        state = "prep";
-        foreach (EntityScript entity in gameEntities)
-        {
-        }
+         } 
     }
 
     void executeActions()
@@ -117,12 +119,18 @@ public class GameStateManager : MonoBehaviour
         gameEntities.Add(obj);
     }
 
+    public List<EntityScript> GetEntityList()
+    {
+        print(gameEntities);
+        return gameEntities;
+    }
+
 
     private void ResolveAttacks(Dictionary<EntityScript, IAction> queuedActions)
     {
         foreach (var a in queuedActions)
         {
-            if (!(a.Value is MeleeAttack)) continue;
+            if (!(a.Value is MeleeAttack || a.Value is GoblinAttackAction)) continue;
 
             a.Value.execute(a.Key);
         }
