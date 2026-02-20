@@ -31,12 +31,13 @@ public class MoveButtonScript : MonoBehaviour
             
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 targetPosition = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
-                print($"Moving to: {targetPosition}");
-                player.QueueMove(targetPosition, player.maxMoveDistance);
-                waitingForTarget = false;
-                Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-                actionUIManager.UpdateActionUI(actionSprite);
-            
+            print($"Moving to: {targetPosition}");
+            player.QueueMove(targetPosition, player.maxMoveDistance);
+            actionUIManager.newMove(targetPosition);
+            waitingForTarget = false;
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            actionUIManager.UpdateActionUI(actionSprite);
+
         }
     }
 
