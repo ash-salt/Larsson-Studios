@@ -6,8 +6,6 @@ namespace Assets.Scripts.player_actions
 {
 	public class PlayerScript: EntityScript
 	{
-		Boolean isBlocking = false;
-
 
 		// Use this for initialization
 		void Start()
@@ -16,10 +14,7 @@ namespace Assets.Scripts.player_actions
         }
 
 		// Update is called once per frame
-		void Update()
-		{
-
-		}
+		
 
 		public void SetBlocking(Boolean isBlocking)
 		{
@@ -38,6 +33,11 @@ namespace Assets.Scripts.player_actions
 		private void Die()
 		{
 			
+		}
+
+		public void QueueMove(Vector2 targetPos, float maxDistance = 3f)
+		{
+			EnqueueAction(new MoveAction(targetPos, maxDistance));
 		}
 	}
 }

@@ -1,13 +1,14 @@
 using Assets.Scripts;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
+//using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class MeleeAttack :  IAction
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     int damage;
     float spawnDistance = 0.75f;
+    GameObject slashInstance;
 
     public void SlashAttack(EntityScript nearestGoblin, EntityScript player)
     {
@@ -23,7 +24,7 @@ public class MeleeAttack :  IAction
         Vector3 spawnPosition = playerPos
                               + (Vector3)direction * spawnDistance;
 
-        GameObject.Instantiate(slashPrefab, spawnPosition, rotation);
+        slashInstance = GameObject.Instantiate(slashPrefab, spawnPosition, rotation);
     }
 
     public int getCost()
@@ -45,6 +46,15 @@ public class MeleeAttack :  IAction
 
             }
             SlashAttack(minDistance, player);
+            player.doneWithAction();
+            MonoBehaviour.print("Done with attack trust");
         }
     }
+
+    public void Dispose()
+    {
+        Object.Destroy(slashInstance);
+    }
+
+
 }

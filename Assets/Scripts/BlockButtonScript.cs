@@ -2,28 +2,21 @@ using Assets.Scripts.player_actions;
 using System.Diagnostics;
 using UnityEngine;
 
-public class SelectButtonScript : MonoBehaviour
+public class BlockButtonScript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Texture2D cursor;
     [SerializeField] private PlayerScript player;
-    IAction action = new MeleeAttack();
-    void Start()
-    {
-    }
+    [SerializeField] private ActionUIManager actionUIManager;
+    [SerializeField] private Sprite actionSprite;
+    IAction action = new BlockAction();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     void OnMouseDown()
     {
-        
         print("Clicked!");
         player.EnqueueAction(action);
-
+        actionUIManager.UpdateActionUI(actionSprite);
     }
     void OnMouseEnter()
     {

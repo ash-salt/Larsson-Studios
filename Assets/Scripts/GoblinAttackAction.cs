@@ -1,18 +1,29 @@
 using Assets.Scripts.player_actions;
 using UnityEngine;
 
-public class GoblinAttackAction : MonoBehaviour, IAction
+public class GoblinAttackAction : IAction
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    int damage;
+    float spawnDistance = 0.5f;
 
-    // Update is called once per frame
-    void Update()
+    GameObject slashInstance;
+
+    public void SlashAttack(EntityScript playerChar, EntityScript goblin)
     {
-        
+        GameObject slashPrefab = GameStateManager.Instance.GetGoblinSlashPrefab();
+
+        Vector3 playerPos = goblin.transform.position;
+
+        Vector2 direction = (playerChar.transform.position - playerPos).normalized;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.Euler(0, 0, angle);
+
+        Vector3 spawnPosition = playerPos
+                              + (Vector3)direction * spawnDistance;
+
+        slashInstance = GameObject.Instantiate(slashPrefab, spawnPosition, rotation);
     }
 
     public int getCost()
@@ -20,11 +31,30 @@ public class GoblinAttackAction : MonoBehaviour, IAction
         return 1;
     }
 
-    public void execute(EntityScript target)
+    public void execute(EntityScript goblin)
     {
-        if (target.TryGetComponent<PlayerScript>(out PlayerScript player))
+        MonoBehaviour.print("goblin is attacking!");
+        EntityScript player = null;
+        foreach (EntityScript character in GameStateManager.Instance.GetEntityList())
         {
-            player.damage(25);
+            if (character is PlayerScript)
+            {
+                player = character;
+            }
+
         }
+        if (player != null)
+        {
+            SlashAttack(player, goblin);
+            goblin.doneWithAction();
+            MonoBehaviour.print("Done with attack trust");
+        }
+        
+    }
+
+    public void Dispose()
+    {
+        Object.Destroy(slashInstance);
     }
 }
+
