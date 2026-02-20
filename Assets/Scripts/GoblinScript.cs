@@ -31,6 +31,10 @@ namespace Assets.Scripts
 		public void PlanTurn()
 		{
 			float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+			float stopDistance = 0.3f;
+
+			Vector3 direction = (player.transform.position - transform.position).normalized;
+			Vector3 targetPosition = player.transform.position - direction * stopDistance;
 
 			if (distanceToPlayer < attackDistance)
 			{
@@ -38,20 +42,20 @@ namespace Assets.Scripts
 			}
 			else if (shortDistance > distanceToPlayer && distanceToPlayer > attackDistance)
 			{
-				QueueMove(player.transform.position);
+				QueueMove(targetPosition);
                 EnqueueAction(new GoblinAttackAction());
             }
             else if (mediumDistance > distanceToPlayer && distanceToPlayer > shortDistance)
 			{
-                QueueMove(player.transform.position);
-                QueueMove(player.transform.position);
+                QueueMove(targetPosition);
+                QueueMove(targetPosition);
                 EnqueueAction(new GoblinAttackAction());
             }
             else if (farAway > distanceToPlayer && distanceToPlayer > mediumDistance)
             {
-                QueueMove(player.transform.position);
-                QueueMove(player.transform.position);
-                QueueMove(player.transform.position);
+                QueueMove(targetPosition);
+                QueueMove(targetPosition);
+                QueueMove(targetPosition);
             }
 
         }

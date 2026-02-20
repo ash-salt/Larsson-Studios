@@ -20,10 +20,10 @@ namespace Assets.Scripts
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            print("goblin hits!");
             var player = collision.GetComponent<player_actions.PlayerScript>();
             if (player != null)
             {
+                print("goblin hits!");
                 player.damage(25);
                 var rb = player.GetComponent<Rigidbody2D>();
                 if (rb != null)

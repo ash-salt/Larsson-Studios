@@ -83,6 +83,24 @@ public class GameStateManager : MonoBehaviour
         {
             executeActions();
             yield return new WaitForSeconds(actionRoundDelay);
+            DisposeAttackProjectiles();
+            List<EntityScript> removeList = new List<EntityScript>();
+            foreach (EntityScript entity in gameEntities)
+            {
+                print("we are in the check dead loop");
+                if (entity.isDead)
+                {
+                    print("DIE!!!!");
+                    Destroy(entity.gameObject);
+                    removeList.Add(entity);
+                }
+            }
+            foreach (EntityScript entity in removeList)
+            {
+                gameEntities.Remove(entity);
+                enemies.Remove(entity);
+            }
+            removeList.Clear();
         }
         state = "prep";
     }
@@ -101,15 +119,6 @@ public class GameStateManager : MonoBehaviour
         ResolveAttacks(currentActions);
         ResolveMove(currentActions);
 
-        foreach (EntityScript entity in gameEntities)
-        {
-            print("we are in the check dead loop");
-            if (entity.isDead)
-            {
-                print("DIE!!!!");
-                Destroy(entity.gameObject);
-            }
-        }
     }
 
     public void AddToEnemyList(EntityScript obj)
@@ -163,6 +172,24 @@ public class GameStateManager : MonoBehaviour
             if (!(a.Value is MoveAction)) continue;
 
             a.Value.execute(a.Key);
+        }
+    }
+
+    private void DisposeAttackProjectiles()
+    {
+        foreach (KeyValuePair<EntityScript, IAction> unit in currentActions)
+        {
+            IAction action = unit.Value;
+            if (action is MeleeAttack)
+            {
+                MeleeAttack attack = (MeleeAttack) action;
+                attack.Dispose();
+            }
+            if (action is GoblinAttackAction)
+            {
+                GoblinAttackAction attack = (GoblinAttackAction) action;
+                attack.Dispose();
+            }
         }
     }
 }
