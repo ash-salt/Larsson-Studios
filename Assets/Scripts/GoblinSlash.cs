@@ -12,7 +12,7 @@ namespace Assets.Scripts
             if (player != null)
             {
                 print("goblin hits!");
-                player.damage(25);
+                player.takeDamage(25);
                 var rb = player.GetComponent<Rigidbody2D>();
                 if (rb != null)
                 {

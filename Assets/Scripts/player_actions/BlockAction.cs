@@ -6,8 +6,6 @@ namespace Assets.Scripts.player_actions
 {
 	public class BlockAction: IAction
 	{
-
-
 		public int getCost()
 		{
 			return 1;
@@ -19,7 +17,6 @@ namespace Assets.Scripts.player_actions
             {
                 player.SetBlocking(true);
             }
-
         }
 	
 	}

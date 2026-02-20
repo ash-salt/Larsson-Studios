@@ -20,6 +20,7 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] public GameObject slashPrefab;
     [SerializeField] public GameObject goblinSlashPrefab;
     [SerializeField] private float actionRoundDelay = 1f;
+    [SerializeField] private ActionUIManager actionUIManager;
 
     public static GameStateManager Instance;
     void Awake()
@@ -30,11 +31,6 @@ public class GameStateManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     void CreateSnapshot()
@@ -75,6 +71,7 @@ public class GameStateManager : MonoBehaviour
 
         state = "action";
         StartCoroutine(ExecuteActionsWithDelay());
+        actionUIManager.clearActionUI();
     }
 
     IEnumerator ExecuteActionsWithDelay()
@@ -102,6 +99,7 @@ public class GameStateManager : MonoBehaviour
             }
             removeList.Clear();
         }
+
         state = "prep";
     }
 

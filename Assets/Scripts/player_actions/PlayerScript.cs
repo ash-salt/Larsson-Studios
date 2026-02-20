@@ -21,7 +21,7 @@ namespace Assets.Scripts.player_actions
 			this.isBlocking = isBlocking;
 		}
 
-		public void damage(int amount)
+		public void takedamage(int amount)
 		{
 			this.currentHealth -= amount;
 			if (this.currentHealth <= 0)

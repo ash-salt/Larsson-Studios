@@ -32,7 +32,19 @@ public class MoveAction : IAction
             validatedTarget = currentPos + direction * maxDistance;
         }
 
+        RaycastHit2D BlockedByObstacle = Physics2D.Raycast(
+                currentPos, 
+                (targetPosition - currentPos).normalized, 
+                distance
+            );
+
+        if (BlockedByObstacle)        {
+            MonoBehaviour.print("Move blocked!");
+            validatedTarget = currentPos + (targetPosition - currentPos).normalized * (BlockedByObstacle.distance - 0.2f);
+        }
+
         // Apply movement (preserve Z coordinate)
+        
         entity.transform.position = new Vector3(validatedTarget.x, validatedTarget.y, entity.transform.position.z);
         
         entity.doneWithAction();

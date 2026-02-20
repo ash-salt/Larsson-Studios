@@ -9,7 +9,7 @@ public class Slash : MonoBehaviour
         var goblin = collision.GetComponent<Assets.Scripts.GoblinScript>();
         if (goblin != null)
         {
-            goblin.damage(50);
+            goblin.takeDamage(50);
         }
     }
 }

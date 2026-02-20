@@ -44,6 +44,23 @@ public class EntityScript : MonoBehaviour
         }
     }
 
+    public void takeDamage(int damage)
+    {
+        if (isBlocking)
+        {
+            print("Attack Blocked!");
+            return;
+        }
+        else
+        {
+            currentHealth -= damage;
+        }
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
     public void doneWithAction()
 	{
 		done = true;
