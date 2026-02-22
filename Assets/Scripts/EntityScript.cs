@@ -72,4 +72,16 @@ public class EntityScript : MonoBehaviour
         print("now we are in the Die() method");
         isDead = true;
     }
+
+    public void doneWithAction()
+	{
+		done = true;
+        print("we are done!!!!");
+	}
+
+    public void Die()
+    {
+        print("now we are in the Die() method");
+        isDead = true;
+    }
 }

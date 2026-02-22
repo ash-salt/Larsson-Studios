@@ -2,7 +2,7 @@
 - Project name: Larsson-Studios
 - Unity version: Unity 6000.0.58f2
 - Active game object:
-  - Name: slash
+  - Name: GameStateManager
   - Tag: Untagged
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

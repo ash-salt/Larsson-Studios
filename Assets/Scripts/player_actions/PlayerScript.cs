@@ -30,9 +30,9 @@ namespace Assets.Scripts.player_actions
 			}
 		}
 
-		private void Die()
+		public void QueueMove(Vector2 targetPos, float maxDistance = 3f)
 		{
-			
+			EnqueueAction(new MoveAction(targetPos, maxDistance));
 		}
 
 		public void QueueMove(Vector2 targetPos, float maxDistance = 3f)
