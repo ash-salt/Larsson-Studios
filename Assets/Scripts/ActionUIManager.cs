@@ -40,6 +40,11 @@ public class ActionUIManager : MonoBehaviour
     {
         playerPosition = playerScript.transform.position;
     }
+
+    public Vector2 GetLastTargetPosition()
+    {
+        return playerPosition;
+    }
     
     public void clearMove()
     {

@@ -7,14 +7,21 @@ public class MoveButtonScript : MonoBehaviour
     [SerializeField] private PlayerScript player;
     [SerializeField] private Sprite actionSprite;
     [SerializeField] private ActionUIManager actionUIManager;
+    private MovementRangeIndicator rangeIndicator;
     private bool waitingForTarget = false;
     private bool buttonJustClicked = false;
+
+    void Start()
+    {
+        rangeIndicator = player.GetComponent<MovementRangeIndicator>();
+    }
 
     void OnMouseDown()
     {
         print("Move button clicked! Click on the board to select target...");
         waitingForTarget = true;
         buttonJustClicked = true;
+        rangeIndicator.Show();
         print("Clicked!");
     }
 
@@ -25,6 +32,7 @@ public class MoveButtonScript : MonoBehaviour
             buttonJustClicked = false;
             return;
         }
+        
 
         if (waitingForTarget && Input.GetMouseButtonDown(0))
         {
@@ -35,6 +43,7 @@ public class MoveButtonScript : MonoBehaviour
             player.QueueMove(targetPosition, player.maxMoveDistance);
             actionUIManager.newMove(targetPosition);
             waitingForTarget = false;
+            rangeIndicator.Hide();
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             actionUIManager.UpdateActionUI(actionSprite);
 
