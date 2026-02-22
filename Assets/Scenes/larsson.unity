@@ -1571,6 +1571,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoblinIdle (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5973251486355101074, guid: 03c4697ac04cb33418d23c08305f6cae, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2157,7 +2161,7 @@ GameObject:
   - component: {fileID: 827677479}
   - component: {fileID: 827677481}
   - component: {fileID: 827677480}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GoblinIdle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2728,7 +2732,7 @@ GameObject:
   - component: {fileID: 1432555170}
   - component: {fileID: 1432555172}
   - component: {fileID: 1432555173}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2744,9 +2748,9 @@ Transform:
   m_GameObject: {fileID: 1432555169}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.99, y: 0.46, z: -0.05102509}
-  m_LocalScale: {x: 1, y: 2.5, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0.99, y: 0.698, z: -0.05102509}
+  m_LocalScale: {x: 0.35, y: 0.875, z: 0.35}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2909,7 +2913,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slashPrefab: {fileID: 9034486332971087722, guid: 6cae2b6d2190e1e4fa559d3a548ec092, type: 3}
-  goblinSlashPrefab: {fileID: 0}
+  goblinSlashPrefab: {fileID: 9034486332971087722, guid: 54a0d4a486c515d4d9aacb80b5530d12, type: 3}
   actionRoundDelay: 1
   actionUIManager: {fileID: 171192607}
 --- !u!1 &1897143140
@@ -4020,6 +4024,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoblinIdle
       objectReference: {fileID: 0}
+    - target: {fileID: 5973251486355101074, guid: 03c4697ac04cb33418d23c08305f6cae, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4182,6 +4190,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: knight
       objectReference: {fileID: 0}
+    - target: {fileID: 1358357364004153695, guid: d78b54189ceb77e8b98b6278ec623d13, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4222378499540979270, guid: d78b54189ceb77e8b98b6278ec623d13, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.33
@@ -4258,6 +4270,7 @@ MonoBehaviour:
   done: 0
   isDead: 0
   isBlocking: 0
+  maxMoveDistance: 3
 --- !u!61 &7525991657286185661
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4331,7 +4344,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
-  maxMoveDistance: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4348,3 +4360,5 @@ SceneRoots:
   - {fileID: 1476452698}
   - {fileID: 406373097}
   - {fileID: 515219957}
+  - {fileID: 827677478}
+  - {fileID: 1432555170}

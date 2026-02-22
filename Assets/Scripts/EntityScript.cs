@@ -48,8 +48,9 @@ public class EntityScript : MonoBehaviour
         {
             actions.Enqueue(a);
         }
+    }
 
-    public void takeDamage(int damage)
+    public void damage(int damage)
     {
         if (isBlocking)
         {
@@ -78,15 +79,4 @@ public class EntityScript : MonoBehaviour
         isDead = true;
     }
 
-    public void doneWithAction()
-	{
-		done = true;
-        print("we are done!!!!");
-	}
-
-    public void Die()
-    {
-        print("now we are in the Die() method");
-        isDead = true;
-    }
 }
