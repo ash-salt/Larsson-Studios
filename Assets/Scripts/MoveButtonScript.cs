@@ -5,6 +5,8 @@ public class MoveButtonScript : MonoBehaviour
 {
     public Texture2D cursor;
     [SerializeField] private PlayerScript player;
+    [SerializeField] private Sprite actionSprite;
+    [SerializeField] private ActionUIManager actionUIManager;
     private bool waitingForTarget = false;
     private bool buttonJustClicked = false;
 
@@ -13,11 +15,11 @@ public class MoveButtonScript : MonoBehaviour
         print("Move button clicked! Click on the board to select target...");
         waitingForTarget = true;
         buttonJustClicked = true;
+        print("Clicked!");
     }
 
     void Update()
     {
-        // Skip the frame where button was clicked
         if (buttonJustClicked)
         {
             buttonJustClicked = false;
@@ -29,12 +31,13 @@ public class MoveButtonScript : MonoBehaviour
             
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 targetPosition = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
-            
             print($"Moving to: {targetPosition}");
             player.QueueMove(targetPosition, player.maxMoveDistance);
-            
+            actionUIManager.newMove(targetPosition);
             waitingForTarget = false;
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            actionUIManager.UpdateActionUI(actionSprite);
+
         }
     }
 

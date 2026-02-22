@@ -8,7 +8,6 @@ namespace Assets.Scripts.player_actions
 	public class PlayerScript: EntityScript
 	{
 
-
 		// Use this for initialization
 		void Start()
 		{
@@ -16,17 +15,14 @@ namespace Assets.Scripts.player_actions
         }
 
 		// Update is called once per frame
-		void Update()
-		{
-
-		}
+		
 
 		public void SetBlocking(Boolean isBlocking)
 		{
 			this.isBlocking = isBlocking;
 		}
 
-		public void damage(int amount)
+		public void takedamage(int amount)
 		{
 			this.currentHealth -= amount;
 			if (this.currentHealth <= 0)

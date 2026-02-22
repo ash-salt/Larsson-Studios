@@ -2,14 +2,14 @@ using Assets.Scripts.player_actions;
 using System.Diagnostics;
 using UnityEngine;
 
-public class MeleeButtonScript : MonoBehaviour
+public class BlockButtonScript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Texture2D cursor;
     [SerializeField] private PlayerScript player;
     [SerializeField] private ActionUIManager actionUIManager;
     [SerializeField] private Sprite actionSprite;
-    IAction action = new MeleeAttack();
+    IAction action = new BlockAction();
 
 
     void OnMouseDown()

@@ -22,12 +22,6 @@ namespace Assets.Scripts
 
         }
 
-		// Update is called once per frame
-		void Update()
-		{
-			
-		}
-
 		public void PlanTurn()
 		{
 			float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
@@ -67,15 +61,21 @@ namespace Assets.Scripts
 
         }
 
-		public void damage(int amount)
-		{
-			this.currentHealth -= amount;
-			if (currentHealth <= 0)
-			{
-				print("goblin is dead ez ez ez");
-				Die();
-			}
-		}
+		public void takeDamage(int damage) {
+        if (isBlocking)
+        {
+            print("Attack Blocked!");
+            return;
+        }
+        else
+        {
+            currentHealth -= damage;
+        }
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
 
         public void QueueMove(Vector2 targetPos, float maxDistance = 2f)
         {
