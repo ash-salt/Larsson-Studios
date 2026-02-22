@@ -1,3 +1,4 @@
+using System.Linq;
 using Assets.Scripts;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -34,6 +35,10 @@ public class MeleeAttack :  IAction
 
     public void execute(EntityScript player)
     {
+        if (!(GameStateManager.Instance.GetEnemyList().Any()))
+        {
+            return;
+        }
         EntityScript minDistance = GameStateManager.Instance.GetEnemyList()[0];
         if (minDistance != null)
         {
@@ -55,6 +60,4 @@ public class MeleeAttack :  IAction
     {
         Object.Destroy(slashInstance);
     }
-
-
 }

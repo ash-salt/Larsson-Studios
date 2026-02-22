@@ -5,11 +5,16 @@ public class Slash : MonoBehaviour
  
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("hit!");
         var goblin = collision.GetComponent<Assets.Scripts.GoblinScript>();
         if (goblin != null)
         {
-            goblin.takeDamage(50);
+            print("hit!");
+            goblin.damage(25);
+            var rb = goblin.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                
+            }
         }
     }
 }
