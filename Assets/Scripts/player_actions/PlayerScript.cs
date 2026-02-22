@@ -7,7 +7,6 @@ namespace Assets.Scripts.player_actions
 	public class PlayerScript: EntityScript
 	{
 
-
 		// Use this for initialization
 		void Start()
 		{
@@ -15,17 +14,14 @@ namespace Assets.Scripts.player_actions
         }
 
 		// Update is called once per frame
-		void Update()
-		{
-
-		}
+		
 
 		public void SetBlocking(Boolean isBlocking)
 		{
 			this.isBlocking = isBlocking;
 		}
 
-		public void damage(int amount)
+		public void takedamage(int amount)
 		{
 			this.currentHealth -= amount;
 			if (this.currentHealth <= 0)
@@ -39,6 +35,9 @@ namespace Assets.Scripts.player_actions
 			EnqueueAction(new MoveAction(targetPos, maxDistance));
 		}
 
-	
+		public void QueueMove(Vector2 targetPos, float maxDistance = 3f)
+		{
+			EnqueueAction(new MoveAction(targetPos, maxDistance));
+		}
 	}
 }

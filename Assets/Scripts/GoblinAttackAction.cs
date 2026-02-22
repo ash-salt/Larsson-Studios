@@ -7,6 +7,8 @@ public class GoblinAttackAction : IAction
     int damage;
     float spawnDistance = 0.5f;
 
+    GameObject slashInstance;
+
     public void SlashAttack(EntityScript playerChar, EntityScript goblin)
     {
         GameObject slashPrefab = GameStateManager.Instance.GetGoblinSlashPrefab();
@@ -21,7 +23,7 @@ public class GoblinAttackAction : IAction
         Vector3 spawnPosition = playerPos
                               + (Vector3)direction * spawnDistance;
 
-        GameObject.Instantiate(slashPrefab, spawnPosition, rotation);
+        slashInstance = GameObject.Instantiate(slashPrefab, spawnPosition, rotation);
     }
 
     public int getCost()
@@ -48,6 +50,11 @@ public class GoblinAttackAction : IAction
             MonoBehaviour.print("Done with attack trust");
         }
         
+    }
+
+    public void Dispose()
+    {
+        Object.Destroy(slashInstance);
     }
 }
 

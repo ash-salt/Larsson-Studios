@@ -1,5 +1,6 @@
 using Assets.Scripts;
 using Assets.Scripts.player_actions;
+using System.Collections;
 using System.Collections.Generic;
 using System.Security;
 using UnityEngine;
@@ -18,6 +19,8 @@ public class GameStateManager : MonoBehaviour
 
     [SerializeField] public GameObject slashPrefab;
     [SerializeField] public GameObject goblinSlashPrefab;
+    [SerializeField] private float actionRoundDelay = 1f;
+    [SerializeField] private ActionUIManager actionUIManager;
 
     public static GameStateManager Instance;
     void Awake()
@@ -28,11 +31,6 @@ public class GameStateManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     void CreateSnapshot()
@@ -72,11 +70,37 @@ public class GameStateManager : MonoBehaviour
         }
 
         state = "action";
+        StartCoroutine(ExecuteActionsWithDelay());
+        actionUIManager.clearActionUI();
+    }
+
+    IEnumerator ExecuteActionsWithDelay()
+    {
         for (int i = 0; i < 3; i++)
         {
             executeActions();
+            yield return new WaitForSeconds(actionRoundDelay);
+            DisposeAttackProjectiles();
+            List<EntityScript> removeList = new List<EntityScript>();
+            foreach (EntityScript entity in gameEntities)
+            {
+                print("we are in the check dead loop");
+                if (entity.isDead)
+                {
+                    print("DIE!!!!");
+                    Destroy(entity.gameObject);
+                    removeList.Add(entity);
+                }
+            }
+            foreach (EntityScript entity in removeList)
+            {
+                gameEntities.Remove(entity);
+                enemies.Remove(entity);
+            }
+            removeList.Clear();
+        }
 
-         } 
+        state = "prep";
     }
 
     void executeActions()
@@ -93,15 +117,6 @@ public class GameStateManager : MonoBehaviour
         ResolveAttacks(currentActions);
         ResolveMove(currentActions);
 
-        foreach (EntityScript entity in gameEntities)
-        {
-            print("we are in the check dead loop");
-            if (entity.isDead)
-            {
-                print("DIE!!!!");
-                Destroy(entity.gameObject);
-            }
-        }
     }
 
     public void AddToEnemyList(EntityScript obj)
@@ -155,6 +170,24 @@ public class GameStateManager : MonoBehaviour
             if (!(a.Value is MoveAction)) continue;
 
             a.Value.execute(a.Key);
+        }
+    }
+
+    private void DisposeAttackProjectiles()
+    {
+        foreach (KeyValuePair<EntityScript, IAction> unit in currentActions)
+        {
+            IAction action = unit.Value;
+            if (action is MeleeAttack)
+            {
+                MeleeAttack attack = (MeleeAttack) action;
+                attack.Dispose();
+            }
+            if (action is GoblinAttackAction)
+            {
+                GoblinAttackAction attack = (GoblinAttackAction) action;
+                attack.Dispose();
+            }
         }
     }
 }

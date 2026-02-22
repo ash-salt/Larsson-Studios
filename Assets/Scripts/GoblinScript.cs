@@ -22,15 +22,13 @@ namespace Assets.Scripts
 
         }
 
-		// Update is called once per frame
-		void Update()
-		{
-			
-		}
-
 		public void PlanTurn()
 		{
 			float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+			float stopDistance = 0.3f;
+
+			Vector3 direction = (player.transform.position - transform.position).normalized;
+			Vector3 targetPosition = player.transform.position - direction * stopDistance;
 
 			if (distanceToPlayer < attackDistance)
 			{
@@ -38,33 +36,39 @@ namespace Assets.Scripts
 			}
 			else if (shortDistance > distanceToPlayer && distanceToPlayer > attackDistance)
 			{
-				QueueMove(player.transform.position);
+				QueueMove(targetPosition);
                 EnqueueAction(new GoblinAttackAction());
             }
             else if (mediumDistance > distanceToPlayer && distanceToPlayer > shortDistance)
 			{
-                QueueMove(player.transform.position);
-                QueueMove(player.transform.position);
+                QueueMove(targetPosition);
+                QueueMove(targetPosition);
                 EnqueueAction(new GoblinAttackAction());
             }
             else if (farAway > distanceToPlayer && distanceToPlayer > mediumDistance)
             {
-                QueueMove(player.transform.position);
-                QueueMove(player.transform.position);
-                QueueMove(player.transform.position);
+                QueueMove(targetPosition);
+                QueueMove(targetPosition);
+                QueueMove(targetPosition);
             }
 
         }
 
-		public void damage(int amount)
-		{
-			this.currentHealth -= amount;
-			if (currentHealth <= 0)
-			{
-				print("goblin is dead ez ez ez");
-				Die();
-			}
-		}
+		public void takeDamage(int damage) {
+        if (isBlocking)
+        {
+            print("Attack Blocked!");
+            return;
+        }
+        else
+        {
+            currentHealth -= damage;
+        }
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
 
         public void QueueMove(Vector2 targetPos, float maxDistance = 2f)
         {
