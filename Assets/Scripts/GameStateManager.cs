@@ -18,6 +18,7 @@ public class GameStateManager : MonoBehaviour
     private Dictionary<EntityScript, IAction> currentActions;
 
     [SerializeField] public GameObject slashPrefab;
+    [SerializeField] public GameObject shieldPrefab;
     [SerializeField] public GameObject goblinSlashPrefab;
     [SerializeField] private float actionRoundDelay = 1f;
     [SerializeField] private ActionUIManager actionUIManager;
@@ -51,6 +52,11 @@ public class GameStateManager : MonoBehaviour
     public GameObject GetSlashPrefab()
     {
         return slashPrefab;
+    }
+
+    public GameObject GetShieldPrefab()
+    {
+        return shieldPrefab;
     }
 
     public GameObject GetGoblinSlashPrefab()
@@ -187,6 +193,11 @@ public class GameStateManager : MonoBehaviour
             {
                 GoblinAttackAction attack = (GoblinAttackAction) action;
                 attack.Dispose();
+            }
+            if (action is BlockAction)
+            {
+                BlockAction act = (BlockAction) action;
+                act.Dispose();
             }
         }
     }
