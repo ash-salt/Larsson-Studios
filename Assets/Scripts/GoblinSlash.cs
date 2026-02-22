@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Scripts.player_actions;
 
 namespace Assets.Scripts
 {
@@ -20,7 +21,7 @@ namespace Assets.Scripts
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            var player = collision.GetComponent<player_actions.PlayerScript>();
+            var player = collision.GetComponent<PlayerScript>();
             if (player != null)
             {
                 print("goblin hits!");

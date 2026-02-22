@@ -42,7 +42,15 @@ public class EntityScript : MonoBehaviour
 
     public void EnqueueAction(IAction a)
     {
-        actions.Enqueue(a);
+        int total_cost = 0;
+        foreach (IAction action in actions)
+        {
+            total_cost += action.getCost();
+        }
+        if (total_cost + a.getCost() <= 3)
+        {
+            actions.Enqueue(a);
+        }
     }
 
     public void doneWithAction()

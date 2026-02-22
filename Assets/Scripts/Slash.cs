@@ -20,7 +20,7 @@ public class Slash : MonoBehaviour
         if (goblin != null)
         {
             print("hit!");
-            goblin.damage(50);
+            goblin.damage(25);
             var rb = goblin.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
