@@ -5,19 +5,17 @@ public class MovementRangeIndicator : MonoBehaviour
 {
     [SerializeField] private LineRenderer lineRenderer;
 
-    [SerializeField] private Rigidbody2D rb;
-
     [SerializeField] private EntityScript entityScript;
 
-    [SerializeField] private ActionUIManager actionUIManager;
-
     private bool isActive;
+    private Vector2 startPosition;
 
 
 
-    public void Show()
+    public void Show(Vector2 fromPosition)
     {
         isActive = true;
+        startPosition = fromPosition;
         lineRenderer.enabled = true;
     }
 
@@ -36,41 +34,17 @@ public class MovementRangeIndicator : MonoBehaviour
         }
 
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        
-        Vector2 currentPos = actionUIManager.GetLastTargetPosition();
         Vector2 mousePos2D = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
-        Vector2 toMouse = mousePos2D - currentPos;
-        float distance = toMouse.magnitude;
 
-        if (distance < 0.001f)
-        {
-            Hide();
-            return;
-        }
-
-        Vector2 direction = toMouse.normalized;
-        float moveDistance = Mathf.Min(distance, entityScript.maxMoveDistance);
-
-        
-        Vector2 potentialTarget = currentPos + direction * moveDistance;
-
-        
-        RaycastHit2D hit = Physics2D.Linecast(currentPos, potentialTarget, LayerMask.GetMask("Obstacles"));
-
-        float finalDistance = moveDistance;
-        if (hit.collider != null)
-        {
-            
-            float hitDistance = Vector2.Distance(currentPos, hit.point);
-            finalDistance = Mathf.Max(hitDistance - 0.05f, 0f);
-        }
-
-
-        Vector2 finalTarget = currentPos + direction * finalDistance;
+        // Use MovementUtility to validate the movement
+        Vector2 finalTarget = MovementUtility.ValidateMovement(
+            startPosition, 
+            mousePos2D, 
+            entityScript.maxMoveDistance
+        );
 
         lineRenderer.positionCount = 2;
-        lineRenderer.SetPosition(0, new Vector3(currentPos.x, currentPos.y, -0.5f));
+        lineRenderer.SetPosition(0, new Vector3(startPosition.x, startPosition.y, -0.5f));
         lineRenderer.SetPosition(1, new Vector3(finalTarget.x, finalTarget.y, -0.5f));
 
     }
