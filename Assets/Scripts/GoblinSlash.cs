@@ -12,6 +12,11 @@ namespace Assets.Scripts
             var player = collision.GetComponent<PlayerScript>();
             if (player != null)
             {
+                if (player.isBlocking )
+                {
+                    print("blocked nerd");
+                    return;
+                }
                 print("goblin hits!");
                 player.damage(25);
                 var rb = player.GetComponent<Rigidbody2D>();
