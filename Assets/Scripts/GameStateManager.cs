@@ -87,6 +87,10 @@ public class GameStateManager : MonoBehaviour
             executeActions();
             yield return new WaitForSeconds(actionRoundDelay);
             DisposeAttackProjectiles();
+            foreach (EntityScript entity in gameEntities)
+            {
+                entity.isBlocking = false;
+            }
             List<EntityScript> removeList = new List<EntityScript>();
             foreach (EntityScript entity in gameEntities)
             {
@@ -122,7 +126,6 @@ public class GameStateManager : MonoBehaviour
         ResolveBlocks(currentActions);
         ResolveAttacks(currentActions);
         ResolveMove(currentActions);
-
     }
 
     public void AddToEnemyList(EntityScript obj)

@@ -2915,7 +2915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slashPrefab: {fileID: 9034486332971087722, guid: 6cae2b6d2190e1e4fa559d3a548ec092, type: 3}
-  shieldPrefab: {fileID: 0}
+  shieldPrefab: {fileID: 679447868725350734, guid: 4407728ba9428aa4faf1935242d4ec15, type: 3}
   goblinSlashPrefab: {fileID: 9034486332971087722, guid: 54a0d4a486c515d4d9aacb80b5530d12, type: 3}
   actionRoundDelay: 1
   actionUIManager: {fileID: 171192607}
@@ -4257,6 +4257,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1358357364004153695, guid: d78b54189ceb77e8b98b6278ec623d13, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7525991657286185665}
+    - targetCorrespondingSourceObject: {fileID: 1358357364004153695, guid: d78b54189ceb77e8b98b6278ec623d13, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7525991657286185669}
   m_SourcePrefab: {fileID: 100100000, guid: d78b54189ceb77e8b98b6278ec623d13, type: 3}
 --- !u!1 &7525991657286185657 stripped
 GameObject:
@@ -4288,7 +4291,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7525991657286185657}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -4475,6 +4478,69 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!60 &7525991657286185669
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7525991657286185657}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.265625, y: 0.265625}
+      - {x: 0.1875, y: 0.328125}
+      - {x: 0.078125, y: 0.5}
+      - {x: -0.0625, y: 0.5}
+      - {x: -0.140625, y: 0.421875}
+      - {x: -0.21875, y: 0.28125}
+      - {x: -0.25, y: 0.140625}
+      - {x: -0.4375, y: 0.328125}
+      - {x: -0.5, y: 0.328125}
+      - {x: -0.5, y: 0.21875}
+      - {x: -0.25, y: -0.109375}
+      - {x: -0.3125, y: -0.5}
+      - {x: 0.203125, y: -0.5}
+      - {x: 0.203125, y: -0.453125}
+      - {x: 0.25, y: -0.234375}
+      - {x: 0.265625, y: -0.09375}
+  m_UseDelaunayMesh: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
