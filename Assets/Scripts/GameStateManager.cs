@@ -122,7 +122,10 @@ public class GameStateManager : MonoBehaviour
         ResolveBlocks(currentActions);
         ResolveAttacks(currentActions);
         ResolveMove(currentActions);
-
+        foreach (EntityScript entity in gameEntities)
+        {
+            entity.isBlocking = false;
+        }
     }
 
     public void AddToEnemyList(EntityScript obj)

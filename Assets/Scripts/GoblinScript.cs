@@ -26,7 +26,7 @@ namespace Assets.Scripts
 		{
 			float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 			float stopDistance = 0.3f;
-			float randomRadius = 0.3f;
+			float randomRadius = 1f;  
 
 			Vector3 direction = (player.transform.position - transform.position).normalized;
 			Vector3 targetPosition = player.transform.position - direction * stopDistance;
