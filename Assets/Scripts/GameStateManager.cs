@@ -111,6 +111,7 @@ public class GameStateManager : MonoBehaviour
         }
 
         state = "prep";
+        actionUIManager.updateMove();
     }
 
     void executeActions()
