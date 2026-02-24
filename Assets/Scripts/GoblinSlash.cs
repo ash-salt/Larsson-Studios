@@ -24,10 +24,10 @@ namespace Assets.Scripts
                 print("goblin hits!");
                 slashSFX.Play();
                 player.damage(25);
-                var rb = player.GetComponent<Rigidbody2D>();
+                Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
                 if (rb != null)
                 {
-
+                    //rb.AddForce()
                 }
             }
         }
