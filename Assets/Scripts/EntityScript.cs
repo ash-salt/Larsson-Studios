@@ -39,12 +39,18 @@ public class EntityScript : MonoBehaviour
 
     public void EnqueueAction(IAction a)
     {
-        if (actions.Count < 4) {
+        int total_cost = 0;
+        foreach (IAction action in actions)
+        {
+            total_cost += action.getCost();
+        }
+        if (total_cost + a.getCost() <= 3)
+        {
             actions.Enqueue(a);
         }
     }
 
-    public void takeDamage(int damage)
+    public void damage(int damage)
     {
         if (isBlocking)
         {
@@ -72,4 +78,5 @@ public class EntityScript : MonoBehaviour
         print("now we are in the Die() method");
         isDead = true;
     }
+
 }

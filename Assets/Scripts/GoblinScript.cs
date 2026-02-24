@@ -26,9 +26,16 @@ namespace Assets.Scripts
 		{
 			float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 			float stopDistance = 0.3f;
+			float randomRadius = 1f;  
 
 			Vector3 direction = (player.transform.position - transform.position).normalized;
 			Vector3 targetPosition = player.transform.position - direction * stopDistance;
+
+			Vector2 randomCircle = Random.insideUnitCircle * randomRadius;
+
+			Vector3 randomOffset = new Vector2(randomCircle.x,randomCircle.y);
+
+			Vector3 finalTarget = targetPosition + randomOffset;
 
 			if (distanceToPlayer < attackDistance)
 			{
@@ -36,20 +43,20 @@ namespace Assets.Scripts
 			}
 			else if (shortDistance > distanceToPlayer && distanceToPlayer > attackDistance)
 			{
-				QueueMove(targetPosition);
+				QueueMove(finalTarget);
                 EnqueueAction(new GoblinAttackAction());
             }
             else if (mediumDistance > distanceToPlayer && distanceToPlayer > shortDistance)
 			{
-                QueueMove(targetPosition);
-                QueueMove(targetPosition);
+                QueueMove(finalTarget);
+                QueueMove(finalTarget);
                 EnqueueAction(new GoblinAttackAction());
             }
             else if (farAway > distanceToPlayer && distanceToPlayer > mediumDistance)
             {
-                QueueMove(targetPosition);
-                QueueMove(targetPosition);
-                QueueMove(targetPosition);
+                QueueMove(finalTarget);
+                QueueMove(finalTarget);
+                QueueMove(finalTarget);
             }
 
         }

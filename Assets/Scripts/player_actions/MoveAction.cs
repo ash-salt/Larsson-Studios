@@ -18,37 +18,44 @@ public class MoveAction : IAction
 
     public void execute(EntityScript entity)
     {
-        // Extract current 2D position (XY plane)
-        Vector2 currentPos = new Vector2(entity.transform.position.x, entity.transform.position.y);
+        Rigidbody2D rb = entity.GetComponent<Rigidbody2D>();
 
-        // Calculate distance to target
-        float distance = Vector2.Distance(currentPos, targetPosition);
+        Vector2 currentPos = rb.position;
 
-        // Clamp to max distance if target is too far
-        Vector2 validatedTarget = targetPosition;
-        if (distance > maxDistance)
+        Vector2 toTarget = targetPosition - currentPos;
+        float distance = toTarget.magnitude;
+
+        if (distance <= 0.001f)
         {
-            Vector2 direction = (targetPosition - currentPos).normalized;
-            validatedTarget = currentPos + direction * maxDistance;
+            entity.doneWithAction();
+            return;
         }
 
-        RaycastHit2D BlockedByObstacle = Physics2D.Raycast(
-                currentPos, 
-                (targetPosition - currentPos).normalized, 
-                distance
-            );
+        Vector2 direction = toTarget.normalized;
 
-        if (BlockedByObstacle)        {
-            MonoBehaviour.print("Move blocked!");
-            validatedTarget = currentPos + (targetPosition - currentPos).normalized * (BlockedByObstacle.distance - 0.2f);
+        float moveDistance = Mathf.Min(distance, maxDistance);
+
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.useLayerMask = true; // REQUIRED
+        filter.SetLayerMask(LayerMask.GetMask("Obstacles"));
+        filter.useTriggers = false;
+
+        RaycastHit2D[] hits = new RaycastHit2D[8];
+
+        int hitCount = rb.Cast(direction, filter, hits, moveDistance);
+
+        float finalDistance = moveDistance;
+
+        if (hitCount > 0)
+        {
+            finalDistance = Mathf.Max(hits[0].distance - 0.05f, 0f);
         }
 
-        // Apply movement (preserve Z coordinate)
-        
-        entity.transform.position = new Vector3(validatedTarget.x, validatedTarget.y, entity.transform.position.z);
-        
+        Vector2 finalPos = currentPos + direction * finalDistance;
+
+        rb.MovePosition(finalPos);
+
         entity.doneWithAction();
-        MonoBehaviour.print("Moved to: " + validatedTarget);
     }
 
 }

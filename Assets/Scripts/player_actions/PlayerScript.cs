@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.player_actions
 {
@@ -21,23 +22,16 @@ namespace Assets.Scripts.player_actions
 			this.isBlocking = isBlocking;
 		}
 
-		public void takedamage(int amount)
-		{
-			this.currentHealth -= amount;
-			if (this.currentHealth <= 0)
-			{
-				Die();
-			}
-		}
-
-		private void Die()
-		{
-			
-		}
-
 		public void QueueMove(Vector2 targetPos, float maxDistance = 3f)
 		{
 			EnqueueAction(new MoveAction(targetPos, maxDistance));
 		}
+
+		public new void Die()
+		{
+			SceneManager.LoadScene("MainMenu");
+		}
+
+	
 	}
 }

@@ -18,6 +18,7 @@ public class GameStateManager : MonoBehaviour
     private Dictionary<EntityScript, IAction> currentActions;
 
     [SerializeField] public GameObject slashPrefab;
+    [SerializeField] public GameObject shieldPrefab;
     [SerializeField] public GameObject goblinSlashPrefab;
     [SerializeField] private float actionRoundDelay = 1f;
     [SerializeField] private ActionUIManager actionUIManager;
@@ -53,6 +54,11 @@ public class GameStateManager : MonoBehaviour
         return slashPrefab;
     }
 
+    public GameObject GetShieldPrefab()
+    {
+        return shieldPrefab;
+    }
+
     public GameObject GetGoblinSlashPrefab()
     {
         return goblinSlashPrefab;
@@ -81,6 +87,10 @@ public class GameStateManager : MonoBehaviour
             executeActions();
             yield return new WaitForSeconds(actionRoundDelay);
             DisposeAttackProjectiles();
+            foreach (EntityScript entity in gameEntities)
+            {
+                entity.isBlocking = false;
+            }
             List<EntityScript> removeList = new List<EntityScript>();
             foreach (EntityScript entity in gameEntities)
             {
@@ -101,6 +111,7 @@ public class GameStateManager : MonoBehaviour
         }
 
         state = "prep";
+        actionUIManager.updateMove();
     }
 
     void executeActions()
@@ -116,7 +127,6 @@ public class GameStateManager : MonoBehaviour
         ResolveBlocks(currentActions);
         ResolveAttacks(currentActions);
         ResolveMove(currentActions);
-
     }
 
     public void AddToEnemyList(EntityScript obj)
@@ -187,6 +197,11 @@ public class GameStateManager : MonoBehaviour
             {
                 GoblinAttackAction attack = (GoblinAttackAction) action;
                 attack.Dispose();
+            }
+            if (action is BlockAction)
+            {
+                BlockAction act = (BlockAction) action;
+                act.Dispose();
             }
         }
     }
