@@ -2,7 +2,6 @@
 - Project name: Larsson-Studios_test
 - Unity version: Unity 6000.0.58f2
 - Active scene:
-  - Name: GoblinSlash
   - Tags:
     - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController
   - Layers:
