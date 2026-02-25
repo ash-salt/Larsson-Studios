@@ -27,7 +27,7 @@ namespace Assets.Scripts.player_actions
 			EnqueueAction(new MoveAction(targetPos, maxDistance));
 		}
 
-		public new void Die()
+		public override void Die()
 		{
 			SceneManager.LoadScene("MainMenu");
 		}
