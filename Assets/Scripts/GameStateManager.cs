@@ -20,6 +20,7 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] public GameObject slashPrefab;
     [SerializeField] public GameObject shieldPrefab;
     [SerializeField] public GameObject goblinSlashPrefab;
+    [SerializeField] public GameObject moveAnimationPrefab;
     [SerializeField] private float actionRoundDelay = 1f;
     [SerializeField] private ActionUIManager actionUIManager;
 
@@ -62,6 +63,11 @@ public class GameStateManager : MonoBehaviour
     public GameObject GetGoblinSlashPrefab()
     {
         return goblinSlashPrefab;
+    }
+
+    public GameObject GetMoveAnimationPrefab()
+    {
+        return moveAnimationPrefab;
     }
 
     public void startActionPhase()
