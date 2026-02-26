@@ -152,6 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slashSFX: {fileID: 3280856837096538355}
   hitShieldSFX: {fileID: -9162520326249976502}
+  healthBarControl: {fileID: 0}
 --- !u!60 &1631915425606605050
 PolygonCollider2D:
   m_ObjectHideFlags: 0

@@ -20,6 +20,7 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] public GameObject slashPrefab;
     [SerializeField] public GameObject shieldPrefab;
     [SerializeField] public GameObject goblinSlashPrefab;
+    [SerializeField] public GameObject ghostSlashPrefab;
     [SerializeField] private float actionRoundDelay = 1f;
     [SerializeField] private ActionUIManager actionUIManager;
 

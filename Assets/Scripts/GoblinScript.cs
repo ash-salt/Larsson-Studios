@@ -9,10 +9,10 @@ namespace Assets.Scripts
 	{
 
         [SerializeField] public GameObject player;
-        float farAway = 5f;
-		float mediumDistance = 4f;
-		float shortDistance = 2f;
-		float attackDistance = 0.5f;
+        public float farAway = 5f;
+		public float mediumDistance = 4f;
+		public float shortDistance = 2f;
+		public float attackDistance = 0.5f;
 
         // Use this for initialization
         void Start()
@@ -22,7 +22,7 @@ namespace Assets.Scripts
 
         }
 
-		public void PlanTurn()
+		public virtual void PlanTurn()
 		{
 			float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 			float stopDistance = 0.3f;
