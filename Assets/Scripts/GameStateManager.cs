@@ -21,6 +21,7 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] public GameObject shieldPrefab;
     [SerializeField] public GameObject goblinSlashPrefab;
     [SerializeField] public GameObject moveAnimationPrefab;
+    [SerializeField] public GameObject ghostSlashPrefab;
     [SerializeField] private float actionRoundDelay = 1f;
     [SerializeField] private ActionUIManager actionUIManager;
 
@@ -70,6 +71,11 @@ public class GameStateManager : MonoBehaviour
         return moveAnimationPrefab;
     }
 
+    public GameObject GetGhostSlashPrefab()
+    {
+        return ghostSlashPrefab;
+    }
+
     public void startActionPhase()
     {
         foreach (EntityScript entity in gameEntities)
@@ -93,6 +99,10 @@ public class GameStateManager : MonoBehaviour
             executeActions();
             yield return new WaitForSeconds(actionRoundDelay);
             DisposeAttackProjectiles();
+            foreach (EntityScript entity in gameEntities)
+            {
+                entity.isBlocking = false;
+            }
             List<EntityScript> removeList = new List<EntityScript>();
             foreach (EntityScript entity in gameEntities)
             {
@@ -113,6 +123,7 @@ public class GameStateManager : MonoBehaviour
         }
 
         state = "prep";
+        actionUIManager.updateMove();
     }
 
     void executeActions()
@@ -128,7 +139,6 @@ public class GameStateManager : MonoBehaviour
         ResolveBlocks(currentActions);
         ResolveAttacks(currentActions);
         ResolveMove(currentActions);
-
     }
 
     public void AddToEnemyList(EntityScript obj)

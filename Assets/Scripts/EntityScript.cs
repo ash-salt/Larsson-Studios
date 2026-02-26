@@ -73,7 +73,7 @@ public class EntityScript : MonoBehaviour
         print("we are done!!!!");
 	}
 
-    public void Die()
+    public virtual void Die()
     {
         print("now we are in the Die() method");
         isDead = true;
