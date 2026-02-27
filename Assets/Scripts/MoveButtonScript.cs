@@ -32,6 +32,13 @@ public class MoveButtonScript : MonoBehaviour
             buttonJustClicked = false;
             return;
         }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            waitingForTarget = false;
+            rangeIndicator.Hide();
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        }
         
 
         if (waitingForTarget && Input.GetMouseButtonDown(0))

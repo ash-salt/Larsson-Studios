@@ -10,22 +10,16 @@ public class MeleeAttack :  IAction
     int damage;
     float spawnDistance = 0.75f;
     GameObject slashInstance;
+    GameObject slashPrefab;
+    Vector3 spawnPos;
+    Quaternion rotation;
+    float angle;
 
-    public void SlashAttack(EntityScript nearestGoblin, EntityScript player)
+    public MeleeAttack(Quaternion rotation, Vector3 spawnPos)
     {
-        GameObject slashPrefab = GameStateManager.Instance.GetSlashPrefab();
-
-        Vector3 playerPos = player.transform.position;
-
-        Vector2 direction = (nearestGoblin.transform.position - playerPos).normalized;
-
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.Euler(0, 0, angle);
-
-        Vector3 spawnPosition = playerPos
-                              + (Vector3)direction * spawnDistance;
-
-        slashInstance = GameObject.Instantiate(slashPrefab, spawnPosition, rotation);
+        this.slashPrefab = GameStateManager.Instance.GetSlashPrefab();
+        this.spawnPos = spawnPos;
+        this.rotation = rotation;
     }
 
     public int getCost()
@@ -35,25 +29,7 @@ public class MeleeAttack :  IAction
 
     public void execute(EntityScript player)
     {
-        if (!(GameStateManager.Instance.GetEnemyList().Any()))
-        {
-            return;
-        }
-        EntityScript minDistance = GameStateManager.Instance.GetEnemyList()[0];
-        if (minDistance != null)
-        {
-            foreach (EntityScript enemy in GameStateManager.Instance.GetEnemyList())
-            {
-                if (Vector3.Distance(player.transform.position, enemy.transform.position) < (Vector3.Distance(player.transform.position, minDistance.transform.position)))
-                {
-                    minDistance = enemy;
-                }
-
-            }
-            SlashAttack(minDistance, player);
-            player.doneWithAction();
-            MonoBehaviour.print("Done with attack trust");
-        }
+        slashInstance = GameObject.Instantiate(slashPrefab, spawnPos, rotation);
     }
 
     public void Dispose()

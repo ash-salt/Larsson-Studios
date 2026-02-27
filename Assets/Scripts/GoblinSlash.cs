@@ -10,6 +10,17 @@ namespace Assets.Scripts
         [SerializeField] private AudioSource slashSFX;
         [SerializeField] private AudioSource hitShieldSFX;
 
+        public HealthBarControl healthBarControl;
+
+        void Awake()
+    {
+        healthBarControl = FindFirstObjectByType<HealthBarControl>();
+
+        if (healthBarControl == null)
+        {
+            Debug.LogError("HealthBarControl not found in scene!");
+        }
+    }
         private void OnTriggerEnter2D(Collider2D collision)
         {
             var player = collision.GetComponent<PlayerScript>();
@@ -24,10 +35,11 @@ namespace Assets.Scripts
                 print("goblin hits!");
                 slashSFX.Play();
                 player.damage(25);
-                var rb = player.GetComponent<Rigidbody2D>();
+                healthBarControl.HealthChanged();
+                Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
                 if (rb != null)
                 {
-
+                    //rb.AddForce()
                 }
             }
         }

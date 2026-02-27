@@ -7,6 +7,7 @@ public class MoveAction : IAction
     
     public Vector2 startPosition;
     private float maxDistance;
+    GameObject moveAnimationInstance;
 
     public MoveAction(Vector2 targetPosition, float maxDistance, Vector2 startPosition)
     {
@@ -40,7 +41,7 @@ public class MoveAction : IAction
         float moveDistance = Mathf.Min(distance, maxDistance);
 
         ContactFilter2D filter = new ContactFilter2D();
-        filter.useLayerMask = true; // REQUIRED
+        filter.useLayerMask = true;
         filter.SetLayerMask(LayerMask.GetMask("Obstacles"));
         filter.useTriggers = false;
 
@@ -57,9 +58,36 @@ public class MoveAction : IAction
 
         Vector2 finalPos = currentPos + direction * finalDistance;
 
-        rb.MovePosition(finalPos);
+        GameObject moveAnimPrefab = GameStateManager.Instance.GetMoveAnimationPrefab();
 
-        entity.doneWithAction();
+        if (moveAnimPrefab != null)
+        {
+            moveAnimationInstance = GameObject.Instantiate(moveAnimPrefab, entity.transform.position, Quaternion.identity);
+            MoveAnimationScript moveAnim = moveAnimationInstance.GetComponent<MoveAnimationScript>();
+
+            if (moveAnim != null)
+            {
+                moveAnim.StartMove(entity, finalPos, () => entity.doneWithAction());
+            }
+            else
+            {
+                rb.MovePosition(finalPos);
+                entity.doneWithAction();
+            }
+        }
+        else
+        {
+            rb.MovePosition(finalPos);
+            entity.doneWithAction();
+        }
+    }
+
+    public void Dispose()
+    {
+        if (moveAnimationInstance != null)
+        {
+            Object.Destroy(moveAnimationInstance);
+        }
     }
 
 }
