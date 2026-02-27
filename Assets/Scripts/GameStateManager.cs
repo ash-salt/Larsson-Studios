@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Security;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -12,6 +13,12 @@ public class GameStateManager : MonoBehaviour
     private string state;
     private List<EntityScript> gameEntities = new List<EntityScript>();
     private List<EntityScript> enemies = new List<EntityScript>();
+
+    private Dictionary<IAction, int> cooldownTracker = new Dictionary<IAction, int>();
+
+    private WorldManager worldManager;
+
+    private PlayerScript player;
 
     public Dictionary<EntityScript, CharacterSnapshot> snapshot;
 
@@ -21,18 +28,25 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] public GameObject shieldPrefab;
     [SerializeField] public GameObject goblinSlashPrefab;
     [SerializeField] private float actionRoundDelay = 1f;
+
     [SerializeField] private ActionUIManager actionUIManager;
 
     public static GameStateManager Instance;
     void Awake()
     {
+        worldManager = WorldManager.Instance;
+        player = FindObjectOfType<PlayerScript>();
         state = "prep";
-        if (Instance == null)
+        if (Instance == null) {
             Instance = this;
-        else
-            Destroy(gameObject);
-
     }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    
 
     void CreateSnapshot()
     {
@@ -49,6 +63,11 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
+    public bool onCooldown(IAction action)
+    {
+        return cooldownTracker.ContainsKey(action);
+    }
+
     public GameObject GetSlashPrefab()
     {
         return slashPrefab;
@@ -62,6 +81,25 @@ public class GameStateManager : MonoBehaviour
     public GameObject GetGoblinSlashPrefab()
     {
         return goblinSlashPrefab;
+    }
+
+    public void addCooldown(IAction action)
+    {
+        if (action.getCooldown() == 0) return;
+        cooldownTracker[action] = action.getCooldown();
+    }
+
+    public void tickCooldowns()
+    {
+        List<IAction> keys = new List<IAction>(cooldownTracker.Keys);
+        foreach (IAction action in keys)
+        {
+            cooldownTracker[action]--;
+            if (cooldownTracker[action] <= 0)
+            {
+                cooldownTracker.Remove(action);
+            }
+        }
     }
 
     public void startActionPhase()
@@ -108,10 +146,23 @@ public class GameStateManager : MonoBehaviour
                 enemies.Remove(entity);
             }
             removeList.Clear();
+            
         }
-
+        if (player.isDead)
+            {
+                worldManager.defeat();
+                yield break;
+            }
+        if (enemies.Count == 0)
+            {
+                worldManager.victory();
+                yield break;
+            }
         state = "prep";
+        actionUIManager.updateMove();
     }
+
+    
 
     void executeActions()
     {

@@ -79,7 +79,7 @@ namespace Assets.Scripts
 
         public void QueueMove(Vector2 targetPos, float maxDistance = 2f)
         {
-            EnqueueAction(new MoveAction(targetPos, maxDistance));
+            EnqueueAction(new MoveAction(targetPos, maxDistance, this.transform.position));
         }
 
 

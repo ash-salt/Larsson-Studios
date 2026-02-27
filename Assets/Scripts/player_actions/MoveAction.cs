@@ -1,14 +1,18 @@
+using Assets.Scripts.player_actions;
 using UnityEngine;
 
 public class MoveAction : IAction
 {
     private Vector2 targetPosition;
+    
+    public Vector2 startPosition;
     private float maxDistance;
 
-    public MoveAction(Vector2 targetPosition, float maxDistance)
+    public MoveAction(Vector2 targetPosition, float maxDistance, Vector2 startPosition)
     {
         this.targetPosition = targetPosition;
         this.maxDistance = maxDistance;
+        this.startPosition = startPosition;
     }
 
     public int getCost()

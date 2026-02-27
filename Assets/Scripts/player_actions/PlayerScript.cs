@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
-using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.player_actions
 {
@@ -22,16 +21,15 @@ namespace Assets.Scripts.player_actions
 			this.isBlocking = isBlocking;
 		}
 
+		public void undoMove()
+		{
+			DequeueAction();
+		}
+
 		public void QueueMove(Vector2 targetPos, float maxDistance = 3f)
 		{
-			EnqueueAction(new MoveAction(targetPos, maxDistance));
+			EnqueueAction(new MoveAction(targetPos, maxDistance, this.transform.position));
 		}
-
-		public new void Die()
-		{
-			SceneManager.LoadScene("MainMenu");
-		}
-
 	
 	}
 }
