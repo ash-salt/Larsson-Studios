@@ -4553,6 +4553,7 @@ MonoBehaviour:
   slashPrefab: {fileID: 9034486332971087722, guid: 6cae2b6d2190e1e4fa559d3a548ec092, type: 3}
   shieldPrefab: {fileID: 679447868725350734, guid: 4407728ba9428aa4faf1935242d4ec15, type: 3}
   goblinSlashPrefab: {fileID: 9034486332971087722, guid: 54a0d4a486c515d4d9aacb80b5530d12, type: 3}
+  moveAnimationPrefab: {fileID: 7931257024906636270, guid: 0654d1f95ad7b7a4287b9aa0eca7d87d, type: 3}
   ghostSlashPrefab: {fileID: 4142087229167309519, guid: 9fcbe615ab5197d46bd29b5bb7d28ee1, type: 3}
   actionRoundDelay: 1
   actionUIManager: {fileID: 171192607}
