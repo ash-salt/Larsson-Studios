@@ -32,7 +32,6 @@ public class EntityScript : MonoBehaviour
         }
         catch (Exception e)
         {
-            print("no action here");
             return null;
         }
     }
@@ -54,7 +53,6 @@ public class EntityScript : MonoBehaviour
     {
         if (isBlocking)
         {
-            print("Attack Blocked!");
             return;
         }
         else
@@ -70,12 +68,10 @@ public class EntityScript : MonoBehaviour
     public void doneWithAction()
 	{
 		done = true;
-        print("we are done!!!!");
 	}
 
     public virtual void Die()
     {
-        print("now we are in the Die() method");
         isDead = true;
     }
 

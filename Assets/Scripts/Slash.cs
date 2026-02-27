@@ -15,7 +15,6 @@ public class Slash : MonoBehaviour
         var goblin = collision.GetComponent<Assets.Scripts.GoblinScript>();
         if (goblin != null)
         {
-            print("hit!");
             goblin.damage(25);
             var rb = goblin.GetComponent<Rigidbody2D>();
             if (rb != null)

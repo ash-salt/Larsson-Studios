@@ -28,11 +28,9 @@ namespace Assets.Scripts
             {
                 if (player.isBlocking )
                 {
-                    print("blocked nerd");
                     hitShieldSFX.Play();
                     return;
                 }
-                print("goblin hits!");
                 slashSFX.Play();
                 player.damage(25);
                 healthBarControl.HealthChanged();
