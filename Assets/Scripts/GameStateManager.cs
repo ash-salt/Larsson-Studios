@@ -97,8 +97,8 @@ public class GameStateManager : MonoBehaviour
 
     public void addCooldown(IAction action)
     {
-        if (action.getCooldown() == 0) return;
-        cooldownTracker[action] = action.getCooldown();
+        //if (action.getCooldown() == 0) return;
+        //cooldownTracker[action] = action.getCooldown();
     }
 
     public void tickCooldowns()
