@@ -13,7 +13,6 @@ public class MoveAnimationScript : MonoBehaviour
 
     [SerializeField] private AnimationCurve movementCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
     [SerializeField] private ParticleSystem dustTrail;
-    [SerializeField] private Animator moveAnimator;
 
     public void StartMove(EntityScript entity, Vector2 destination, Action callback)
     {
@@ -24,9 +23,10 @@ public class MoveAnimationScript : MonoBehaviour
         onComplete = callback;
         elapsed = 0f;
 
-        if (moveAnimator != null)
+        Animator entityAnimator = entity.GetComponent<Animator>();
+        if (entityAnimator != null)
         {
-            moveAnimator.SetTrigger("Move");
+            entityAnimator.SetTrigger("Move");
         }
 
         if (dustTrail != null)
