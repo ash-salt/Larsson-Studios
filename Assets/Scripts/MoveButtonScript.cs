@@ -8,12 +8,14 @@ public class MoveButtonScript : MonoBehaviour
     [SerializeField] private Sprite actionSprite;
     [SerializeField] private ActionUIManager actionUIManager;
     private MovementRangeIndicator rangeIndicator;
+    private PositionIndicatorSprite positionIndicator;
     private bool waitingForTarget = false;
     private bool buttonJustClicked = false;
 
     void Start()
     {
         rangeIndicator = player.GetComponent<MovementRangeIndicator>();
+        positionIndicator = player.GetComponent<PositionIndicatorSprite>();
     }
 
     void OnMouseDown()
@@ -21,7 +23,19 @@ public class MoveButtonScript : MonoBehaviour
         print("Move button clicked! Click on the board to select target...");
         waitingForTarget = true;
         buttonJustClicked = true;
-        rangeIndicator.Show(actionUIManager.GetLastTargetPosition());
+        
+        Vector2 startPos = actionUIManager.GetLastTargetPosition();
+        
+        if (rangeIndicator != null)
+        {
+            rangeIndicator.Show(startPos);
+        }
+        
+        if (positionIndicator != null)
+        {
+            positionIndicator.Show(startPos);
+        }
+        
         print("Clicked!");
     }
 
@@ -36,7 +50,17 @@ public class MoveButtonScript : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             waitingForTarget = false;
-            rangeIndicator.Hide();
+            
+            if (rangeIndicator != null)
+            {
+                rangeIndicator.Hide();
+            }
+            
+            if (positionIndicator != null)
+            {
+                positionIndicator.Hide();
+            }
+            
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         }
         
@@ -46,18 +70,45 @@ public class MoveButtonScript : MonoBehaviour
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 targetPosition = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
             
-            // Validate the movement using MovementUtility
-            Vector2 validatedTarget = MovementUtility.ValidateMovement(
+            // Get collider size for validation
+            float colliderRadius = 0.3f;
+            CircleCollider2D circleCollider = player.GetComponent<CircleCollider2D>();
+            if (circleCollider != null)
+            {
+                colliderRadius = circleCollider.radius;
+            }
+            else
+            {
+                BoxCollider2D boxCollider = player.GetComponent<BoxCollider2D>();
+                if (boxCollider != null)
+                {
+                    colliderRadius = (boxCollider.size.x + boxCollider.size.y) / 4f;
+                }
+            }
+            
+            // Find nearest valid position (snap to valid location)
+            Vector2 validatedTarget = MovementUtility.FindNearestValidPosition(
                 actionUIManager.GetLastTargetPosition(),
                 targetPosition,
-                player.maxMoveDistance
+                player.maxMoveDistance,
+                colliderRadius
             );
             
             print($"Moving to: {validatedTarget}");
-            player.QueueMove(targetPosition, player.maxMoveDistance);
-            actionUIManager.newMove(validatedTarget); // Store validated position
+            player.QueueMove(validatedTarget, player.maxMoveDistance);
+            actionUIManager.newMove(validatedTarget);
             waitingForTarget = false;
-            rangeIndicator.Hide();
+            
+            if (rangeIndicator != null)
+            {
+                rangeIndicator.Hide();
+            }
+            
+            if (positionIndicator != null)
+            {
+                positionIndicator.Hide();
+            }
+            
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             actionUIManager.UpdateActionUI(actionSprite);
         }
