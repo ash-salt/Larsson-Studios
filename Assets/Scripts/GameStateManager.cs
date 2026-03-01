@@ -6,6 +6,7 @@ using System.Security;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class GameStateManager : MonoBehaviour
     private List<EntityScript> gameEntities = new List<EntityScript>();
     private List<EntityScript> enemies = new List<EntityScript>();
 
-    private Dictionary<IAction, int> cooldownTracker = new Dictionary<IAction, int>();
+    private Dictionary<Type, int> cooldownTracker = new Dictionary<Type, int>();
 
     private WorldManager worldManager;
 
@@ -65,10 +66,6 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
-    public bool onCooldown(IAction action)
-    {
-        return cooldownTracker.ContainsKey(action);
-    }
 
     public GameObject GetSlashPrefab()
     {
@@ -95,22 +92,61 @@ public class GameStateManager : MonoBehaviour
         return ghostSlashPrefab;
     }
 
+    public Vector2 getUIPosition()
+    {
+        return actionUIManager.getUIPosition();
+    }
+
     public void addCooldown(IAction action)
     {
-        //if (action.getCooldown() == 0) return;
-        //cooldownTracker[action] = action.getCooldown();
+        if (action.getCooldown() == 0) return;
+        cooldownTracker[action.GetType()] = action.getCooldown();
     }
 
     public void tickCooldowns()
     {
-        List<IAction> keys = new List<IAction>(cooldownTracker.Keys);
-        foreach (IAction action in keys)
+        List<Type> keys = new List<Type>(cooldownTracker.Keys);
+        foreach (Type action in keys)
         {
             cooldownTracker[action]--;
             if (cooldownTracker[action] <= 0)
             {
                 cooldownTracker.Remove(action);
             }
+        }
+    }
+
+    public bool onCooldown(IAction action)
+    {
+        return cooldownTracker.ContainsKey(action.GetType());
+    }
+
+    public bool removeCooldown(IAction action)
+    {
+        return cooldownTracker.Remove(action.GetType());
+    }
+
+
+    public void newAction(IAction action, Sprite sprite)
+    {
+        if (onCooldown(action)) return;
+        player.EnqueueAction(action);
+        actionUIManager.UpdateActionUI(sprite);
+        if (action.getCooldown() > 0)
+        {
+            addCooldown(action);
+        }
+    }
+
+    public void newMove(MoveAction action, Sprite sprite)
+    {
+        if (onCooldown(action)) return;
+        player.QueueMove(action.getTargetPosition(), player.maxMoveDistance);
+        actionUIManager.newMove(action.getTargetPosition()); // Store validated position
+        actionUIManager.UpdateActionUI(sprite);
+        if (action.getCooldown() > 0)
+        {
+            addCooldown(action);
         }
     }
 
@@ -128,6 +164,7 @@ public class GameStateManager : MonoBehaviour
         state = "action";
         StartCoroutine(ExecuteActionsWithDelay());
         actionUIManager.clearActionUI();
+        tickCooldowns();
     }
 
     IEnumerator ExecuteActionsWithDelay()
@@ -171,7 +208,6 @@ public class GameStateManager : MonoBehaviour
                 yield break;
             }
         state = "prep";
-        actionUIManager.updateMove();
         actionUIManager.updateMove();
     }
 

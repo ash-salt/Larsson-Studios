@@ -22,6 +22,11 @@ public class MeleeAttack :  IAction
         this.rotation = rotation;
     }
 
+    public int getCooldown()
+    {
+        return 0;
+    }
+
     public int getCost()
     {
         return 1;

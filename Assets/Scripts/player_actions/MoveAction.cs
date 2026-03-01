@@ -5,7 +5,7 @@ public class MoveAction : IAction
 {
     private Vector2 targetPosition;
     
-    public Vector2 startPosition;
+    private Vector2 startPosition;
     private float maxDistance;
     GameObject moveAnimationInstance;
 
@@ -16,9 +16,24 @@ public class MoveAction : IAction
         this.startPosition = startPosition;
     }
 
+    public Vector2 getTargetPosition()
+    {
+        return targetPosition;
+    }  
+
+    public int getCooldown()
+    {
+        return 0;
+    }
+
     public int getCost()
     {
         return 1;
+    }
+
+    public Vector2 getStartPosition()
+    {
+        return startPosition;
     }
 
     public void execute(EntityScript entity)

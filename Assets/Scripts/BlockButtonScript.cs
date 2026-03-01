@@ -15,8 +15,7 @@ public class BlockButtonScript : MonoBehaviour
     void OnMouseDown()
     {
         print("Clicked!");
-        player.EnqueueAction(action);
-        actionUIManager.UpdateActionUI(actionSprite);
+        GameStateManager.Instance.newAction(action, actionSprite);
     }
     void OnMouseEnter()
     {

@@ -19,11 +19,16 @@ public class ActionUIManager : MonoBehaviour
 
     public void UpdateActionUI(Sprite newSprite)
     {
-    ActionSlot emptySlot = firstSlot();
+        ActionSlot emptySlot = firstSlot();
         if (emptySlot != null)
         {
             emptySlot.SetActionSprite(newSprite);
         }
+    }
+
+    public Vector2 getUIPosition()
+    {
+        return playerPosition;
     }
 
     public void newMove(Vector2 targetPosition)
@@ -42,15 +47,20 @@ public class ActionUIManager : MonoBehaviour
 
     public void undoMove()
     {
-    IAction action = playerScript.DequeueAction();
+    IAction action = playerScript.lastAction();
     if (action == null) return;
 
     if (indicators.Count > 0 && action is MoveAction)
     {
-        playerPosition = (action as MoveAction).startPosition;
+        playerPosition = (action as MoveAction).getStartPosition();
         GameObject lastIndicator = indicators[indicators.Count - 1];
         Destroy(lastIndicator);
         indicators.RemoveAt(indicators.Count - 1);    
+    }
+
+    if (GameStateManager.Instance.onCooldown(action))
+    {
+        GameStateManager.Instance.removeCooldown(action);
     }
 
     for (int i = actionSlots.Length - 1; i >= 0; i--)

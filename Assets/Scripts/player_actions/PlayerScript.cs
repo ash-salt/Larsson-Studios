@@ -21,14 +21,10 @@ namespace Assets.Scripts.player_actions
 			this.isBlocking = isBlocking;
 		}
 
-		public void undoMove()
-		{
-			DequeueAction();
-		}
 
 		public void QueueMove(Vector2 targetPos, float maxDistance = 3f)
 		{
-			EnqueueAction(new MoveAction(targetPos, maxDistance, this.transform.position));
+			EnqueueAction(new MoveAction(targetPos, maxDistance, GameStateManager.Instance.getUIPosition()));
 		}
 	
 	}
