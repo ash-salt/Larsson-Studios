@@ -42,36 +42,34 @@ public class MoveAction : IAction
 
         Vector2 currentPos = rb.position;
 
-        Vector2 toTarget = targetPosition - currentPos;
-        float distance = toTarget.magnitude;
+        float colliderRadius = 0.3f;
+        CircleCollider2D circleCollider = entity.GetComponent<CircleCollider2D>();
+        if (circleCollider != null)
+        {
+            colliderRadius = circleCollider.radius;
+        }
+        else
+        {
+            BoxCollider2D boxCollider = entity.GetComponent<BoxCollider2D>();
+            if (boxCollider != null)
+            {
+                colliderRadius = (boxCollider.size.x + boxCollider.size.y) / 4f;
+            }
+        }
 
-        if (distance <= 0.001f)
+        Vector2 finalPos = MovementUtility.ValidateMovement(
+            currentPos, 
+            targetPosition, 
+            maxDistance, 
+            colliderRadius
+        );
+
+        float moveDistance = Vector2.Distance(currentPos, finalPos);
+        if (moveDistance <= 0.001f)
         {
             entity.doneWithAction();
             return;
         }
-
-        Vector2 direction = toTarget.normalized;
-
-        float moveDistance = Mathf.Min(distance, maxDistance);
-
-        ContactFilter2D filter = new ContactFilter2D();
-        filter.useLayerMask = true;
-        filter.SetLayerMask(LayerMask.GetMask("Obstacles"));
-        filter.useTriggers = false;
-
-        RaycastHit2D[] hits = new RaycastHit2D[8];
-
-        int hitCount = rb.Cast(direction, filter, hits, moveDistance);
-
-        float finalDistance = moveDistance;
-
-        if (hitCount > 0)
-        {
-            finalDistance = Mathf.Max(hits[0].distance - 0.05f, 0f);
-        }
-
-        Vector2 finalPos = currentPos + direction * finalDistance;
 
         GameObject moveAnimPrefab = GameStateManager.Instance.GetMoveAnimationPrefab();
 
