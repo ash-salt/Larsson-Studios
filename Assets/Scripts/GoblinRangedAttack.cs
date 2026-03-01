@@ -8,42 +8,42 @@ public class GoblinRangedAttack : IAction
     private LayerMask obstacleLayer = LayerMask.GetMask("Obstacles");
     private LayerMask playerLayer = LayerMask.GetMask("Ignore Raycast");
 
-    public LineRenderer lineRenderer = new LineRenderer();
+    public LineRenderer lineRenderer;
+    private Vector2 playerPos;
 
-    public GoblinRangedAttack(bool isPrepared)
+    public GoblinRangedAttack(bool isPrepared, Vector3 pPos)
     {
         prepared = isPrepared;
+        playerPos = pPos;
+        
     }
     public int getCost()
     {
         return 1;
     }
 
-    private Vector2 playerPos;
 
     public void execute(EntityScript entity)
     {
         Debug.Log("prepared is " + prepared);
         if (prepared == false)
         {
-            MonoBehaviour.print("here we go");
-            foreach (EntityScript e in GameStateManager.Instance.GetEntityList())
-            {
-                if (e is PlayerScript p)
-                {
-                    player = p;
-                }
-            }
-            playerPos = player.transform.position;
-            prepared = true;
         }
         else
         {
+            lineRenderer = entity.GetComponent<LineRenderer>();
+            lineRenderer.useWorldSpace = true;
+            lineRenderer.enabled = true;
             MonoBehaviour.print("firing!");
             Vector2 origin = entity.transform.position;
             Vector2 direction = (playerPos - origin).normalized;
             origin = origin + direction*0.5f;
-            float distance = Vector2.Distance(origin, playerPos);
+            float distance = Vector2.Distance(origin, playerPos) * 1.5f;
+
+            Debug.Log("Origin: " + origin);
+            Debug.Log("PlayerPos: " + playerPos);
+            Debug.Log("Direction: " + direction);
+            Debug.Log("Distance: " + distance);
 
             RaycastHit2D hit = Physics2D.Raycast(
                 origin,
@@ -56,10 +56,13 @@ public class GoblinRangedAttack : IAction
             {
                 // Hit wall/obstacle
                 Debug.Log("hit object");
-                li
+                lineRenderer.positionCount = 2;
+                lineRenderer.SetPosition(0, new Vector3(entity.transform.position.x, entity.transform.position.y, -0.5f));
+                lineRenderer.SetPosition(1, new Vector3(hit.point.x, hit.point.y, -0.5f));
             }
             else
             {
+                Debug.DrawRay(origin, direction * distance, Color.red, 1f);
                 // No obstacle → check player
                 RaycastHit2D entityHit = Physics2D.Raycast(
                     origin,
@@ -68,14 +71,32 @@ public class GoblinRangedAttack : IAction
                     playerLayer
                 );
 
-                if (entityHit.collider.GetComponent<EntityScript>() != null)
+                if (entityHit.collider != null)
                 {
-                    entityHit.collider.GetComponent<EntityScript>().damage(25);
-                    Debug.Log("hit something with " + entityHit.collider.GetComponent<EntityScript>().maxHealth + " hp, now has " + entityHit.collider.GetComponent<EntityScript>().currentHealth);
+                    lineRenderer.positionCount = 2;
+                    lineRenderer.SetPosition(0, new Vector3(entity.transform.position.x, entity.transform.position.y, -0.5f));
+                    lineRenderer.SetPosition(1, new Vector3(entityHit.point.x, entityHit.point.y, -0.5f));
+                    if (!entityHit.collider.GetComponent<EntityScript>().isBlocking)
+                    {
+                        Debug.Log("hit something named " + entityHit.collider.name);
+                        entityHit.collider.GetComponent<EntityScript>().damage(25);
+                    }
+                    else
+                    {
+                        Debug.Log("Shot was blocked!!!");
+                    }
                 }
             }
-
             prepared = false;
         }
+    }
+    
+    public void Dispose()
+    {
+        if (lineRenderer != null)
+        {
+            lineRenderer.enabled = false;  
+        }
+        
     }
 }

@@ -213,6 +213,11 @@ public class GameStateManager : MonoBehaviour
                 BlockAction act = (BlockAction) action;
                 act.Dispose();
             }
+             if (action is GoblinRangedAttack)
+            {
+                GoblinRangedAttack attack = (GoblinRangedAttack) action;
+                attack.Dispose();
+            }
         }
     }
 }

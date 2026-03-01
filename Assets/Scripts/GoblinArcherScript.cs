@@ -14,25 +14,25 @@ public class GoblinArcherScript : GoblinScript
         if (distanceToPlayer < attackDistance)
         {
             QueueMove(targetPosition);
-            EnqueueAction(new GoblinRangedAttack(false));
-            EnqueueAction(new GoblinRangedAttack(true));
+            EnqueueAction(new GoblinRangedAttack(false, player.transform.position));
+            EnqueueAction(new GoblinRangedAttack(true, player.transform.position));
         }
         else if (shortDistance > distanceToPlayer && distanceToPlayer > attackDistance)
         {
             QueueMove(targetPosition);
-            EnqueueAction(new GoblinRangedAttack(false));
-            EnqueueAction(new GoblinRangedAttack(true));
+            EnqueueAction(new GoblinRangedAttack(false, player.transform.position));
+            EnqueueAction(new GoblinRangedAttack(true, player.transform.position));
         }
         else if (mediumDistance > distanceToPlayer && distanceToPlayer > shortDistance)
         {
-            EnqueueAction(new GoblinRangedAttack(false));
-            EnqueueAction(new GoblinRangedAttack(true));
+            EnqueueAction(new GoblinRangedAttack(false, player.transform.position));
+            EnqueueAction(new GoblinRangedAttack(true, player.transform.position));
             QueueMove(targetPosition);
         }
         else if (farAway > distanceToPlayer && distanceToPlayer > mediumDistance)
         {
-            EnqueueAction(new GoblinRangedAttack(false));
-            EnqueueAction(new GoblinRangedAttack(true));
+            EnqueueAction(new GoblinRangedAttack(false, player.transform.position));
+            EnqueueAction(new GoblinRangedAttack(true, player.transform.position));
         }
         
     }
