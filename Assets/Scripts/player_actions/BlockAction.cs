@@ -12,6 +12,11 @@ namespace Assets.Scripts.player_actions
 			return 1;
 		}
 
+		public int getCooldown()
+    	{
+        return 1;
+    	}
+
 		public void execute(EntityScript target)
 		{
 			GameObject shieldPrefab = GameStateManager.Instance.GetShieldPrefab();

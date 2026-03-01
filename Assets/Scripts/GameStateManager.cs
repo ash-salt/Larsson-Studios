@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Security;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
+using System;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -13,6 +15,12 @@ public class GameStateManager : MonoBehaviour
     private List<EntityScript> gameEntities = new List<EntityScript>();
     private List<EntityScript> enemies = new List<EntityScript>();
 
+    private Dictionary<Type, int> cooldownTracker = new Dictionary<Type, int>();
+
+    private WorldManager worldManager;
+
+    private PlayerScript player;
+
     public Dictionary<EntityScript, CharacterSnapshot> snapshot;
 
     private Dictionary<EntityScript, IAction> currentActions;
@@ -20,19 +28,25 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] public GameObject slashPrefab;
     [SerializeField] public GameObject shieldPrefab;
     [SerializeField] public GameObject goblinSlashPrefab;
+    [SerializeField] public GameObject moveAnimationPrefab;
     [SerializeField] public GameObject ghostSlashPrefab;
     [SerializeField] private float actionRoundDelay = 1f;
+
     [SerializeField] private ActionUIManager actionUIManager;
 
     public static GameStateManager Instance;
     void Awake()
     {
+        worldManager = WorldManager.Instance;
+        player = FindObjectOfType<PlayerScript>();
         state = "prep";
-        if (Instance == null)
+        if (Instance == null) {
             Instance = this;
+    }
         else
+        {
             Destroy(gameObject);
-
+        }
     }
 
     void CreateSnapshot()
@@ -50,6 +64,7 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
+
     public GameObject GetSlashPrefab()
     {
         return slashPrefab;
@@ -65,6 +80,74 @@ public class GameStateManager : MonoBehaviour
         return goblinSlashPrefab;
     }
 
+    public GameObject GetMoveAnimationPrefab()
+    {
+        return moveAnimationPrefab;
+    }
+
+    public GameObject GetGhostSlashPrefab()
+    {
+        return ghostSlashPrefab;
+    }
+
+    public Vector2 getUIPosition()
+    {
+        return actionUIManager.getUIPosition();
+    }
+
+    public void addCooldown(IAction action)
+    {
+        if (action.getCooldown() == 0) return;
+        cooldownTracker[action.GetType()] = action.getCooldown();
+    }
+
+    public void tickCooldowns()
+    {
+        List<Type> keys = new List<Type>(cooldownTracker.Keys);
+        foreach (Type action in keys)
+        {
+            cooldownTracker[action]--;
+            if (cooldownTracker[action] <= 0)
+            {
+                cooldownTracker.Remove(action);
+            }
+        }
+    }
+
+    public bool onCooldown(IAction action)
+    {
+        return cooldownTracker.ContainsKey(action.GetType());
+    }
+
+    public bool removeCooldown(IAction action)
+    {
+        return cooldownTracker.Remove(action.GetType());
+    }
+
+
+    public void newAction(IAction action, Sprite sprite)
+    {
+        if (onCooldown(action)) return;
+        player.EnqueueAction(action);
+        if (action.getCooldown() > 0)
+        {
+            addCooldown(action);
+        }
+        actionUIManager.UpdateActionUI(sprite);
+    }
+
+    public void newMove(MoveAction action, Sprite sprite)
+    {
+        if (onCooldown(action)) return;
+        player.QueueMove(action.getTargetPosition(), player.maxMoveDistance);
+        actionUIManager.newMove(action.getTargetPosition()); // Store validated position
+        actionUIManager.UpdateActionUI(sprite);
+        if (action.getCooldown() > 0)
+        {
+            addCooldown(action);
+        }
+    }
+
     public void startActionPhase()
     {
         foreach (EntityScript entity in gameEntities)
@@ -78,6 +161,7 @@ public class GameStateManager : MonoBehaviour
 
         state = "action";
         StartCoroutine(ExecuteActionsWithDelay());
+        tickCooldowns();
         actionUIManager.clearActionUI();
     }
 
@@ -109,11 +193,23 @@ public class GameStateManager : MonoBehaviour
                 enemies.Remove(entity);
             }
             removeList.Clear();
+            
         }
-
+        if (player.isDead)
+            {
+                worldManager.defeat();
+                yield break;
+            }
+        if (enemies.Count == 0)
+            {
+                worldManager.victory();
+                yield break;
+            }
         state = "prep";
         actionUIManager.updateMove();
     }
+
+    
 
     void executeActions()
     {

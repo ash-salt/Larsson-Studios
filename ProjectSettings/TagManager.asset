@@ -41,6 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Overworld
+    uniqueID: 1321387119
+    locked: 0
+  - name: Worlds
+    uniqueID: 2979421429
+    locked: 0
   m_RenderingLayers:
   - Default
   - Light Layer 1

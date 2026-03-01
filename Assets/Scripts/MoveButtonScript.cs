@@ -54,12 +54,10 @@ public class MoveButtonScript : MonoBehaviour
             );
             
             print($"Moving to: {validatedTarget}");
-            player.QueueMove(targetPosition, player.maxMoveDistance);
-            actionUIManager.newMove(validatedTarget); // Store validated position
             waitingForTarget = false;
             rangeIndicator.Hide();
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-            actionUIManager.UpdateActionUI(actionSprite);
+            GameStateManager.Instance.newMove(new MoveAction(validatedTarget, player.maxMoveDistance, actionUIManager.getUIPosition()), actionSprite);
         }
     }
 
