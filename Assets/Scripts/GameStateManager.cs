@@ -49,8 +49,6 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
-    
-
     void CreateSnapshot()
     {
         snapshot = new Dictionary<EntityScript, CharacterSnapshot>();
@@ -131,11 +129,11 @@ public class GameStateManager : MonoBehaviour
     {
         if (onCooldown(action)) return;
         player.EnqueueAction(action);
-        actionUIManager.UpdateActionUI(sprite);
         if (action.getCooldown() > 0)
         {
             addCooldown(action);
         }
+        actionUIManager.UpdateActionUI(sprite);
     }
 
     public void newMove(MoveAction action, Sprite sprite)
@@ -163,8 +161,8 @@ public class GameStateManager : MonoBehaviour
 
         state = "action";
         StartCoroutine(ExecuteActionsWithDelay());
-        actionUIManager.clearActionUI();
         tickCooldowns();
+        actionUIManager.clearActionUI();
     }
 
     IEnumerator ExecuteActionsWithDelay()

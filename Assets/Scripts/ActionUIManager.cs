@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using Assets.Scripts.player_actions;
 
@@ -12,8 +13,16 @@ public class ActionUIManager : MonoBehaviour
     private List<GameObject> indicators = new List<GameObject>();
     private Vector2 playerPosition;
 
+
+    //temporary, really bad solution for playtesting since there's no good object to attach to
+    //and cooldowns don't deserve their own scripts imo
+    [SerializeField] private GameObject lockSprite;
+
+    private IAction blockAction;
+
     public void Start()
     {
+        blockAction = new BlockAction();
         updateMove();
     }
 
@@ -23,6 +32,19 @@ public class ActionUIManager : MonoBehaviour
         if (emptySlot != null)
         {
             emptySlot.SetActionSprite(newSprite);
+        }
+        UpdateCooldownUI();
+    }
+
+    public void UpdateCooldownUI()
+    {
+        if (GameStateManager.Instance.onCooldown(blockAction))
+        {
+            lockSprite.SetActive(true);
+        }
+        else
+        {
+            lockSprite.SetActive(false);
         }
     }
 
@@ -71,6 +93,7 @@ public class ActionUIManager : MonoBehaviour
                     break;
                 }
         }
+    UpdateCooldownUI();
     }
 
     public Vector2 GetLastTargetPosition()
@@ -106,6 +129,7 @@ public class ActionUIManager : MonoBehaviour
             slot.ClearActionSprite();
         }
         clearMove();
+        UpdateCooldownUI();
     }
-
+    
 }
