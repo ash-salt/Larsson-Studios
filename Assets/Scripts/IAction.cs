@@ -6,4 +6,6 @@ public interface IAction
 
     void execute(EntityScript target);
 
+    int getCooldown();
+
 }

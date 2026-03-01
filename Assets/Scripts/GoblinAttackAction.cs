@@ -31,6 +31,11 @@ public class GoblinAttackAction : IAction
         return 1;
     }
 
+    public int getCooldown()
+    {
+        return 0;
+    }
+
     public void execute(EntityScript goblin)
     {
         EntityScript player = null;

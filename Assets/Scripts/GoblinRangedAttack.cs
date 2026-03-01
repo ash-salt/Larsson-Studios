@@ -22,6 +22,10 @@ public class GoblinRangedAttack : IAction
         return 1;
     }
 
+    public int getCooldown()
+    {
+        return 0;
+    }
 
     public void execute(EntityScript entity)
     {
