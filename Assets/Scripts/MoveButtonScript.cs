@@ -108,7 +108,7 @@ public class MoveButtonScript : MonoBehaviour
             }
             
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-            actionUIManager.UpdateActionUI(actionSprite);
+            GameStateManager.Instance.newMove(new MoveAction(validatedTarget, player.maxMoveDistance, actionUIManager.getUIPosition()), actionSprite);
         }
     }
 

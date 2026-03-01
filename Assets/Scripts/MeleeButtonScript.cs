@@ -55,11 +55,11 @@ public class MeleeButtonScript : MonoBehaviour
             Quaternion rotation = Quaternion.Euler(0, 0, angle);
             Vector3 spawnPosition = actionUIManager.GetLastTargetPosition() + direction * spawnDistance;
             
-            player.EnqueueAction(new MeleeAttack(rotation, spawnPosition));
+            
             waitingForTarget = false;
             slashIndicator.Hide();
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-            actionUIManager.UpdateActionUI(actionSprite);
+            GameStateManager.Instance.newAction(new MeleeAttack(rotation, spawnPosition), actionSprite);
         }
         
     }

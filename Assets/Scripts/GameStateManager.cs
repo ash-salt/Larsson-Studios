@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Security;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
+using System;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -12,6 +14,12 @@ public class GameStateManager : MonoBehaviour
     private string state;
     private List<EntityScript> gameEntities = new List<EntityScript>();
     private List<EntityScript> enemies = new List<EntityScript>();
+
+    private Dictionary<Type, int> cooldownTracker = new Dictionary<Type, int>();
+
+    private WorldManager worldManager;
+
+    private PlayerScript player;
 
     public Dictionary<EntityScript, CharacterSnapshot> snapshot;
 
@@ -23,17 +31,22 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] public GameObject moveAnimationPrefab;
     [SerializeField] public GameObject ghostSlashPrefab;
     [SerializeField] private float actionRoundDelay = 1f;
+
     [SerializeField] private ActionUIManager actionUIManager;
 
     public static GameStateManager Instance;
     void Awake()
     {
+        worldManager = WorldManager.Instance;
+        player = FindObjectOfType<PlayerScript>();
         state = "prep";
-        if (Instance == null)
+        if (Instance == null) {
             Instance = this;
+    }
         else
+        {
             Destroy(gameObject);
-
+        }
     }
 
     void CreateSnapshot()
@@ -50,6 +63,7 @@ public class GameStateManager : MonoBehaviour
             };
         }
     }
+
 
     public GameObject GetSlashPrefab()
     {
@@ -76,6 +90,64 @@ public class GameStateManager : MonoBehaviour
         return ghostSlashPrefab;
     }
 
+    public Vector2 getUIPosition()
+    {
+        return actionUIManager.getUIPosition();
+    }
+
+    public void addCooldown(IAction action)
+    {
+        if (action.getCooldown() == 0) return;
+        cooldownTracker[action.GetType()] = action.getCooldown();
+    }
+
+    public void tickCooldowns()
+    {
+        List<Type> keys = new List<Type>(cooldownTracker.Keys);
+        foreach (Type action in keys)
+        {
+            cooldownTracker[action]--;
+            if (cooldownTracker[action] <= 0)
+            {
+                cooldownTracker.Remove(action);
+            }
+        }
+    }
+
+    public bool onCooldown(IAction action)
+    {
+        return cooldownTracker.ContainsKey(action.GetType());
+    }
+
+    public bool removeCooldown(IAction action)
+    {
+        return cooldownTracker.Remove(action.GetType());
+    }
+
+
+    public void newAction(IAction action, Sprite sprite)
+    {
+        if (onCooldown(action)) return;
+        player.EnqueueAction(action);
+        if (action.getCooldown() > 0)
+        {
+            addCooldown(action);
+        }
+        actionUIManager.UpdateActionUI(sprite);
+    }
+
+    public void newMove(MoveAction action, Sprite sprite)
+    {
+        if (onCooldown(action)) return;
+        player.QueueMove(action.getTargetPosition(), player.maxMoveDistance);
+        actionUIManager.newMove(action.getTargetPosition()); // Store validated position
+        actionUIManager.UpdateActionUI(sprite);
+        if (action.getCooldown() > 0)
+        {
+            addCooldown(action);
+        }
+    }
+
     public void startActionPhase()
     {
         foreach (EntityScript entity in gameEntities)
@@ -89,6 +161,7 @@ public class GameStateManager : MonoBehaviour
 
         state = "action";
         StartCoroutine(ExecuteActionsWithDelay());
+        tickCooldowns();
         actionUIManager.clearActionUI();
     }
 
@@ -106,10 +179,8 @@ public class GameStateManager : MonoBehaviour
             List<EntityScript> removeList = new List<EntityScript>();
             foreach (EntityScript entity in gameEntities)
             {
-                print("we are in the check dead loop");
                 if (entity.isDead)
                 {
-                    print("DIE!!!!");
                     Destroy(entity.gameObject);
                     removeList.Add(entity);
                 }
@@ -120,11 +191,23 @@ public class GameStateManager : MonoBehaviour
                 enemies.Remove(entity);
             }
             removeList.Clear();
+            
         }
-
+        if (player.isDead)
+            {
+                worldManager.defeat();
+                yield break;
+            }
+        if (enemies.Count == 0)
+            {
+                worldManager.victory();
+                yield break;
+            }
         state = "prep";
         actionUIManager.updateMove();
     }
+
+    
 
     void executeActions()
     {
@@ -167,7 +250,7 @@ public class GameStateManager : MonoBehaviour
     {
         foreach (var a in queuedActions)
         {
-            if (!(a.Value is MeleeAttack || a.Value is GoblinAttackAction)) continue;
+            if (!(a.Value is MeleeAttack || a.Value is GoblinAttackAction || a.Value is GoblinRangedAttack)) continue;
 
             a.Value.execute(a.Key);
         }
@@ -214,6 +297,11 @@ public class GameStateManager : MonoBehaviour
             {
                 BlockAction act = (BlockAction) action;
                 act.Dispose();
+            }
+             if (action is GoblinRangedAttack)
+            {
+                GoblinRangedAttack attack = (GoblinRangedAttack) action;
+                attack.Dispose();
             }
         }
     }

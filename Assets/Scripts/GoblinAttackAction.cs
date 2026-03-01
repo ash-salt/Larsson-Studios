@@ -31,9 +31,13 @@ public class GoblinAttackAction : IAction
         return 1;
     }
 
+    public int getCooldown()
+    {
+        return 0;
+    }
+
     public void execute(EntityScript goblin)
     {
-        MonoBehaviour.print("goblin is attacking!");
         EntityScript player = null;
         foreach (EntityScript character in GameStateManager.Instance.GetEntityList())
         {
@@ -47,7 +51,6 @@ public class GoblinAttackAction : IAction
         {
             SlashAttack(player, goblin);
             goblin.doneWithAction();
-            MonoBehaviour.print("Done with attack trust");
         }
         
     }

@@ -13,26 +13,32 @@ public class EntityScript : MonoBehaviour
     public bool isBlocking = false;
 
     public float maxMoveDistance = 3f;
-    Queue<IAction> actions = new Queue<IAction>();
-
-
-    public IAction[] getActions() {
-        return actions.ToArray();
-    }
+    LinkedList<IAction> actions = new LinkedList<IAction>();
 
     public void ClearActions() {
         actions.Clear();
     }
 
+    public IAction lastAction() {
+        if (actions.Count > 0) {
+            IAction last = actions.Last.Value;
+            actions.RemoveLast();
+            return last;
+        }
+        else {
+            return null;
+        }
+    }
+
     public IAction DequeueAction()
     {
         try {
-            IAction a = actions.Dequeue();
+            IAction a = actions.First.Value;
+            actions.RemoveFirst();
             return a;
         }
         catch (Exception e)
         {
-            print("no action here");
             return null;
         }
     }
@@ -46,7 +52,7 @@ public class EntityScript : MonoBehaviour
         }
         if (total_cost + a.getCost() <= 3)
         {
-            actions.Enqueue(a);
+            actions.AddLast(a);
         }
     }
 
@@ -54,7 +60,6 @@ public class EntityScript : MonoBehaviour
     {
         if (isBlocking)
         {
-            print("Attack Blocked!");
             return;
         }
         else
@@ -70,12 +75,10 @@ public class EntityScript : MonoBehaviour
     public void doneWithAction()
 	{
 		done = true;
-        print("we are done!!!!");
 	}
 
     public virtual void Die()
     {
-        print("now we are in the Die() method");
         isDead = true;
     }
 

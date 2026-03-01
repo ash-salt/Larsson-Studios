@@ -6,9 +6,9 @@
   - Tags:
     - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController
   - Layers:
-    - Default, TransparentFX, Ignore Raycast, Obstacles, Water, UI
+    - Default, TransparentFX, Ignore Raycast, Obstacles, Water, UI, Player
 - Active game object:
-  - Name: knight
+  - Name: GoblinIdle (2)
   - Tag: Untagged
   - Layer: Ignore Raycast
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
