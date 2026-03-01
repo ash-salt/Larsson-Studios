@@ -179,10 +179,8 @@ public class GameStateManager : MonoBehaviour
             List<EntityScript> removeList = new List<EntityScript>();
             foreach (EntityScript entity in gameEntities)
             {
-                print("we are in the check dead loop");
                 if (entity.isDead)
                 {
-                    print("DIE!!!!");
                     Destroy(entity.gameObject);
                     removeList.Add(entity);
                 }
@@ -252,7 +250,7 @@ public class GameStateManager : MonoBehaviour
     {
         foreach (var a in queuedActions)
         {
-            if (!(a.Value is MeleeAttack || a.Value is GoblinAttackAction)) continue;
+            if (!(a.Value is MeleeAttack || a.Value is GoblinAttackAction || a.Value is GoblinRangedAttack)) continue;
 
             a.Value.execute(a.Key);
         }
@@ -299,6 +297,11 @@ public class GameStateManager : MonoBehaviour
             {
                 BlockAction act = (BlockAction) action;
                 act.Dispose();
+            }
+             if (action is GoblinRangedAttack)
+            {
+                GoblinRangedAttack attack = (GoblinRangedAttack) action;
+                attack.Dispose();
             }
         }
     }
