@@ -23,8 +23,7 @@ public class MoveAction : IAction
 
         Vector2 currentPos = rb.position;
 
-        // Get collider size for proper validation
-        float colliderRadius = 0.3f; // Default
+        float colliderRadius = 0.3f;
         CircleCollider2D circleCollider = entity.GetComponent<CircleCollider2D>();
         if (circleCollider != null)
         {
@@ -39,7 +38,6 @@ public class MoveAction : IAction
             }
         }
 
-        // Use enhanced validation to find safe position
         Vector2 finalPos = MovementUtility.ValidateMovement(
             currentPos, 
             targetPosition, 
@@ -47,7 +45,6 @@ public class MoveAction : IAction
             colliderRadius
         );
 
-        // Check if movement is actually possible
         float moveDistance = Vector2.Distance(currentPos, finalPos);
         if (moveDistance <= 0.001f)
         {

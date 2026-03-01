@@ -70,7 +70,6 @@ public class MoveButtonScript : MonoBehaviour
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 targetPosition = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
             
-            // Get collider size for validation
             float colliderRadius = 0.3f;
             CircleCollider2D circleCollider = player.GetComponent<CircleCollider2D>();
             if (circleCollider != null)
@@ -86,7 +85,6 @@ public class MoveButtonScript : MonoBehaviour
                 }
             }
             
-            // Find nearest valid position (snap to valid location)
             Vector2 validatedTarget = MovementUtility.FindNearestValidPosition(
                 actionUIManager.GetLastTargetPosition(),
                 targetPosition,
