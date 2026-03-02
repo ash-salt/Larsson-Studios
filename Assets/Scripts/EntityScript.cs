@@ -12,11 +12,21 @@ public class EntityScript : MonoBehaviour
     public bool isDead = false;
     public bool isBlocking = false;
 
+    public HealthBarControl healthBarControl;
     public float maxMoveDistance = 3f;
     public LinkedList<IAction> actions = new LinkedList<IAction>();
 
     public void ClearActions() {
         actions.Clear();
+    }
+
+    public void Awake()
+    {
+        healthBarControl = FindFirstObjectByType<HealthBarControl>();
+		if (healthBarControl == null)
+			{
+				Debug.LogError("HealthBarControl not found in scene!");
+			}
     }
 
     public IAction lastAction() {
@@ -65,6 +75,7 @@ public class EntityScript : MonoBehaviour
         else
         {
             currentHealth -= damage;
+            healthBarControl.HealthChanged();
         }
         if (currentHealth <= 0)
         {

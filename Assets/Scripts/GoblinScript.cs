@@ -13,6 +13,7 @@ namespace Assets.Scripts
 		public float mediumDistance = 4f;
 		public float shortDistance = 2f;
 		public float attackDistance = 0.5f;
+        [SerializeField] private float randomRadius = 1f;
 
         // Use this for initialization
         void Start()
@@ -26,7 +27,6 @@ namespace Assets.Scripts
 		{
 			float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 			float stopDistance = 0.3f;
-			float randomRadius = 1f;  
 
 			Vector3 direction = (player.transform.position - transform.position).normalized;
 			Vector3 targetPosition = player.transform.position - direction * stopDistance;

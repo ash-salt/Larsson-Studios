@@ -62,8 +62,13 @@ public class GoblinRangedAttack : IAction
                 distance,
                 obstacleLayer
             );
-
-            if (hit.collider != null)
+            RaycastHit2D entityHit = Physics2D.Raycast(
+                    origin,
+                    direction,
+                    distance,
+                    playerLayer
+                );
+            if (hit.collider != null && (entityHit.collider == null || hit.distance < entityHit.distance))
             {
 
                 // Hit wall/obstacle
@@ -77,12 +82,6 @@ public class GoblinRangedAttack : IAction
             {
                 Debug.DrawRay(origin, direction * distance, Color.red, 1f);
                 // No obstacle → check player
-                RaycastHit2D entityHit = Physics2D.Raycast(
-                    origin,
-                    direction,
-                    distance,
-                    playerLayer
-                );
 
                 if (entityHit.collider != null)
                 {
