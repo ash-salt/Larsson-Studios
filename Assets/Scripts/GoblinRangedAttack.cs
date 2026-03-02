@@ -11,10 +11,17 @@ public class GoblinRangedAttack : IAction
     public LineRenderer lineRenderer;
     private Vector2 playerPos;
 
+    private SpriteRenderer spriteRenderer;
+    public Sprite attackSprite;
+    public Sprite defaultSprite;
+
     public GoblinRangedAttack(bool isPrepared, Vector3 pPos)
     {
         prepared = isPrepared;
         playerPos = pPos;
+
+        attackSprite = GameStateManager.Instance.archerAttackSprite;
+        defaultSprite = GameStateManager.Instance.archerDefaultSprite;
         
     }
     public int getCost()
@@ -29,9 +36,11 @@ public class GoblinRangedAttack : IAction
 
     public void execute(EntityScript entity)
     {
+        spriteRenderer = entity.GetComponent<SpriteRenderer>();
         Debug.Log("prepared is " + prepared);
         if (prepared == false)
         {
+            spriteRenderer.sprite = attackSprite;
         }
         else
         {
@@ -91,7 +100,7 @@ public class GoblinRangedAttack : IAction
                     }
                 }
             }
-            prepared = false;
+            spriteRenderer.sprite = defaultSprite;
         }
     }
     

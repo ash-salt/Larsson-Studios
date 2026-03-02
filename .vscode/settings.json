@@ -67,6 +67,6 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Larsson-Studios.slnx",
+    "dotnet.defaultSolution": "Larsson-Studios_test.slnx",
     "dotnet.enableWorkspaceBasedDevelopment": false
 }

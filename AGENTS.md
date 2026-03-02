@@ -1,5 +1,5 @@
 <!-- UNITY CODE ASSIST INSTRUCTIONS START -->
-- Project name: Larsson-Studios
+- Project name: Larsson-Studios_test
 - Unity version: Unity 6000.0.58f2
 - Active scene:
   - Name: larsson
@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Obstacles, Water, UI, Player
 - Active game object:
-  - Name: GoblinIdle (2)
+  - Name: GameStateManager
   - Tag: Untagged
-  - Layer: Ignore Raycast
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

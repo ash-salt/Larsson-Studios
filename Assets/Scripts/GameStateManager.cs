@@ -30,6 +30,8 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] public GameObject goblinSlashPrefab;
     [SerializeField] public GameObject moveAnimationPrefab;
     [SerializeField] public GameObject ghostSlashPrefab;
+    [SerializeField] public Sprite archerAttackSprite;
+    [SerializeField] public Sprite archerDefaultSprite;
     [SerializeField] private float actionRoundDelay = 1f;
 
     [SerializeField] private ActionUIManager actionUIManager;
@@ -46,6 +48,14 @@ public class GameStateManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    void Update()
+    {
+        if (enemies.Count == 0)
+        {
+            SceneManager.LoadScene("MainMenu");
         }
     }
 

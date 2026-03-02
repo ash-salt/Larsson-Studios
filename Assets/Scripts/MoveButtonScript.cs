@@ -93,7 +93,6 @@ public class MoveButtonScript : MonoBehaviour
             );
             
             print($"Moving to: {validatedTarget}");
-            player.QueueMove(validatedTarget, player.maxMoveDistance);
             actionUIManager.newMove(validatedTarget);
             waitingForTarget = false;
             

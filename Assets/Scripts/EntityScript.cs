@@ -13,7 +13,7 @@ public class EntityScript : MonoBehaviour
     public bool isBlocking = false;
 
     public float maxMoveDistance = 3f;
-    LinkedList<IAction> actions = new LinkedList<IAction>();
+    public LinkedList<IAction> actions = new LinkedList<IAction>();
 
     public void ClearActions() {
         actions.Clear();
