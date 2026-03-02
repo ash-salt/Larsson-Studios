@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Obstacles, Water, UI, Player
 - Active game object:
-  - Name: GameStateManager
+  - Name: HelpButton3
   - Tag: Untagged
-  - Layer: Default
+  - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

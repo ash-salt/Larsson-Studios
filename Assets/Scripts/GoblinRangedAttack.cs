@@ -15,6 +15,9 @@ public class GoblinRangedAttack : IAction
     public Sprite attackSprite;
     public Sprite defaultSprite;
 
+    private float objectDistance;
+    private float playerDistance;
+
     public GoblinRangedAttack(bool isPrepared, Vector3 pPos)
     {
         prepared = isPrepared;
@@ -53,11 +56,6 @@ public class GoblinRangedAttack : IAction
             origin = origin + direction*0.5f;
             float distance = Vector2.Distance(origin, playerPos) * 1.5f;
 
-            Debug.Log("Origin: " + origin);
-            Debug.Log("PlayerPos: " + playerPos);
-            Debug.Log("Direction: " + direction);
-            Debug.Log("Distance: " + distance);
-
             RaycastHit2D hit = Physics2D.Raycast(
                 origin,
                 direction,
@@ -67,7 +65,9 @@ public class GoblinRangedAttack : IAction
 
             if (hit.collider != null)
             {
+
                 // Hit wall/obstacle
+                objectDistance = Vector2.Distance(origin, hit.point);
                 Debug.Log("hit object");
                 lineRenderer.positionCount = 2;
                 lineRenderer.SetPosition(0, new Vector3(entity.transform.position.x, entity.transform.position.y, -0.5f));
@@ -86,6 +86,7 @@ public class GoblinRangedAttack : IAction
 
                 if (entityHit.collider != null)
                 {
+                    playerDistance = Vector2.Distance(origin, entityHit.point);
                     lineRenderer.positionCount = 2;
                     lineRenderer.SetPosition(0, new Vector3(entity.transform.position.x, entity.transform.position.y, -0.5f));
                     lineRenderer.SetPosition(1, new Vector3(entityHit.point.x, entityHit.point.y, -0.5f));
