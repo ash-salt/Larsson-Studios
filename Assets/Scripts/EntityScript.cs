@@ -13,10 +13,14 @@ public class EntityScript : MonoBehaviour
     public bool isBlocking = false;
 
     public float maxMoveDistance = 3f;
+    private DamageFlash damageFlash;
 
     public LinkedList<IAction> actions = new LinkedList<IAction>();
 
-    
+    void Awake()
+    {
+        damageFlash = GetComponent<DamageFlash>();
+    }
     public void ClearActions() {
         actions.Clear();
     }
@@ -67,6 +71,7 @@ public class EntityScript : MonoBehaviour
         else
         {
             currentHealth -= damage;
+            damageFlash.CallFlashDamage();
             
         }
         if (currentHealth <= 0)
