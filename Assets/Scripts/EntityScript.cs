@@ -18,10 +18,7 @@ public class EntityScript : MonoBehaviour
 
     public LinkedList<IAction> actions = new LinkedList<IAction>();
 
-    void Awake()
-    {
-        damageFlash = GetComponent<DamageFlash>();
-    }
+   
     public void ClearActions() {
         actions.Clear();
     }
@@ -33,6 +30,7 @@ public class EntityScript : MonoBehaviour
 			{
 				Debug.LogError("HealthBarControl not found in scene!");
 			}
+        damageFlash = GetComponent<DamageFlash>();
     }
 
     public IAction lastAction() {
@@ -81,8 +79,15 @@ public class EntityScript : MonoBehaviour
         else
         {
             currentHealth -= damage;
+            if (damageFlash != null)
+            {
             damageFlash.CallFlashDamage();
-            
+            }       
+
+            if (healthBarControl != null)
+            {
+                healthBarControl.HealthChanged();
+            }     
         }
         if (currentHealth <= 0)
         {
