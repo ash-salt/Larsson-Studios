@@ -2,12 +2,13 @@
 - Project name: Larsson-Studios
 - Unity version: Unity 6000.0.58f2
 - Active scene:
+  - Name: larsson2
   - Tags:
     - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Obstacles, Water, UI, Player
 - Active game object:
-  - Name: GoblinIdle 1
-  - Tag: Untagged
+  - Name: knight
+  - Tag: Player
   - Layer: Ignore Raycast
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
