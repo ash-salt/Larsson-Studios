@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.23065409, g: 0.8962264, b: 0.19023676, a: 1}
+  m_Color: {r: 0.99215686, g: 0.023529412, b: 0.023529412, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -263,7 +263,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9433962, g: 0.26254895, b: 0.26254895, a: 1}
+  m_Color: {r: 0.047058824, g: 0.7647059, b: 0.078431375, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -501,6 +501,7 @@ MonoBehaviour:
   done: 0
   isDead: 0
   isBlocking: 0
+  healthBarControl: {fileID: 0}
   maxMoveDistance: 3
   player: {fileID: 0}
   healthBar: {fileID: 0}
@@ -508,6 +509,7 @@ MonoBehaviour:
   mediumDistance: 4
   shortDistance: 2
   attackDistance: 0.5
+  randomRadius: 1
 --- !u!50 &2442509854145144512
 Rigidbody2D:
   serializedVersion: 5
