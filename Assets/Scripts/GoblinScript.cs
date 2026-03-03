@@ -9,19 +9,53 @@ namespace Assets.Scripts
 	{
 
         [SerializeField] public GameObject player;
+        [SerializeField] FloatingHealthBar healthBar;
         public float farAway = 5f;
 		public float mediumDistance = 4f;
 		public float shortDistance = 2f;
 		public float attackDistance = 0.5f;
+
+        private DamageFlash damageFlash;
 
         // Use this for initialization
         void Start()
 		{
             GameStateManager.Instance.AddToEnemyList(this);
 			GameStateManager.Instance.AddToEntityList(this);
+            
 
         }
 
+        private void Awake()
+        {
+            healthBar = GetComponentInChildren<FloatingHealthBar>();
+            damageFlash = GetComponent<DamageFlash>();
+        }
+        public override void damage(int damage)
+    {
+        if (isBlocking)
+        {
+            return;
+        }
+        else
+        {
+            currentHealth -= damage;
+            if (healthBar != null){
+                healthBar.UpdateHealthBar(currentHealth,maxHealth);
+
+            }
+
+            damageFlash.CallFlashDamage();
+
+
+            
+        }
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+        
 		public virtual void PlanTurn()
 		{
 			float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);

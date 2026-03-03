@@ -13,8 +13,10 @@ public class EntityScript : MonoBehaviour
     public bool isBlocking = false;
 
     public float maxMoveDistance = 3f;
+
     public LinkedList<IAction> actions = new LinkedList<IAction>();
 
+    
     public void ClearActions() {
         actions.Clear();
     }
@@ -56,7 +58,7 @@ public class EntityScript : MonoBehaviour
         }
     }
 
-    public void damage(int damage)
+    public virtual void damage(int damage)
     {
         if (isBlocking)
         {
@@ -65,6 +67,7 @@ public class EntityScript : MonoBehaviour
         else
         {
             currentHealth -= damage;
+            
         }
         if (currentHealth <= 0)
         {
