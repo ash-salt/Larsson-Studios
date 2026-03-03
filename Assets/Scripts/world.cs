@@ -71,6 +71,7 @@ public class World: MonoBehaviour {
     {
         completed = true;
         currentSprite.sprite = completedSprite;
+        lockSprite.enabled = false;
     }
 
     public void swapSprite()
@@ -110,9 +111,9 @@ public class World: MonoBehaviour {
     public void OnMouseDown()
     {
         print("clicked");
+        loadWorld();
         if (IsUnlocked() && !isCompleted())
         {
-            loadWorld();
             return;
         }
         else

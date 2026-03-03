@@ -87,7 +87,6 @@ public class MoveButtonScript : MonoBehaviour
             );
             
             print($"Moving to: {validatedTarget}");
-            actionUIManager.newMove(validatedTarget);
             waitingForTarget = false;
             
             if (rangeIndicator != null)

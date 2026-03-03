@@ -69,12 +69,16 @@ public static class MovementUtility
         {
             return targetPosition;
         }
-        
+
         Vector2 toTarget = targetPosition - fromPosition;
         float distance = toTarget.magnitude;
         if (distance > maxDistance)
         {
             targetPosition = fromPosition + toTarget.normalized * maxDistance;
+        }
+        if (IsPositionReachable(fromPosition, targetPosition, maxDistance, colliderRadius))
+        {
+            return targetPosition;
         }
         
         Vector2 direction = (targetPosition - fromPosition).normalized;

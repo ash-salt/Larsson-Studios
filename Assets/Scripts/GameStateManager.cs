@@ -55,7 +55,8 @@ public class GameStateManager : MonoBehaviour
     {
         if (enemies.Count == 0)
         {
-            SceneManager.LoadScene("MainMenu");
+            worldManager.victory();
+            //SceneManager.LoadScene("Overworld");
         }
     }
 
