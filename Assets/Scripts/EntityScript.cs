@@ -23,8 +23,9 @@ public class EntityScript : MonoBehaviour
         actions.Clear();
     }
 
-    public void Awake()
+    public virtual void Awake()
     {
+        Debug.Log($"EntityScript Awake called on {gameObject.name}");
         healthBarControl = FindFirstObjectByType<HealthBarControl>();
 		if (healthBarControl == null)
 			{

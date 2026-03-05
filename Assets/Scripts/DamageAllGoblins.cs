@@ -28,7 +28,13 @@ public class DamageAllGoblins : MonoBehaviour
             
             if (entity != null && !entity.isDead)
             {
+                Debug.Log($"Found: {entity.gameObject.name}");
+                Debug.Log($"Type: {entity.GetType()}");
+                Debug.Log($"Health BEFORE: {entity.currentHealth}");
+
                 entity.damage(damageAmount);
+
+                Debug.Log($"Health AFTER: {entity.currentHealth}");
                 entitiesHit++;
             }
         }

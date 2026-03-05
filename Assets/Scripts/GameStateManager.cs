@@ -55,6 +55,7 @@ public class GameStateManager : MonoBehaviour
     {
         if (enemies.Count == 0)
         {
+            worldManager = WorldManager.Instance;
             worldManager.victory();
             //SceneManager.LoadScene("Overworld");
         }
@@ -206,6 +207,7 @@ public class GameStateManager : MonoBehaviour
         }
         if (player.isDead)
             {
+                worldManager = WorldManager.Instance;
                 worldManager.defeat();
                 yield break;
             }

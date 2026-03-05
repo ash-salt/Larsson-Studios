@@ -3962,6 +3962,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 7525991657286185657}
+    - target: {fileID: 1149887146906919708, guid: 6703c188e75b329428c7ab6bec1bb665, type: 3}
+      propertyPath: randomRadius
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4899651787929196449, guid: 6703c188e75b329428c7ab6bec1bb665, type: 3}
       propertyPath: m_Color.b
       value: 0.023529412
@@ -4106,6 +4110,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 7525991657286185657}
+    - target: {fileID: 39455635957661927, guid: db4f9d241959686419bee8c1f56ecd62, type: 3}
+      propertyPath: isBlocking
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 993249494861531238, guid: db4f9d241959686419bee8c1f56ecd62, type: 3}
       propertyPath: m_Name
       value: GoblinArcher 3
@@ -7430,6 +7438,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 7525991657286185657}
+    - target: {fileID: 39455635957661927, guid: db4f9d241959686419bee8c1f56ecd62, type: 3}
+      propertyPath: isBlocking
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 993249494861531238, guid: db4f9d241959686419bee8c1f56ecd62, type: 3}
       propertyPath: m_Name
       value: GoblinArcher 2
@@ -8045,6 +8057,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 7525991657286185657}
+    - target: {fileID: 39455635957661927, guid: db4f9d241959686419bee8c1f56ecd62, type: 3}
+      propertyPath: isBlocking
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 993249494861531238, guid: db4f9d241959686419bee8c1f56ecd62, type: 3}
       propertyPath: m_Name
       value: GoblinArcher 1

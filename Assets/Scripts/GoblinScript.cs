@@ -27,7 +27,7 @@ namespace Assets.Scripts
 
         }
 
-        private void Awake()
+        private new void Awake()
         {
             healthBar = GetComponentInChildren<FloatingHealthBar>();
             damageFlash = GetComponent<DamageFlash>();
@@ -36,6 +36,7 @@ namespace Assets.Scripts
     {
         if (isBlocking)
         {
+            Debug.Log("We are damagiiiiing");
             return;
         }
         else
