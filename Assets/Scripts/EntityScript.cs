@@ -12,11 +12,26 @@ public class EntityScript : MonoBehaviour
     public bool isDead = false;
     public bool isBlocking = false;
 
+    public HealthBarControl healthBarControl;
     public float maxMoveDistance = 3f;
-    LinkedList<IAction> actions = new LinkedList<IAction>();
+    private DamageFlash damageFlash;
 
+    public LinkedList<IAction> actions = new LinkedList<IAction>();
+
+   
     public void ClearActions() {
         actions.Clear();
+    }
+
+    public virtual void Awake()
+    {
+        Debug.Log($"EntityScript Awake called on {gameObject.name}");
+        healthBarControl = FindFirstObjectByType<HealthBarControl>();
+		if (healthBarControl == null)
+			{
+				Debug.LogError("HealthBarControl not found in scene!");
+			}
+        damageFlash = GetComponent<DamageFlash>();
     }
 
     public IAction lastAction() {
@@ -56,7 +71,7 @@ public class EntityScript : MonoBehaviour
         }
     }
 
-    public void damage(int damage)
+    public virtual void damage(int damage)
     {
         if (isBlocking)
         {
@@ -65,6 +80,15 @@ public class EntityScript : MonoBehaviour
         else
         {
             currentHealth -= damage;
+            if (damageFlash != null)
+            {
+            damageFlash.CallFlashDamage();
+            }       
+
+            if (healthBarControl != null)
+            {
+                healthBarControl.HealthChanged();
+            }     
         }
         if (currentHealth <= 0)
         {

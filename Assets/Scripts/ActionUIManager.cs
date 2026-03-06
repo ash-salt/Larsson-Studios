@@ -77,6 +77,8 @@ public class ActionUIManager : MonoBehaviour
         playerPosition = (action as MoveAction).getStartPosition();
         GameObject lastIndicator = indicators[indicators.Count - 1];
         Destroy(lastIndicator);
+        Debug.Log(lastIndicator.name);
+
         indicators.RemoveAt(indicators.Count - 1);    
     }
 

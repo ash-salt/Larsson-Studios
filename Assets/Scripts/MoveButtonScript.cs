@@ -8,14 +8,14 @@ public class MoveButtonScript : MonoBehaviour
     [SerializeField] private Sprite actionSprite;
     [SerializeField] private ActionUIManager actionUIManager;
     private MovementRangeIndicator rangeIndicator;
-    private PositionIndicatorSprite positionIndicator;
+    
     private bool waitingForTarget = false;
     private bool buttonJustClicked = false;
 
     void Start()
     {
         rangeIndicator = player.GetComponent<MovementRangeIndicator>();
-        positionIndicator = player.GetComponent<PositionIndicatorSprite>();
+        
     }
 
     void OnMouseDown()
@@ -31,10 +31,7 @@ public class MoveButtonScript : MonoBehaviour
             rangeIndicator.Show(startPos);
         }
         
-        if (positionIndicator != null)
-        {
-            positionIndicator.Show(startPos);
-        }
+  
         
         print("Clicked!");
     }
@@ -56,10 +53,7 @@ public class MoveButtonScript : MonoBehaviour
                 rangeIndicator.Hide();
             }
             
-            if (positionIndicator != null)
-            {
-                positionIndicator.Hide();
-            }
+
             
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         }
@@ -93,8 +87,6 @@ public class MoveButtonScript : MonoBehaviour
             );
             
             print($"Moving to: {validatedTarget}");
-            player.QueueMove(validatedTarget, player.maxMoveDistance);
-            actionUIManager.newMove(validatedTarget);
             waitingForTarget = false;
             
             if (rangeIndicator != null)
@@ -102,10 +94,7 @@ public class MoveButtonScript : MonoBehaviour
                 rangeIndicator.Hide();
             }
             
-            if (positionIndicator != null)
-            {
-                positionIndicator.Hide();
-            }
+
             
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             GameStateManager.Instance.newMove(new MoveAction(validatedTarget, player.maxMoveDistance, actionUIManager.getUIPosition()), actionSprite);

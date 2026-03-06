@@ -11,10 +11,20 @@ public class GoblinRangedAttack : IAction
     public LineRenderer lineRenderer;
     private Vector2 playerPos;
 
+    private SpriteRenderer spriteRenderer;
+    public Sprite attackSprite;
+    public Sprite defaultSprite;
+
+    private float objectDistance;
+    private float playerDistance;
+
     public GoblinRangedAttack(bool isPrepared, Vector3 pPos)
     {
         prepared = isPrepared;
         playerPos = pPos;
+
+        attackSprite = GameStateManager.Instance.archerAttackSprite;
+        defaultSprite = GameStateManager.Instance.archerDefaultSprite;
         
     }
     public int getCost()
@@ -29,9 +39,11 @@ public class GoblinRangedAttack : IAction
 
     public void execute(EntityScript entity)
     {
+        spriteRenderer = entity.GetComponent<SpriteRenderer>();
         Debug.Log("prepared is " + prepared);
         if (prepared == false)
         {
+            spriteRenderer.sprite = attackSprite;
         }
         else
         {
@@ -44,21 +56,23 @@ public class GoblinRangedAttack : IAction
             origin = origin + direction*0.5f;
             float distance = Vector2.Distance(origin, playerPos) * 1.5f;
 
-            Debug.Log("Origin: " + origin);
-            Debug.Log("PlayerPos: " + playerPos);
-            Debug.Log("Direction: " + direction);
-            Debug.Log("Distance: " + distance);
-
             RaycastHit2D hit = Physics2D.Raycast(
                 origin,
                 direction,
                 distance,
                 obstacleLayer
             );
-
-            if (hit.collider != null)
+            RaycastHit2D entityHit = Physics2D.Raycast(
+                    origin,
+                    direction,
+                    distance,
+                    playerLayer
+                );
+            if (hit.collider != null && (entityHit.collider == null || hit.distance < entityHit.distance))
             {
+
                 // Hit wall/obstacle
+                objectDistance = Vector2.Distance(origin, hit.point);
                 Debug.Log("hit object");
                 lineRenderer.positionCount = 2;
                 lineRenderer.SetPosition(0, new Vector3(entity.transform.position.x, entity.transform.position.y, -0.5f));
@@ -68,15 +82,10 @@ public class GoblinRangedAttack : IAction
             {
                 Debug.DrawRay(origin, direction * distance, Color.red, 1f);
                 // No obstacle → check player
-                RaycastHit2D entityHit = Physics2D.Raycast(
-                    origin,
-                    direction,
-                    distance,
-                    playerLayer
-                );
 
                 if (entityHit.collider != null)
                 {
+                    playerDistance = Vector2.Distance(origin, entityHit.point);
                     lineRenderer.positionCount = 2;
                     lineRenderer.SetPosition(0, new Vector3(entity.transform.position.x, entity.transform.position.y, -0.5f));
                     lineRenderer.SetPosition(1, new Vector3(entityHit.point.x, entityHit.point.y, -0.5f));
@@ -91,7 +100,7 @@ public class GoblinRangedAttack : IAction
                     }
                 }
             }
-            prepared = false;
+            spriteRenderer.sprite = defaultSprite;
         }
     }
     

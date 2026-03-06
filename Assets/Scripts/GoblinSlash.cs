@@ -33,7 +33,6 @@ namespace Assets.Scripts
                 }
                 slashSFX.Play();
                 player.damage(25);
-                healthBarControl.HealthChanged();
                 Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
                 if (rb != null)
                 {

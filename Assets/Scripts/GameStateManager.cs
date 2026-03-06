@@ -30,13 +30,24 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] public GameObject goblinSlashPrefab;
     [SerializeField] public GameObject moveAnimationPrefab;
     [SerializeField] public GameObject ghostSlashPrefab;
+    [SerializeField] public Sprite archerAttackSprite;
+    [SerializeField] public Sprite archerDefaultSprite;
     [SerializeField] private float actionRoundDelay = 1f;
 
     [SerializeField] private ActionUIManager actionUIManager;
 
     public static GameStateManager Instance;
+    [SerializeField] AudioSource backgroundMusic;
     void Awake()
     {
+        if (PlayerPrefs.HasKey("musicVolume"))
+        {
+            backgroundMusic.volume = PlayerPrefs.GetFloat("musicVolume");
+        }
+        else
+        {
+            backgroundMusic.volume = 1;
+        }
         worldManager = WorldManager.Instance;
         player = FindObjectOfType<PlayerScript>();
         state = "prep";
@@ -46,6 +57,16 @@ public class GameStateManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    void Update()
+    {
+        if (enemies.Count == 0)
+        {
+            worldManager = WorldManager.Instance;
+            worldManager.victory();
+            //SceneManager.LoadScene("Overworld");
         }
     }
 
@@ -195,6 +216,7 @@ public class GameStateManager : MonoBehaviour
         }
         if (player.isDead)
             {
+                worldManager = WorldManager.Instance;
                 worldManager.defeat();
                 yield break;
             }
