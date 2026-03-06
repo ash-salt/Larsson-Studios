@@ -7,14 +7,14 @@ public class MoveButtonScript : MonoBehaviour
     [SerializeField] private PlayerScript player;
     [SerializeField] private Sprite actionSprite;
     [SerializeField] private ActionUIManager actionUIManager;
-    private MovementRangeIndicator rangeIndicator;
+    [SerializeField] private MovementRangeIndicator rangeIndicator;
     private PositionIndicatorSprite positionIndicator;
     private bool waitingForTarget = false;
     private bool buttonJustClicked = false;
 
     void Start()
     {
-        rangeIndicator = player.GetComponent<MovementRangeIndicator>();
+        //rangeIndicator = player.GetComponent<MovementRangeIndicator>();
         positionIndicator = player.GetComponent<PositionIndicatorSprite>();
     }
 

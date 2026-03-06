@@ -150,6 +150,7 @@ public class GameStateManager : MonoBehaviour
     public void newMove(MoveAction action, Sprite sprite)
     {
         if (onCooldown(action)) return;
+        if (player.fullActionQueue()) return;
         player.QueueMove(action.getTargetPosition(), player.maxMoveDistance);
         actionUIManager.newMove(action.getTargetPosition()); // Store validated position
         actionUIManager.UpdateActionUI(sprite);

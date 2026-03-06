@@ -1,125 +1,103 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class MovementRangeIndicator : MonoBehaviour
 {
-    [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private EntityScript entityScript;
-    [SerializeField] private int circleSegments = 64;
-    [SerializeField] private float colliderRadius = 0.3f;
-    
+    [SerializeField] private int rayCount = 72;
+    [SerializeField] private LayerMask obstacleLayer;
+
+    private MeshFilter meshFilter;
+    private MeshRenderer meshRenderer;
     private bool isActive;
-    private Vector2 startPosition;
-    
-    void Start()
+    private Vector2 originPosition;
+
+    void Awake()
     {
-        if (entityScript != null)
+        meshFilter = GetComponent<MeshFilter>();
+        meshRenderer = GetComponent<MeshRenderer>();
+
+        Material mat = new Material(Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default"))
         {
-            CircleCollider2D circleCollider = entityScript.GetComponent<CircleCollider2D>();
-            if (circleCollider != null)
-            {
-                colliderRadius = circleCollider.radius;
-            }
-            else
-            {
-                BoxCollider2D boxCollider = entityScript.GetComponent<BoxCollider2D>();
-                if (boxCollider != null)
-                {
-                    colliderRadius = (boxCollider.size.x + boxCollider.size.y) / 4f;
-                }
-            }
-        }
-        
-        if (lineRenderer != null)
-        {
-            lineRenderer.loop = false;
-        }
+            color = new Color(0.5f, 0.5f, 0.5f, 0.1f) 
+        };
+
+        meshRenderer.material = mat;
+        //meshRenderer.material = new Material(Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default"));
+        meshRenderer.sortingLayerName = "Ignore Raycast";
+        meshRenderer.sortingOrder = 1;
+        meshRenderer.enabled = false;
     }
 
-    public void Show(Vector2 fromPosition)
+    public void Show(Vector2 from)
     {
+        originPosition = from;
         isActive = true;
-        startPosition = fromPosition;
-        if (lineRenderer != null)
-        {
-            lineRenderer.enabled = true;
-        }
+        meshRenderer.enabled = true;
+        transform.position = originPosition;
+        BuildMesh();
     }
 
     public void Hide()
     {
         isActive = false;
-        if (lineRenderer != null)
-        {
-            lineRenderer.enabled = false;
-        }
+        meshRenderer.enabled = false;
     }
 
     void Update()
     {
-        if (!isActive || entityScript == null)
+        if (isActive)
+            BuildMesh();
+
+    }
+
+    private void BuildMesh()
+    {
+        float maxRange = entityScript.maxMoveDistance;
+        int vertCount = rayCount + 2;
+        Vector3[] vertices = new Vector3[vertCount];
+        int[] triangles = new int[rayCount * 3];
+
+        CircleCollider2D circleCollider = entityScript.GetComponent<CircleCollider2D>();
+        float colliderRadius = circleCollider.radius;
+        vertices[0] = Vector3.zero;
+
+        for (int i = 0; i <= rayCount; i++)
         {
-            return;
+            float angle = (float)i / rayCount * Mathf.PI * 2f;
+            Vector2 dir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+
+            RaycastHit2D hit = Physics2D.CircleCast(originPosition, colliderRadius, dir, maxRange, obstacleLayer);
+    
+            Vector2 worldPoint;
+            if (hit.collider != null)
+            {
+                float adjustedDistance = Mathf.Max(hit.distance - 0.1f, 0f);
+                worldPoint = originPosition + dir * adjustedDistance;
+            }
+            else
+            {
+                worldPoint = originPosition + dir * maxRange;
+            }
+
+            Vector2 localPoint = worldPoint - originPosition;
+            vertices[i + 1] = localPoint;
         }
 
-        DrawCircularRange();
-    }
-    
-    private void DrawCircularRange()
-    {
-        List<Vector3> validPoints = new List<Vector3>();
-        float maxDistance = entityScript.maxMoveDistance;
-        bool wasLastPointValid = false;
-        
-        for (int i = 0; i <= circleSegments; i++)
+        for (int i = 0; i < rayCount; i++)
         {
-            float angle = (float)i / circleSegments * 360f * Mathf.Deg2Rad;
-            Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-            
-            RaycastHit2D hit = Physics2D.CircleCast(
-                startPosition, 
-                colliderRadius, 
-                direction, 
-                maxDistance, 
-                LayerMask.GetMask("Obstacles")
-            );
-            
-            bool isReachable = (hit.collider == null);
-            Vector2 targetPoint;
-            
-            if (isReachable)
-            {
-                targetPoint = startPosition + direction * maxDistance;
-            }
-            else
-            {
-                float reachableDistance = Mathf.Max(hit.distance - (colliderRadius * 0.5f), 0f);
-                targetPoint = startPosition + direction * reachableDistance;
-                isReachable = (reachableDistance > 0.1f);
-            }
-            
-            if (isReachable)
-            {
-                validPoints.Add(new Vector3(targetPoint.x, targetPoint.y, -0.5f));
-                wasLastPointValid = true;
-            }
-            else
-            {
-                if (wasLastPointValid && validPoints.Count > 0)
-                {
-                    validPoints.Add(new Vector3(float.NaN, float.NaN, float.NaN));
-                }
-                wasLastPointValid = false;
-            }
+            triangles[i * 3 + 0] = 0;
+            triangles[i * 3 + 1] = i + 2;
+            triangles[i * 3 + 2] = i + 1;
         }
-        
-        if (lineRenderer != null)
+
+        Mesh mesh = new Mesh
         {
-            lineRenderer.positionCount = validPoints.Count;
-            if (validPoints.Count > 0)
-            {
-                lineRenderer.SetPositions(validPoints.ToArray());
-            }
-        }
+            vertices = vertices,
+            triangles = triangles
+        };
+        mesh.RecalculateNormals();
+        mesh.RecalculateBounds();
+        meshFilter.mesh = mesh;
+        
     }
 }

@@ -11,6 +11,9 @@ public class WorldManager : MonoBehaviour
 
     private string worldID;
 
+    //temporary references
+    public Item item;
+
     private void Awake()
     {
         if (Instance == null)

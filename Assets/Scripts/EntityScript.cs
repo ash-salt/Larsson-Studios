@@ -20,6 +20,15 @@ public class EntityScript : MonoBehaviour
         actions.Clear();
     }
 
+    public bool fullActionQueue() {
+        int total_cost = 0;
+        foreach (IAction action in actions)
+        {
+            total_cost += action.getCost();
+        }
+        return total_cost >= 3;
+    }
+
     public void Awake()
     {
         healthBarControl = FindFirstObjectByType<HealthBarControl>();
