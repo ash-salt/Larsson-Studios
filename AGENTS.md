@@ -2,13 +2,13 @@
 - Project name: Larsson-Studios_test
 - Unity version: Unity 6000.0.58f2
 - Active scene:
-  - Name: larsson2
+  - Name: MainMenu
   - Tags:
     - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Obstacles, Water, UI, Player
 - Active game object:
-  - Name: BackgroundMusic
+  - Name: Close
   - Tag: Untagged
-  - Layer: Default
+  - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

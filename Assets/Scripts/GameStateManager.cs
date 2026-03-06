@@ -37,8 +37,17 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private ActionUIManager actionUIManager;
 
     public static GameStateManager Instance;
+    [SerializeField] AudioSource backgroundMusic;
     void Awake()
     {
+        if (PlayerPrefs.HasKey("musicVolume"))
+        {
+            backgroundMusic.volume = PlayerPrefs.GetFloat("musicVolume");
+        }
+        else
+        {
+            backgroundMusic.volume = 1;
+        }
         worldManager = WorldManager.Instance;
         player = FindObjectOfType<PlayerScript>();
         state = "prep";
