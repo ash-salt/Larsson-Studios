@@ -2,13 +2,12 @@
 - Project name: Larsson_Studios2
 - Unity version: Unity 6000.0.58f2
 - Active scene:
-  - Name: larsson
   - Tags:
     - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Obstacles, Water, UI, Player
 - Active game object:
-  - Name: UndoButtonManager
+  - Name: FatGoblin
   - Tag: Untagged
-  - Layer: Default
+  - Layer: Ignore Raycast
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

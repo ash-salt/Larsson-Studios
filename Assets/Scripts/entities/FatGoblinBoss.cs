@@ -14,6 +14,6 @@ public class FatGoblinBoss : Assets.Scripts.GoblinScript
             EnqueueAction(null);
             EnqueueAction(new FatGoblinSummonAction(goblinPrefab, goblinArcherPrefab));
         }
-
+        readyToSpawn = !readyToSpawn;
     }
 }
