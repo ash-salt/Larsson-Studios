@@ -1,11 +1,13 @@
-using Unityengine;
+using UnityEngine;
+using System.Collections.Generic;
+
 
 public class ItemUnlockTable : MonoBehaviour
 {
-    [SerializeField] private Dictionary<String, Item> unlockTable;
+    [SerializeField] private Dictionary<string, Item> unlockTable;
 
 
-    public Item unlockItem(String worldID)
+    public Item unlockItem(string worldID)
     {
         if (unlockTable.ContainsKey(worldID))
         {
