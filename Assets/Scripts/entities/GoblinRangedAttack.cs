@@ -1,15 +1,15 @@
 using Assets.Scripts.player_actions;
 using UnityEngine;
 
-public class GoblinRangedAttack : IAction 
+public class GoblinRangedAttack : AAction 
 {
-    private bool prepared;
+    public bool prepared;
     public PlayerScript player;
     private LayerMask obstacleLayer = LayerMask.GetMask("Obstacles");
     private LayerMask playerLayer = LayerMask.GetMask("Ignore Raycast");
 
     public LineRenderer lineRenderer;
-    private Vector2 playerPos;
+    public Vector2 playerPos;
 
     private SpriteRenderer spriteRenderer;
     public Sprite attackSprite;
@@ -27,6 +27,18 @@ public class GoblinRangedAttack : IAction
         defaultSprite = GameStateManager.Instance.archerDefaultSprite;
         
     }
+
+    public override void CopyFrom(AAction source)
+    {
+        if (source is GoblinRangedAttack src)
+        {
+            prepared = src.prepared;
+            playerPos = src.playerPos;
+            attackSprite = src.attackSprite;
+            defaultSprite = src.defaultSprite;
+        }
+    }
+
     public int getCost()
     {
         return 1;
@@ -37,7 +49,7 @@ public class GoblinRangedAttack : IAction
         return 0;
     }
 
-    public void execute(EntityScript entity)
+    public override void execute(EntityScript entity)
     {
         spriteRenderer = entity.GetComponent<SpriteRenderer>();
         Debug.Log("prepared is " + prepared);

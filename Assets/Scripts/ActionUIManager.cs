@@ -8,22 +8,15 @@ public class ActionUIManager : MonoBehaviour
     public ActionSlot[] actionSlots;
 
     [SerializeField] public PlayerScript playerScript;
-
     public GameObject moveIndicator;
     private List<GameObject> indicators = new List<GameObject>();
     private Vector2 playerPosition;
 
-
-    //temporary, really bad solution for playtesting since there's no good object to attach to
-    //and cooldowns don't deserve their own scripts imo
-    [SerializeField] private GameObject lockSprite;
-
-    private IAction blockAction;
-
+    private CooldownManager cooldownManager;
     public void Start()
     {
-        blockAction = new BlockAction();
         updateMove();
+        cooldownManager = GameStateManager.Instance.cd;
     }
 
     public void UpdateActionUI(Sprite newSprite)
@@ -32,19 +25,6 @@ public class ActionUIManager : MonoBehaviour
         if (emptySlot != null)
         {
             emptySlot.SetActionSprite(newSprite);
-        }
-        UpdateCooldownUI();
-    }
-
-    public void UpdateCooldownUI()
-    {
-        if (GameStateManager.Instance.onCooldown(blockAction))
-        {
-            lockSprite.SetActive(true);
-        }
-        else
-        {
-            lockSprite.SetActive(false);
         }
     }
 
@@ -69,7 +49,7 @@ public class ActionUIManager : MonoBehaviour
 
     public void undoMove()
     {
-    IAction action = playerScript.lastAction();
+    AAction action = playerScript.lastAction();
     if (action == null) return;
 
     if (indicators.Count > 0 && action is MoveAction)
@@ -82,9 +62,9 @@ public class ActionUIManager : MonoBehaviour
         indicators.RemoveAt(indicators.Count - 1);    
     }
 
-    if (GameStateManager.Instance.onCooldown(action))
+    if (cooldownManager.onCooldown(action))
     {
-        GameStateManager.Instance.removeCooldown(action);
+        cooldownManager.removeCooldown(action);
     }
 
     for (int i = actionSlots.Length - 1; i >= 0; i--)
@@ -95,7 +75,6 @@ public class ActionUIManager : MonoBehaviour
                     break;
                 }
         }
-    UpdateCooldownUI();
     }
 
     public Vector2 GetLastTargetPosition()
@@ -131,7 +110,6 @@ public class ActionUIManager : MonoBehaviour
             slot.ClearActionSprite();
         }
         clearMove();
-        UpdateCooldownUI();
     }
     
 }

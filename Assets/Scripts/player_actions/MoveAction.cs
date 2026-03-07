@@ -1,20 +1,45 @@
 using Assets.Scripts.player_actions;
 using UnityEngine;
 
-public class MoveAction : IAction
+
+namespace Assets.Scripts.player_actions {
+    [CreateAssetMenu(menuName = "Scriptable Objects/Move")]
+public class MoveAction : AAction
 {
     private Vector2 targetPosition;
-    
     private Vector2 startPosition;
     private float maxDistance;
     GameObject moveAnimationInstance;
 
-    public MoveAction(Vector2 targetPosition, float maxDistance, Vector2 startPosition)
+    public void Initialize(Vector2 targetPosition, float maxDistance, Vector2 startPosition)
     {
         this.targetPosition = targetPosition;
         this.maxDistance = maxDistance;
         this.startPosition = startPosition;
     }
+
+    public override void CopyFrom(AAction source)
+        {
+            if (source is MoveAction src)  {
+                this.targetPosition = src.targetPosition;
+                this.maxDistance = src.maxDistance;
+                this.startPosition = src.startPosition;
+            }
+        }
+
+    public void OnEnable()
+		{
+        	buttonInstruction = new MoveButtonScript(this);
+		}
+
+    public ButtonInstruction getInstructions()
+        {
+            if (buttonInstruction is null)
+            {
+                buttonInstruction = new MoveButtonScript(this);
+            }
+            return buttonInstruction;
+        }
 
     public Vector2 getTargetPosition()
     {
@@ -36,7 +61,7 @@ public class MoveAction : IAction
         return startPosition;
     }
 
-    public void execute(EntityScript entity)
+    public override void execute(EntityScript entity)
     {
         Rigidbody2D rb = entity.GetComponent<Rigidbody2D>();
 
@@ -94,7 +119,6 @@ public class MoveAction : IAction
             entity.doneWithAction();
         }
     }
-
     public void Dispose()
     {
         if (moveAnimationInstance != null)
@@ -102,5 +126,5 @@ public class MoveAction : IAction
             Object.Destroy(moveAnimationInstance);
         }
     }
-
+}
 }

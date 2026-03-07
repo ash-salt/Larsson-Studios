@@ -17,6 +17,8 @@ public class World: MonoBehaviour {
 
     [SerializeField] private SpriteRenderer currentSprite;
 
+    [SerializeField] private Item[] unlockables;
+
     private WorldManager worldManager;
 
     private bool completed;

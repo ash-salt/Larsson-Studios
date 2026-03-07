@@ -14,16 +14,13 @@ public class GameStateManager : MonoBehaviour
     private string state;
     private List<EntityScript> gameEntities = new List<EntityScript>();
     private List<EntityScript> enemies = new List<EntityScript>();
-
-    private Dictionary<Type, int> cooldownTracker = new Dictionary<Type, int>();
-
     private WorldManager worldManager;
-
+    [SerializeField] public CooldownManager cd;
     private PlayerScript player;
 
     public Dictionary<EntityScript, CharacterSnapshot> snapshot;
 
-    private Dictionary<EntityScript, IAction> currentActions;
+    private Dictionary<EntityScript, AAction> currentActions;
 
     [SerializeField] public GameObject slashPrefab;
     [SerializeField] public GameObject shieldPrefab;
@@ -106,57 +103,28 @@ public class GameStateManager : MonoBehaviour
         return actionUIManager.getUIPosition();
     }
 
-    public void addCooldown(IAction action)
-    {
-        if (action.getCooldown() == 0) return;
-        cooldownTracker[action.GetType()] = action.getCooldown();
-    }
 
-    public void tickCooldowns()
+    public void newAction(AAction action, Sprite sprite)
     {
-        List<Type> keys = new List<Type>(cooldownTracker.Keys);
-        foreach (Type action in keys)
-        {
-            cooldownTracker[action]--;
-            if (cooldownTracker[action] <= 0)
-            {
-                cooldownTracker.Remove(action);
-            }
-        }
-    }
-
-    public bool onCooldown(IAction action)
-    {
-        return cooldownTracker.ContainsKey(action.GetType());
-    }
-
-    public bool removeCooldown(IAction action)
-    {
-        return cooldownTracker.Remove(action.GetType());
-    }
-
-
-    public void newAction(IAction action, Sprite sprite)
-    {
-        if (onCooldown(action)) return;
+        if (cd.onCooldown(action)) return;
         player.EnqueueAction(action);
         if (action.getCooldown() > 0)
         {
-            addCooldown(action);
+            cd.addCooldown(action);
         }
         actionUIManager.UpdateActionUI(sprite);
     }
 
     public void newMove(MoveAction action, Sprite sprite)
     {
-        if (onCooldown(action)) return;
+        if (cd.onCooldown(action)) return;
         if (player.fullActionQueue()) return;
-        player.QueueMove(action.getTargetPosition(), player.maxMoveDistance);
+        player.QueueMove(action);
         actionUIManager.newMove(action.getTargetPosition()); // Store validated position
         actionUIManager.UpdateActionUI(sprite);
         if (action.getCooldown() > 0)
         {
-            addCooldown(action);
+            cd.addCooldown(action);
         }
     }
 
@@ -173,7 +141,7 @@ public class GameStateManager : MonoBehaviour
 
         state = "action";
         StartCoroutine(ExecuteActionsWithDelay());
-        tickCooldowns();
+        cd.tickCooldowns();
         actionUIManager.clearActionUI();
     }
 
@@ -223,12 +191,12 @@ public class GameStateManager : MonoBehaviour
 
     void executeActions()
     {
-        currentActions = new Dictionary<EntityScript, IAction>();
+        currentActions = new Dictionary<EntityScript, AAction>();
         CreateSnapshot();
 
         foreach (EntityScript entity in gameEntities)
         {
-            IAction action = entity.DequeueAction();
+            AAction action = entity.DequeueAction();
             currentActions[entity] = action;
         }
         ResolveBlocks(currentActions);
@@ -258,7 +226,7 @@ public class GameStateManager : MonoBehaviour
     }
 
 
-    private void ResolveAttacks(Dictionary<EntityScript, IAction> queuedActions)
+    private void ResolveAttacks(Dictionary<EntityScript, AAction> queuedActions)
     {
         foreach (var a in queuedActions)
         {
@@ -269,7 +237,7 @@ public class GameStateManager : MonoBehaviour
         return;
     }
 
-    private void ResolveBlocks(Dictionary<EntityScript, IAction> queuedActions)
+    private void ResolveBlocks(Dictionary<EntityScript, AAction> queuedActions)
     {
         foreach (var a in queuedActions)
         {
@@ -280,7 +248,7 @@ public class GameStateManager : MonoBehaviour
         return;
     }
 
-    private void ResolveMove(Dictionary<EntityScript, IAction> queuedActions)
+    private void ResolveMove(Dictionary<EntityScript, AAction> queuedActions)
     {
         foreach (var a in queuedActions)
         {
@@ -292,9 +260,9 @@ public class GameStateManager : MonoBehaviour
 
     private void DisposeAttackProjectiles()
     {
-        foreach (KeyValuePair<EntityScript, IAction> unit in currentActions)
+        foreach (KeyValuePair<EntityScript, AAction> unit in currentActions)
         {
-            IAction action = unit.Value;
+            AAction action = unit.Value;
             if (action is MeleeAttack)
             {
                 MeleeAttack attack = (MeleeAttack) action;

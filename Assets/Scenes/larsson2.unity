@@ -1076,7 +1076,6 @@ MonoBehaviour:
   - {fileID: 123214263}
   playerScript: {fileID: 7525991657286185658}
   moveIndicator: {fileID: 2121374501}
-  lockSprite: {fileID: 39795521}
 --- !u!1 &179277785
 GameObject:
   m_ObjectHideFlags: 0
@@ -1363,13 +1362,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 192672521}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 047f60b8971806f43892198d2a9af6bd, type: 3}
+  m_Script: {fileID: 11500000, guid: 31345c3466196234c8cddb7a2c39a23b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cursor: {fileID: 0}
-  player: {fileID: 7525991657286185658}
-  actionUIManager: {fileID: 171192607}
-  actionSprite: {fileID: 21300000, guid: d519bfaee15f9109196c9d0cd4034ff0, type: 3}
+  actionIndex: 1
+  action: {fileID: 11400000, guid: 0c2521ef52308ab42a3e9882e4248f13, type: 2}
+  cooldown: {fileID: 0}
+  spriteRenderer: {fileID: 902588121}
 --- !u!1 &199279700
 GameObject:
   m_ObjectHideFlags: 0
@@ -2155,14 +2155,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 367388030}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27d3885f6d202af43b20fffc06e83d07, type: 3}
+  m_Script: {fileID: 11500000, guid: 31345c3466196234c8cddb7a2c39a23b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursor: {fileID: 2800000, guid: 8d7390e5dae1d4744b94f8509c7851da, type: 3}
-  player: {fileID: 7525991657286185658}
-  actionSprite: {fileID: 21300000, guid: 74a41230fbc948702895f7f83156718f, type: 3}
-  actionUIManager: {fileID: 171192607}
-  rangeIndicator: {fileID: 878594022}
+  cursor: {fileID: 0}
+  actionIndex: 0
+  action: {fileID: 11400000, guid: 5a653baa46e11724189a17cdc41420c5, type: 2}
+  cooldown: {fileID: 0}
+  spriteRenderer: {fileID: 2121374503}
 --- !u!1 &406373095
 GameObject:
   m_ObjectHideFlags: 0
@@ -3018,13 +3018,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 741866226}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d92884a3b01e5b945a19d3cb1412769b, type: 3}
+  m_Script: {fileID: 11500000, guid: 31345c3466196234c8cddb7a2c39a23b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cursor: {fileID: 0}
-  player: {fileID: 7525991657286185658}
-  actionUIManager: {fileID: 171192607}
-  actionSprite: {fileID: 21300000, guid: 2a24067a5b13eb914bc5ef455ddfc73e, type: 3}
+  actionIndex: 2
+  action: {fileID: 11400000, guid: 44d2528f497c9d744a19e0ce7630c843, type: 2}
+  cooldown: {fileID: 0}
+  spriteRenderer: {fileID: 841572396}
 --- !u!1 &764111855
 GameObject:
   m_ObjectHideFlags: 0
@@ -3270,6 +3271,7 @@ MonoBehaviour:
   isBlocking: 0
   healthBarControl: {fileID: 0}
   maxMoveDistance: 3
+  moveAction: {fileID: 11400000, guid: 5a653baa46e11724189a17cdc41420c5, type: 2}
   player: {fileID: 7525991657286185657}
   farAway: 5
   mediumDistance: 4
@@ -4969,6 +4971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c210288976b05920bd8e801df1d96fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cd: {fileID: 0}
   slashPrefab: {fileID: 9034486332971087722, guid: 6cae2b6d2190e1e4fa559d3a548ec092, type: 3}
   shieldPrefab: {fileID: 679447868725350734, guid: 4407728ba9428aa4faf1935242d4ec15, type: 3}
   goblinSlashPrefab: {fileID: 9034486332971087722, guid: 54a0d4a486c515d4d9aacb80b5530d12, type: 3}
@@ -5125,6 +5128,7 @@ MonoBehaviour:
   isBlocking: 1
   healthBarControl: {fileID: 0}
   maxMoveDistance: 3
+  moveAction: {fileID: 11400000, guid: 5a653baa46e11724189a17cdc41420c5, type: 2}
   player: {fileID: 7525991657286185657}
   farAway: 5
   mediumDistance: 4
@@ -5760,6 +5764,7 @@ MonoBehaviour:
   isBlocking: 1
   healthBarControl: {fileID: 0}
   maxMoveDistance: 3
+  moveAction: {fileID: 11400000, guid: 5a653baa46e11724189a17cdc41420c5, type: 2}
   player: {fileID: 7525991657286185657}
   farAway: 5
   mediumDistance: 4
@@ -6074,6 +6079,7 @@ MonoBehaviour:
   isBlocking: 1
   healthBarControl: {fileID: 0}
   maxMoveDistance: 3
+  moveAction: {fileID: 11400000, guid: 5a653baa46e11724189a17cdc41420c5, type: 2}
   player: {fileID: 7525991657286185657}
   farAway: 5
   mediumDistance: 4
@@ -8665,6 +8671,10 @@ MonoBehaviour:
   isBlocking: 0
   healthBarControl: {fileID: 0}
   maxMoveDistance: 3
+  attackAction: {fileID: 11400000, guid: 0c2521ef52308ab42a3e9882e4248f13, type: 2}
+  utilAction: {fileID: 11400000, guid: 44d2528f497c9d744a19e0ce7630c843, type: 2}
+  moveAction: {fileID: 11400000, guid: 5a653baa46e11724189a17cdc41420c5, type: 2}
+  spriteRenderer: {fileID: 7525991657286185680}
 --- !u!50 &7525991657286185662
 Rigidbody2D:
   serializedVersion: 5
@@ -8890,6 +8900,11 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.3
+--- !u!212 &7525991657286185680 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1202560448606667523, guid: d78b54189ceb77e8b98b6278ec623d13, type: 3}
+  m_PrefabInstance: {fileID: 7525991657286185656}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
