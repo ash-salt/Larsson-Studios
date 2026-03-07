@@ -354,6 +354,7 @@ MonoBehaviour:
   isBlocking: 1
   healthBarControl: {fileID: 0}
   maxMoveDistance: 3
+  moveAction: {fileID: 11400000, guid: 5a653baa46e11724189a17cdc41420c5, type: 2}
   player: {fileID: 0}
   healthBar: {fileID: 0}
   farAway: 5

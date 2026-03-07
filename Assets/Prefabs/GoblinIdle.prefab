@@ -108,13 +108,16 @@ MonoBehaviour:
   done: 0
   isDead: 0
   isBlocking: 0
+  healthBarControl: {fileID: 0}
   maxMoveDistance: 3
-  healthBar: {fileID: 0}
+  moveAction: {fileID: 11400000, guid: 5a653baa46e11724189a17cdc41420c5, type: 2}
   player: {fileID: 0}
+  healthBar: {fileID: 0}
   farAway: 5
   mediumDistance: 4
   shortDistance: 2
   attackDistance: 0.5
+  randomRadius: 1
 --- !u!61 &8339824230997093584
 BoxCollider2D:
   m_ObjectHideFlags: 0

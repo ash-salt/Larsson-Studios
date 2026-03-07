@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: StrongShield
   m_EditorClassIdentifier: 
   itemName: Good Shield
-  itemSprite: {fileID: 21300000, guid: 6400a74ee5443ac41bbfc69fe1c54aeb, type: 3}
+  itemSprite: {fileID: 21300000, guid: fcef4493fb9733043b6b1b8b4fe80723, type: 3}
   description: Removes the cooldown of your block action

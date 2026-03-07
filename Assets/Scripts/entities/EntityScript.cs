@@ -18,9 +18,6 @@ public class EntityScript : MonoBehaviour
     public LinkedList<AAction> actions = new LinkedList<AAction>();
 
     private DamageFlash damageFlash;
-
-    public LinkedList<IAction> actions = new LinkedList<IAction>();
-
    
     public void ClearActions() {
         actions.Clear();

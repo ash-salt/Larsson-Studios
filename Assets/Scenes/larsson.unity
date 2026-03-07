@@ -148,7 +148,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 741866227}
+  m_Father: {fileID: 841572397}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1293,9 +1293,6 @@ MonoBehaviour:
   action: {fileID: 11400000, guid: 0c2521ef52308ab42a3e9882e4248f13, type: 2}
   cooldown: {fileID: 1705584646}
   spriteRenderer: {fileID: 902588121}
-  player: {fileID: 7525991657286185658}
-  actionUIManager: {fileID: 171192607}
-  actionSprite: {fileID: 21300000, guid: 2404dff90014cbb4f801e336fa456cc0, type: 3}
 --- !u!1 &199279700
 GameObject:
   m_ObjectHideFlags: 0
@@ -2086,9 +2083,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursor: {fileID: 2800000, guid: 8d7390e5dae1d4744b94f8509c7851da, type: 3}
-  player: {fileID: 7525991657286185658}
-  actionSprite: {fileID: 21300000, guid: 8dee59cc7290d3e45b5712d5b9ade2e9, type: 3}
-  actionUIManager: {fileID: 171192607}
+  actionIndex: 0
+  action: {fileID: 11400000, guid: 5a653baa46e11724189a17cdc41420c5, type: 2}
+  cooldown: {fileID: 630083444}
+  spriteRenderer: {fileID: 2121374503}
 --- !u!1 &406373095
 GameObject:
   m_ObjectHideFlags: 0
@@ -3156,8 +3154,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 39795522}
+  m_Children: []
   m_Father: {fileID: 416375931}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -3287,9 +3284,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursor: {fileID: 0}
-  player: {fileID: 7525991657286185658}
-  actionUIManager: {fileID: 171192607}
-  actionSprite: {fileID: 21300000, guid: fcef4493fb9733043b6b1b8b4fe80723, type: 3}
+  actionIndex: 2
+  action: {fileID: 11400000, guid: 44d2528f497c9d744a19e0ce7630c843, type: 2}
+  cooldown: {fileID: 39795523}
+  spriteRenderer: {fileID: 841572396}
 --- !u!1 &764111855
 GameObject:
   m_ObjectHideFlags: 0
@@ -4826,6 +4824,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1359006908}
   m_CullTransparentMesh: 1
+--- !u!1 &1373425962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1373425963}
+  - component: {fileID: 1373425964}
+  m_Layer: 0
+  m_Name: CooldownManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1373425963
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373425962}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1476452698}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1373425964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373425962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f15c2cab44a69c548a08abe518a003ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttons:
+  - {fileID: 367388036}
+  - {fileID: 192672527}
+  - {fileID: 741866232}
 --- !u!1 &1432555169
 GameObject:
   m_ObjectHideFlags: 0
@@ -5064,7 +5110,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 788579580}
+  - {fileID: 1373425963}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1476452699
@@ -5079,7 +5125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c210288976b05920bd8e801df1d96fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cd: {fileID: 788579581}
+  cd: {fileID: 1373425964}
   slashPrefab: {fileID: 9034486332971087722, guid: 6cae2b6d2190e1e4fa559d3a548ec092, type: 3}
   shieldPrefab: {fileID: 679447868725350734, guid: 4407728ba9428aa4faf1935242d4ec15, type: 3}
   goblinSlashPrefab: {fileID: 9034486332971087722, guid: 54a0d4a486c515d4d9aacb80b5530d12, type: 3}
@@ -7892,6 +7938,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 7525991657286185657}
+    - target: {fileID: 1149887146906919708, guid: 6703c188e75b329428c7ab6bec1bb665, type: 3}
+      propertyPath: moveAction
+      value: 
+      objectReference: {fileID: 11400000, guid: 5a653baa46e11724189a17cdc41420c5, type: 2}
     - target: {fileID: 5519989177851678993, guid: 6703c188e75b329428c7ab6bec1bb665, type: 3}
       propertyPath: m_Name
       value: GoblinIdle 1
@@ -8054,9 +8104,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1358357364004153695, guid: d78b54189ceb77e8b98b6278ec623d13, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7525991657286185680}
-    - targetCorrespondingSourceObject: {fileID: 1358357364004153695, guid: d78b54189ceb77e8b98b6278ec623d13, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7525991657286185680}
   m_SourcePrefab: {fileID: 100100000, guid: d78b54189ceb77e8b98b6278ec623d13, type: 3}
 --- !u!1 &7525991657286185657 stripped
 GameObject:
@@ -8085,7 +8132,7 @@ MonoBehaviour:
   attackAction: {fileID: 11400000, guid: 0c2521ef52308ab42a3e9882e4248f13, type: 2}
   utilAction: {fileID: 11400000, guid: 44d2528f497c9d744a19e0ce7630c843, type: 2}
   moveAction: {fileID: 11400000, guid: 5a653baa46e11724189a17cdc41420c5, type: 2}
-  spriteRenderer: {fileID: 7525991657286185680}
+  spriteRenderer: {fileID: 0}
 --- !u!50 &7525991657286185662
 Rigidbody2D:
   serializedVersion: 5
@@ -8360,3 +8407,5 @@ SceneRoots:
   - {fileID: 986175794}
   - {fileID: 547669639}
   - {fileID: 534917509}
+  - {fileID: 606761793}
+  - {fileID: 609204424}

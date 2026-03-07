@@ -25,7 +25,7 @@ public class MoveButtonScript : ButtonInstruction
         actionUIManager = GameObject.FindFirstObjectByType<ActionUIManager>();
 
         rangeIndicator = GameObject.FindFirstObjectByType<MovementRangeIndicator>();
-        positionIndicator = GameObject.FindFirstObjectByType<PositionIndicatorSprite>();
+        //positionIndicator = GameObject.FindFirstObjectByType<PositionIndicatorSprite>();
     }
 
     public override void Execute()

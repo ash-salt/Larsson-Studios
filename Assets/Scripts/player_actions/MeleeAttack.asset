@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f95cdac6bd7cf6f61811bed7bf748ce6, type: 3}
   m_Name: MeleeAttack
   m_EditorClassIdentifier: 
-  cost: 0
+  cost: 1
   cooldown: 0
   actionSprite: {fileID: 21300000, guid: 2404dff90014cbb4f801e336fa456cc0, type: 3}
   slashPrefab: {fileID: 9034486332971087722, guid: 6cae2b6d2190e1e4fa559d3a548ec092, type: 3}
-  spawnPos: {x: -2.3529768, y: -1.6941874, z: 0}
-  rotation: {x: 0, y: 0, z: 0.99694437, w: 0.07811467}
+  spawnPos: {x: -0.253071, y: -0.44223857, z: 0}
+  rotation: {x: 0, y: 0, z: -0.5973793, w: 0.8019588}

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ExampleBoots
   m_EditorClassIdentifier: 
   itemName: Speedy Boots
-  itemSprite: {fileID: 21300000, guid: 74a41230fbc948702895f7f83156718f, type: 3}
+  itemSprite: {fileID: 21300000, guid: 8dee59cc7290d3e45b5712d5b9ade2e9, type: 3}
   description: Increases your movement speed by 1
   speedBoost: 1
