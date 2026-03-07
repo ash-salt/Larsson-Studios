@@ -1282,7 +1282,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.78125, y: 0.390625}
+    oldSize: {x: 1.5625, y: 0.78125}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -2138,7 +2138,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.78125, y: 0.390625}
+    oldSize: {x: 1.5625, y: 0.78125}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -2935,7 +2935,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.78125, y: 0.390625}
+    oldSize: {x: 1.5625, y: 0.78125}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -3178,7 +3178,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &827677477
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3270,6 +3270,7 @@ MonoBehaviour:
   maxMoveDistance: 3
   moveAction: {fileID: 11400000, guid: 5a653baa46e11724189a17cdc41420c5, type: 2}
   player: {fileID: 7525991657286185657}
+  healthBar: {fileID: 0}
   farAway: 5
   mediumDistance: 4
   shortDistance: 2
@@ -4283,6 +4284,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoblinIdle 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5519989177851678993, guid: 6703c188e75b329428c7ab6bec1bb665, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6630369028037475257, guid: 6703c188e75b329428c7ab6bec1bb665, type: 3}
       propertyPath: m_Value
       value: 1
@@ -4329,11 +4334,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9067465771745575026, guid: 6703c188e75b329428c7ab6bec1bb665, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9067465771745575026, guid: 6703c188e75b329428c7ab6bec1bb665, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5138,7 +5143,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.6, y: 1.6}
+    oldSize: {x: 2.5, y: 2.5}
     newSize: {x: 0.1665039, y: 0.1665039}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -7996,7 +8001,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &7525991657286185656
@@ -8116,7 +8121,7 @@ MonoBehaviour:
   attackAction: {fileID: 11400000, guid: 0c2521ef52308ab42a3e9882e4248f13, type: 2}
   utilAction: {fileID: 11400000, guid: 44d2528f497c9d744a19e0ce7630c843, type: 2}
   moveAction: {fileID: 11400000, guid: 5a653baa46e11724189a17cdc41420c5, type: 2}
-  spriteRenderer: {fileID: 7525991657286185680}
+  spriteRenderer: {fileID: 0}
 --- !u!50 &7525991657286185662
 Rigidbody2D:
   serializedVersion: 5
@@ -8438,3 +8443,5 @@ SceneRoots:
   - {fileID: 1033289286}
   - {fileID: 986175794}
   - {fileID: 992004534}
+  - {fileID: 827677478}
+  - {fileID: 878594018}

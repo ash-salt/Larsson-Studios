@@ -822,7 +822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldID: larsson2
-  prerequisite: {fileID: 0}
+  prerequisite: {fileID: 1873919843}
   lockedSprite: {fileID: 21300000, guid: 8debd44dd1113b445a903d13cd14ad13, type: 3}
   unlockedSprite: {fileID: 21300000, guid: 0bca2477f079d4544833d3d50905f2ea, type: 3}
   completedSprite: {fileID: 21300000, guid: abb76fdceda2b384fbbc1e1e44159ebf, type: 3}

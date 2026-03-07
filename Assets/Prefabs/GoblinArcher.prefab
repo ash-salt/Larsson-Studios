@@ -362,6 +362,7 @@ MonoBehaviour:
   shortDistance: 2
   attackDistance: 0.5
   randomRadius: 1
+  RangedAttack: {fileID: 11400000, guid: 2a7876b1f0d9f424abf99474bacccce8, type: 2}
 --- !u!120 &249989952573597964
 LineRenderer:
   serializedVersion: 2

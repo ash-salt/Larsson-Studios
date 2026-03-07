@@ -1,6 +1,7 @@
 using Assets.Scripts.player_actions;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Scriptable Objects/GoblinRanged")]
 public class GoblinRangedAttack : AAction 
 {
     public bool prepared;
@@ -18,6 +19,7 @@ public class GoblinRangedAttack : AAction
     private float objectDistance;
     private float playerDistance;
 
+    /*
     public GoblinRangedAttack(bool isPrepared, Vector3 pPos)
     {
         prepared = isPrepared;
@@ -26,6 +28,15 @@ public class GoblinRangedAttack : AAction
         attackSprite = GameStateManager.Instance.archerAttackSprite;
         defaultSprite = GameStateManager.Instance.archerDefaultSprite;
         
+    }*/
+
+    public void Initialize(bool isPrepared, Vector3 pPos)
+    {
+        prepared = isPrepared;
+        playerPos = pPos;
+
+        attackSprite = GameStateManager.Instance.archerAttackSprite;
+        defaultSprite = GameStateManager.Instance.archerDefaultSprite;    
     }
 
     public override void CopyFrom(AAction source)
