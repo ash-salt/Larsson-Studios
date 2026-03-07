@@ -1,12 +1,11 @@
 using Assets.Scripts.player_actions;
 using UnityEngine;
 
-public class GoblinAttackAction : IAction
+public class GoblinAttackAction : AAction
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     int damage;
     float spawnDistance = 0.5f;
-
     GameObject slashInstance;
 
     public void SlashAttack(EntityScript playerChar, EntityScript goblin)
@@ -36,7 +35,12 @@ public class GoblinAttackAction : IAction
         return 0;
     }
 
-    public void execute(EntityScript goblin)
+    public override void CopyFrom(AAction source)
+    {
+        return;
+    }
+
+    public override void execute(EntityScript goblin)
     {
         EntityScript player = null;
         foreach (EntityScript character in GameStateManager.Instance.GetEntityList())

@@ -13,9 +13,11 @@ public class World: MonoBehaviour {
 
     [SerializeField] Sprite completedSprite;
 
-    [SerializeField] private Image lockSprite;
+    [SerializeField] private SpriteRenderer lockSprite;
 
-    [SerializeField] private Image currentSprite;
+    [SerializeField] private SpriteRenderer currentSprite;
+
+    [SerializeField] private Item[] unlockables;
 
     private WorldManager worldManager;
 

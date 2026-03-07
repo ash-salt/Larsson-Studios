@@ -1,23 +1,38 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Rendering;
+namespace Assets.Scripts.player_actions {
+	[CreateAssetMenu(menuName = "Scriptable Objects/Block")]
 
-namespace Assets.Scripts.player_actions
-{
-	public class BlockAction: IAction
+public class BlockAction: AAction
 	{
-		GameObject shieldInstance;
-		public int getCost()
+		public GameObject shieldInstance;
+
+		public void OnEnable()
 		{
-			return 1;
+        	buttonInstruction = new BlockButtonScript(this);
+			cooldown = 1;
 		}
 
-		public int getCooldown()
-    	{
-        return 1;
-    	}
+		public void Initialize()
+		{
+			return;
+		}
 
-		public void execute(EntityScript target)
+		public override void CopyFrom(AAction source)
+        {
+            if (source is BlockAction src)
+			{
+				this.shieldInstance = src.shieldInstance;
+			}
+        }
+
+		public ButtonInstruction getInstructions()
+        {
+            return buttonInstruction;
+        }
+
+		public override void execute(EntityScript target)
 		{
 			GameObject shieldPrefab = GameStateManager.Instance.GetShieldPrefab();
             if (target.TryGetComponent<PlayerScript>(out PlayerScript player))

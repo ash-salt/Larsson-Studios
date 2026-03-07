@@ -1,29 +1,38 @@
 using Assets.Scripts.player_actions;
 using UnityEngine;
 
-public class MoveButtonScript : MonoBehaviour
+public class MoveButtonScript : ButtonInstruction
 {
     public Texture2D cursor;
-    [SerializeField] private PlayerScript player;
-    [SerializeField] private Sprite actionSprite;
-    [SerializeField] private ActionUIManager actionUIManager;
+    private PlayerScript player;
+    private ActionUIManager actionUIManager;
     private MovementRangeIndicator rangeIndicator;
     
     private bool waitingForTarget = false;
     private bool buttonJustClicked = false;
+    private MoveAction action;
 
-    void Start()
+    public MoveButtonScript(MoveAction action)
     {
-        rangeIndicator = player.GetComponent<MovementRangeIndicator>();
-        
+        this.action = action;
+    }
+    public override void Instruct(GenericButton button)
+    {
+        button.spriteRenderer.sprite = action.getSprite();
+        action.Initialize(Vector2.zero, 0, Vector2.zero);
+
+        player = GameObject.FindFirstObjectByType<PlayerScript>();
+        actionUIManager = GameObject.FindFirstObjectByType<ActionUIManager>();
+
+        rangeIndicator = GameObject.FindFirstObjectByType<MovementRangeIndicator>();
+        positionIndicator = GameObject.FindFirstObjectByType<PositionIndicatorSprite>();
     }
 
-    void OnMouseDown()
+    public override void Execute()
     {
-        print("Move button clicked! Click on the board to select target...");
+        Debug.Log("Move button clicked! Click on the board to select target...");
         waitingForTarget = true;
         buttonJustClicked = true;
-        
         Vector2 startPos = actionUIManager.GetLastTargetPosition();
         
         if (rangeIndicator != null)
@@ -33,10 +42,10 @@ public class MoveButtonScript : MonoBehaviour
         
   
         
-        print("Clicked!");
+        Debug.Log("Clicked!");
     }
 
-    void Update()
+    public override void Update()
     {
         if (buttonJustClicked)
         {
@@ -86,7 +95,7 @@ public class MoveButtonScript : MonoBehaviour
                 colliderRadius
             );
             
-            print($"Moving to: {validatedTarget}");
+            Debug.Log($"Moving to: {validatedTarget}");
             waitingForTarget = false;
             
             if (rangeIndicator != null)
@@ -97,10 +106,10 @@ public class MoveButtonScript : MonoBehaviour
 
             
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-            GameStateManager.Instance.newMove(new MoveAction(validatedTarget, player.maxMoveDistance, actionUIManager.getUIPosition()), actionSprite);
-        }
-    }
-
+            action.Initialize(validatedTarget, player.maxMoveDistance, actionUIManager.getUIPosition());
+            GameStateManager.Instance.newMove(action, action.getSprite());
+        } 
+    } 
     void OnMouseEnter()
     {
         if (!waitingForTarget)

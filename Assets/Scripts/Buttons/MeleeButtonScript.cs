@@ -2,33 +2,42 @@ using Assets.Scripts.player_actions;
 using System.Diagnostics;
 using UnityEngine;
 
-public class MeleeButtonScript : MonoBehaviour
+
+public class MeleeButtonScript : ButtonInstruction
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    private ActionUIManager actionUIManager;   
+    private PlayerScript player;
     public Texture2D cursor;
-    [SerializeField] private PlayerScript player;
-    [SerializeField] private ActionUIManager actionUIManager;
-    [SerializeField] private Sprite actionSprite;
     private SlashDirectionIndicator slashIndicator;
     private float spawnDistance = 0.75f;
-    IAction action;
-
     private bool waitingForTarget = false;
     private bool buttonJustClicked = false;
+    private MeleeAttack action;
 
-    void Start()
+    public MeleeButtonScript(MeleeAttack action)
     {
-        slashIndicator = player.GetComponent<SlashDirectionIndicator>();
+        this.action = action;
     }
-    void OnMouseDown()
+    public override void Instruct(GenericButton button)
     {
+        button.spriteRenderer.sprite = action.getSprite();
+
+        player = GameObject.FindFirstObjectByType<PlayerScript>();
+        slashIndicator = player.GetComponent<SlashDirectionIndicator>();
+
+        actionUIManager = GameObject.FindFirstObjectByType<ActionUIManager>();
+    }
+    public override void Execute()
+    {
+        UnityEngine.Debug.Log("Clacked!");
         waitingForTarget = true;
         buttonJustClicked = true;
         slashIndicator.Show(actionUIManager.GetLastTargetPosition());
-        print("Clicked!");
-        //actionUIManager.UpdateActionUI(actionSprite);
+        
     }
-    void Update()
+    public override void Update()
     {
         if (buttonJustClicked)
         {
@@ -59,22 +68,8 @@ public class MeleeButtonScript : MonoBehaviour
             waitingForTarget = false;
             slashIndicator.Hide();
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-            GameStateManager.Instance.newAction(new MeleeAttack(rotation, spawnPosition), actionSprite);
+            action.Initialize(rotation, spawnPosition);
+            GameStateManager.Instance.newAction(action, action.getSprite());
         }
-        
     }
-    void OnMouseEnter()
-    {
-        Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
-    }
-    
-    void OnMouseExit()
-    {
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-    }
-
-    
-   
-
-
 }

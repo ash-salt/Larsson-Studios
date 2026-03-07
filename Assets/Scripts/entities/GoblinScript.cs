@@ -8,6 +8,7 @@ namespace Assets.Scripts
 	public class GoblinScript: EntityScript
 	{
 
+        [SerializeField] public MoveAction moveAction;
         [SerializeField] public GameObject player;
         [SerializeField] FloatingHealthBar healthBar;
         public float farAway = 5f;
@@ -114,7 +115,8 @@ namespace Assets.Scripts
 
         public void QueueMove(Vector2 targetPos, float maxDistance = 2f)
         {
-            EnqueueAction(new MoveAction(targetPos, maxDistance, this.transform.position));
+            moveAction.Initialize(targetPos, maxDistance, this.transform.position);
+            EnqueueAction(moveAction);
         }
 
 
