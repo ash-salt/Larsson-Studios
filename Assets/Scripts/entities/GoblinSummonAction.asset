@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56e5267cb3b5d5143a0dc985b67c569c, type: 3}
+  m_Name: GoblinSummonAction
+  m_EditorClassIdentifier: 
+  cost: 1
+  cooldown: 0
+  actionSprite: {fileID: 0}
+  goblinPrefab: {fileID: 5519989177851678993, guid: 6703c188e75b329428c7ab6bec1bb665, type: 3}
+  goblinArcherPrefab: {fileID: 993249494861531238, guid: db4f9d241959686419bee8c1f56ecd62, type: 3}

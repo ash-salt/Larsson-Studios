@@ -354,7 +354,8 @@ MonoBehaviour:
   isBlocking: 1
   healthBarControl: {fileID: 0}
   maxMoveDistance: 3
-  moveAction: {fileID: 11400000, guid: 5a653baa46e11724189a17cdc41420c5, type: 2}
+  moveActionData: {fileID: 11400000, guid: d4b47dc7a3843474ba09ddd355688a9c, type: 2}
+  attackActionData: {fileID: 11400000, guid: 99776d5c63043374bbae6dec63d794dd, type: 2}
   player: {fileID: 0}
   healthBar: {fileID: 0}
   farAway: 5
@@ -362,7 +363,7 @@ MonoBehaviour:
   shortDistance: 2
   attackDistance: 0.5
   randomRadius: 1
-  RangedAttack: {fileID: 11400000, guid: 2a7876b1f0d9f424abf99474bacccce8, type: 2}
+  attackActionData: {fileID: 0}
 --- !u!120 &249989952573597964
 LineRenderer:
   serializedVersion: 2

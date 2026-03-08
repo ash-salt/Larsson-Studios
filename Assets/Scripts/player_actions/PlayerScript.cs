@@ -6,12 +6,12 @@ namespace Assets.Scripts.player_actions {
 public class PlayerScript: EntityScript
 	{
 		private Item selectedItem;
-		[SerializeField] public AAction attackAction;
-		[SerializeField] public AAction utilAction;
-		[SerializeField] public AAction moveAction;
+		[SerializeField] public ActionData attackAction;
+		[SerializeField] public ActionData utilAction;
+		[SerializeField] public ActionData moveAction;
 		[SerializeField] public SpriteRenderer spriteRenderer;
 
-		public AAction getAction(int index)
+		public ActionData getAction(int index)
 		{
 			switch (index)
 			{
@@ -34,15 +34,6 @@ public class PlayerScript: EntityScript
 				selectedItem.UseItem(this);
 			}
         }
-		
-		public void SetBlocking(Boolean isBlocking)
-		{
-			this.isBlocking = isBlocking;
-		}
-		public void QueueMove(MoveAction action)
-		{
-			EnqueueAction(action);
-		}
 	
 	}
 }

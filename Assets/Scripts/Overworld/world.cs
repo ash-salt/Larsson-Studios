@@ -7,13 +7,13 @@ public class World: MonoBehaviour {
 
     [SerializeField] World prerequisite;
 
+    [SerializeField] Sprite blinkingSprite;
+
     [SerializeField] Sprite lockedSprite;
 
     [SerializeField] Sprite unlockedSprite;
 
-    [SerializeField] Sprite completedSprite;
-
-    [SerializeField] private SpriteRenderer lockSprite;
+    [SerializeField] SpriteRenderer completedSprite;
 
     [SerializeField] private SpriteRenderer currentSprite;
 
@@ -26,13 +26,18 @@ public class World: MonoBehaviour {
     void Start()
     {   
         worldManager = WorldManager.Instance;
+
         if (worldManager.isCompleted(worldID))
         {
             setToCompleted();
         }
         if (IsUnlocked())
         {
-            unlock();
+            setToUnlocked();
+        }
+        else
+        {
+            setToLocked();
         }
         if (!completed && IsUnlocked()) {        
             StartCoroutine(SwapRoutine());
@@ -53,12 +58,6 @@ public class World: MonoBehaviour {
         return worldID;
     }
 
-    public void unlock()
-    {
-        lockSprite.enabled = false;
-
-    }
-
     public void setToLocked()
     {
         currentSprite.sprite = lockedSprite;
@@ -72,20 +71,19 @@ public class World: MonoBehaviour {
     public void setToCompleted()
     {
         completed = true;
-        currentSprite.sprite = completedSprite;
-        lockSprite.enabled = false;
+        setToUnlocked();
     }
 
     public void swapSprite()
     {
-        if (currentSprite.sprite == lockedSprite)
-        {
-            setToUnlocked();
-        }
-        else
-        {
-            setToLocked();
-        }
+        if (currentSprite.sprite == blinkingSprite)
+         {
+             currentSprite.sprite = unlockedSprite;
+         }
+         else
+         {
+             currentSprite.sprite = blinkingSprite;
+         }
     }
     public bool IsUnlocked()
     {

@@ -2,46 +2,22 @@
 using System.Collections;
 using UnityEngine.Rendering;
 namespace Assets.Scripts.player_actions {
-	[CreateAssetMenu(menuName = "Scriptable Objects/Block")]
-
 public class BlockAction: AAction
 	{
 		public GameObject shieldInstance;
 
-		public void OnEnable()
+		public BlockAction(ActionData actionData)
 		{
-        	buttonInstruction = new BlockButtonScript(this);
-			cooldown = 1;
+			this.actionData = actionData;
 		}
 
-		public void Initialize()
-		{
-			return;
-		}
-
-		public override void CopyFrom(AAction source)
-        {
-            if (source is BlockAction src)
-			{
-				this.shieldInstance = src.shieldInstance;
-			}
-        }
-
-		public ButtonInstruction getInstructions()
-        {
-            return buttonInstruction;
-        }
-
-		public override void execute(EntityScript target)
+		public override void execute()
 		{
 			GameObject shieldPrefab = GameStateManager.Instance.GetShieldPrefab();
-            if (target.TryGetComponent<PlayerScript>(out PlayerScript player))
-            {
-                player.SetBlocking(true);
-				Vector3 playerPos = player.transform.position;
-				Quaternion rotation = Quaternion.Euler(0, 0, 0);
-				shieldInstance = GameObject.Instantiate(shieldPrefab, playerPos, rotation);
-            }
+            target.SetBlocking(true);
+			Vector3 playerPos = target.transform.position;
+			Quaternion rotation = Quaternion.Euler(0, 0, 0);
+			shieldInstance = GameObject.Instantiate(shieldPrefab, playerPos, rotation);
         }
 
 		public void Dispose()

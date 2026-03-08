@@ -1,31 +1,24 @@
 using Assets.Scripts.player_actions;
 //using System.Diagnostics;
 using UnityEngine;
-
 public class BlockButtonScript : ButtonInstruction
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public Texture2D cursor;
-    BlockAction action;
+    private BlockActionData actionData;
 
-    public BlockButtonScript(BlockAction action)
+    public BlockButtonScript(BlockActionData actionData)
     {
-        this.action = action;
+        this.actionData = actionData;
     }
-
-    public override void Update()
-    {
-        return;
-    }
-    public override void Execute()
-    {
-        Debug.Log("Clicked!");
-        GameStateManager.Instance.newAction(action, action.getSprite());
-    }    
 
     public override void Instruct(GenericButton button)
     {
-        button.spriteRenderer.sprite = action.getSprite();
+        button.spriteRenderer.sprite = actionData.getSprite();
     }
 
+    public override void Execute()
+    {
+        AAction blockAction = actionData.createAction();
+        GameStateManager.Instance.newAction(blockAction);
+    }
+    public override void Update() { }
 }

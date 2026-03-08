@@ -8026,7 +8026,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1358357364004153695, guid: d78b54189ceb77e8b98b6278ec623d13, type: 3}
       propertyPath: m_Layer
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1358357364004153695, guid: d78b54189ceb77e8b98b6278ec623d13, type: 3}
       propertyPath: m_TagString
@@ -8129,9 +8129,9 @@ MonoBehaviour:
   isBlocking: 0
   healthBarControl: {fileID: 0}
   maxMoveDistance: 3
-  attackAction: {fileID: 11400000, guid: 0c2521ef52308ab42a3e9882e4248f13, type: 2}
-  utilAction: {fileID: 11400000, guid: 44d2528f497c9d744a19e0ce7630c843, type: 2}
-  moveAction: {fileID: 11400000, guid: 5a653baa46e11724189a17cdc41420c5, type: 2}
+  attackAction: {fileID: 11400000, guid: 9abf0656b6fa0c542865f13490817439, type: 2}
+  utilAction: {fileID: 11400000, guid: 2aacf3d8c8394934284ab71211cefa0b, type: 2}
+  moveAction: {fileID: 11400000, guid: d4b47dc7a3843474ba09ddd355688a9c, type: 2}
   spriteRenderer: {fileID: 0}
 --- !u!50 &7525991657286185662
 Rigidbody2D:
