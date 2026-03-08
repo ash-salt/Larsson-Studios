@@ -114,7 +114,7 @@ public class GameStateManager : MonoBehaviour
     }
 
 
-    public void newAction(AAction action, Sprite sprite)
+    public void newAction(AAction action)
     {
         if (cd.onCooldown(action)) return;
         player.EnqueueAction(action);
@@ -122,16 +122,16 @@ public class GameStateManager : MonoBehaviour
         {
             cd.addCooldown(action);
         }
-        actionUIManager.UpdateActionUI(sprite);
+        actionUIManager.UpdateActionUI(action.getSprite());
     }
 
-    public void newMove(MoveAction action, Sprite sprite)
+    public void newMove(MoveAction action)
     {
         if (cd.onCooldown(action)) return;
         if (player.fullActionQueue()) return;
-        player.QueueMove(action);
+        player.EnqueueAction(action);
         actionUIManager.newMove(action.getTargetPosition()); // Store validated position
-        actionUIManager.UpdateActionUI(sprite);
+        actionUIManager.UpdateActionUI(action.getSprite());
         if (action.getCooldown() > 0)
         {
             cd.addCooldown(action);
@@ -208,6 +208,8 @@ public class GameStateManager : MonoBehaviour
         foreach (EntityScript entity in gameEntities)
         {
             AAction action = entity.DequeueAction();
+            if (action == null) continue;
+            action.target = entity;
             currentActions[entity] = action;
         }
         ResolveBlocks(currentActions);
@@ -241,9 +243,8 @@ public class GameStateManager : MonoBehaviour
     {
         foreach (var a in queuedActions)
         {
-            if (!(a.Value is MeleeAttack || a.Value is GoblinAttackAction || a.Value is GoblinRangedAttack)) continue;
-
-            a.Value.execute(a.Key);
+            if (!(a.Value is MeleeAttack || a.Value is GoblinAttackAction || a.Value is GoblinRangedAttack || a.Value is FatGoblinSummonAction)) continue;
+            a.Value.execute();
         }
         return;
     }
@@ -254,7 +255,7 @@ public class GameStateManager : MonoBehaviour
         {
             if (!(a.Value is BlockAction)) continue;
 
-            a.Value.execute(a.Key);
+            a.Value.execute();
         }
         return;
     }
@@ -265,7 +266,7 @@ public class GameStateManager : MonoBehaviour
         {
             if (!(a.Value is MoveAction)) continue;
 
-            a.Value.execute(a.Key);
+            a.Value.execute();
         }
     }
 

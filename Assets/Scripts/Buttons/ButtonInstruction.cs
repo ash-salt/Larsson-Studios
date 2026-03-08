@@ -1,4 +1,5 @@
 using UnityEngine;
+
 public abstract class ButtonInstruction
 {
     public abstract void Instruct(GenericButton button);

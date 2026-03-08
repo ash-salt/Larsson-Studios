@@ -5,120 +5,85 @@ using UnityEngine.Scripting.APIUpdating;
 
 namespace Assets.Scripts
 {
-	public class GoblinScript: EntityScript
-	{
+	public class GoblinScript : EntityScript
+{
+    [SerializeField] public MoveActionData moveActionData;
+    [SerializeField] public ActionData attackActionData;
+    [SerializeField] public GameObject player;
+    [SerializeField] FloatingHealthBar healthBar;
+    public float farAway = 5f;
+    public float mediumDistance = 4f;
+    public float shortDistance = 2f;
+    public float attackDistance = 0.5f;
+    [SerializeField] private float randomRadius = 1f;
+    private DamageFlash damageFlash;
 
-        [SerializeField] public MoveAction moveAction;
-        [SerializeField] public GameObject player;
-        [SerializeField] FloatingHealthBar healthBar;
-        public float farAway = 5f;
-		public float mediumDistance = 4f;
-		public float shortDistance = 2f;
-		public float attackDistance = 0.5f;
-        [SerializeField] private float randomRadius = 1f;
-
-        private DamageFlash damageFlash;
-
-        // Use this for initialization
-        void Start()
-		{
-            GameStateManager.Instance.AddToEnemyList(this);
-			GameStateManager.Instance.AddToEntityList(this);
-            
-
-        }
-
-        private new void Awake()
-        {
-            healthBar = GetComponentInChildren<FloatingHealthBar>();
-            damageFlash = GetComponent<DamageFlash>();
-        }
-        public override void damage(int damage)
+    void Start()
     {
-        if (isBlocking)
-        {
-            Debug.Log("We are damagiiiiing");
-            return;
-        }
-        else
-        {
-            currentHealth -= damage;
-            if (healthBar != null){
-                healthBar.UpdateHealthBar(currentHealth,maxHealth);
+        GameStateManager.Instance.AddToEnemyList(this);
+        GameStateManager.Instance.AddToEntityList(this);
+    }
 
-            }
+    private new void Awake()
+    {
+        healthBar = GetComponentInChildren<FloatingHealthBar>();
+        damageFlash = GetComponent<DamageFlash>();
+    }
 
-            damageFlash.CallFlashDamage();
+    public override void damage(int damage)
+    {
+        if (isBlocking) return;
 
+        currentHealth -= damage;
+        if (healthBar != null)
+            healthBar.UpdateHealthBar(currentHealth, maxHealth);
+        damageFlash.CallFlashDamage();
 
-            
-        }
         if (currentHealth <= 0)
-        {
             Die();
-        }
     }
-        
-		public virtual void PlanTurn()
-		{
-			float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-			float stopDistance = 0.3f;
 
-			Vector3 direction = (player.transform.position - transform.position).normalized;
-			Vector3 targetPosition = player.transform.position - direction * stopDistance;
+    public virtual void PlanTurn()
+    {
+        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        Vector3 direction = (player.transform.position - transform.position).normalized;
+        Vector3 targetPosition = player.transform.position - direction * 0.3f;
+        Vector3 randomOffset = (Vector3)(Random.insideUnitCircle * randomRadius);
+        Vector3 finalTarget = targetPosition + randomOffset;
 
-			Vector2 randomCircle = Random.insideUnitCircle * randomRadius;
-
-			Vector3 randomOffset = new Vector2(randomCircle.x,randomCircle.y);
-
-			Vector3 finalTarget = targetPosition + randomOffset;
-
-			if (distanceToPlayer < attackDistance)
-			{
-				EnqueueAction(new GoblinAttackAction());
-			}
-			else if (shortDistance > distanceToPlayer && distanceToPlayer > attackDistance)
-			{
-				QueueMove(finalTarget);
-                EnqueueAction(new GoblinAttackAction());
-            }
-            else if (mediumDistance > distanceToPlayer && distanceToPlayer > shortDistance)
-			{
-                QueueMove(finalTarget);
-                QueueMove(finalTarget);
-                EnqueueAction(new GoblinAttackAction());
-            }
-            else if (farAway > distanceToPlayer && distanceToPlayer > mediumDistance)
-            {
-                QueueMove(finalTarget);
-                QueueMove(finalTarget);
-                QueueMove(finalTarget);
-            }
-
-        }
-
-		public void takeDamage(int damage) {
-        if (isBlocking)
+        if (distanceToPlayer < attackDistance)
         {
-            print("Attack Blocked!");
-            return;
+            QueueAttack();
         }
-        else
+        else if (distanceToPlayer < shortDistance)
         {
-            currentHealth -= damage;
+            QueueMove(finalTarget);
+            QueueAttack();
         }
-        if (currentHealth <= 0)
+        else if (distanceToPlayer < mediumDistance)
         {
-            Die();
+            QueueMove(finalTarget);
+            QueueMove(finalTarget);
+            QueueAttack();
+        }
+        else if (distanceToPlayer < farAway)
+        {
+            QueueMove(finalTarget);
+            QueueMove(finalTarget);
+            QueueMove(finalTarget);
         }
     }
 
-        public void QueueMove(Vector2 targetPos, float maxDistance = 2f)
-        {
-            moveAction.Initialize(targetPos, maxDistance, this.transform.position);
-            EnqueueAction(moveAction);
-        }
-
-
+    public void QueueMove(Vector2 targetPos, float maxDistance = 2f)
+    {
+        MoveAction action = (MoveAction)moveActionData.createAction();
+        action.Initialize(targetPos, maxDistance, transform.position);
+        EnqueueAction(action);
     }
+
+    private void QueueAttack()
+    {
+        EnqueueAction(attackActionData.createAction());
+    }
+}
 }

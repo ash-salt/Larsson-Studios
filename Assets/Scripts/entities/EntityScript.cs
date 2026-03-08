@@ -67,20 +67,22 @@ public class EntityScript : MonoBehaviour
         }
     }
 
-    public void EnqueueAction(AAction template)
+    public void EnqueueAction(AAction action)
     {
         int total_cost = 0;
-        foreach (AAction action in actions)
+        foreach (AAction act in actions)
         {
-            total_cost += action.getCost();
+            if (act == null)
+            {
+                Debug.LogError("Null action found in queue");
+                continue;
+            }
+            total_cost += act.getCost();
         }
 
-        if (total_cost + template.getCost() <= 3)
+        if (total_cost + action.getCost() <= 3)
         {
-            // clone the ScriptableObject to make a unique instance
-            AAction actionInstance = Instantiate(template);
-            actionInstance.CopyFrom(template);
-            actions.AddLast(actionInstance);
+            actions.AddLast(action);
         }
     }
 
@@ -119,4 +121,8 @@ public class EntityScript : MonoBehaviour
         isDead = true;
     }
 
+    public void SetBlocking(Boolean isBlocking)
+		{
+			this.isBlocking = isBlocking;
+		}
 }

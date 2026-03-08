@@ -3,13 +3,16 @@ using UnityEngine;
 
 
 namespace Assets.Scripts.player_actions {
-    [CreateAssetMenu(menuName = "Scriptable Objects/Move")]
 public class MoveAction : AAction
 {
     private Vector2 targetPosition;
     private Vector2 startPosition;
     private float maxDistance;
-    GameObject moveAnimationInstance;
+    private GameObject moveAnimationInstance;
+    public MoveAction(ActionData data)
+    {
+        actionData = data;
+    }
 
     public void Initialize(Vector2 targetPosition, float maxDistance, Vector2 startPosition)
     {
@@ -18,64 +21,31 @@ public class MoveAction : AAction
         this.startPosition = startPosition;
     }
 
-    public override void CopyFrom(AAction source)
-        {
-            if (source is MoveAction src)  {
-                this.targetPosition = src.targetPosition;
-                this.maxDistance = src.maxDistance;
-                this.startPosition = src.startPosition;
-            }
-        }
-
-    public void OnEnable()
-		{
-        	buttonInstruction = new MoveButtonScript(this);
-		}
-
-    public ButtonInstruction getInstructions()
-        {
-            if (buttonInstruction is null)
-            {
-                buttonInstruction = new MoveButtonScript(this);
-            }
-            return buttonInstruction;
-        }
-
     public Vector2 getTargetPosition()
     {
         return targetPosition;
     }  
-
-    public int getCooldown()
-    {
-        return 0;
-    }
-
-    public int getCost()
-    {
-        return 1;
-    }
 
     public Vector2 getStartPosition()
     {
         return startPosition;
     }
 
-    public override void execute(EntityScript entity)
+    public override void execute()
     {
-        Rigidbody2D rb = entity.GetComponent<Rigidbody2D>();
+        Rigidbody2D rb = target.GetComponent<Rigidbody2D>();
 
         Vector2 currentPos = rb.position;
 
         float colliderRadius = 0.3f;
-        CircleCollider2D circleCollider = entity.GetComponent<CircleCollider2D>();
+        CircleCollider2D circleCollider = target.GetComponent<CircleCollider2D>();
         if (circleCollider != null)
         {
             colliderRadius = circleCollider.radius;
         }
         else
         {
-            BoxCollider2D boxCollider = entity.GetComponent<BoxCollider2D>();
+            BoxCollider2D boxCollider = target.GetComponent<BoxCollider2D>();
             if (boxCollider != null)
             {
                 colliderRadius = (boxCollider.size.x + boxCollider.size.y) / 4f;
@@ -92,7 +62,7 @@ public class MoveAction : AAction
         float moveDistance = Vector2.Distance(currentPos, finalPos);
         if (moveDistance <= 0.001f)
         {
-            entity.doneWithAction();
+            target.doneWithAction();
             return;
         }
 
@@ -100,23 +70,23 @@ public class MoveAction : AAction
 
         if (moveAnimPrefab != null)
         {
-            moveAnimationInstance = GameObject.Instantiate(moveAnimPrefab, entity.transform.position, Quaternion.identity);
+            moveAnimationInstance = GameObject.Instantiate(moveAnimPrefab, target.transform.position, Quaternion.identity);
             MoveAnimationScript moveAnim = moveAnimationInstance.GetComponent<MoveAnimationScript>();
 
             if (moveAnim != null)
             {
-                moveAnim.StartMove(entity, finalPos, () => entity.doneWithAction());
+                moveAnim.StartMove(target, finalPos, () => target.doneWithAction());
             }
             else
             {
                 rb.MovePosition(finalPos);
-                entity.doneWithAction();
+                target.doneWithAction();
             }
         }
         else
         {
             rb.MovePosition(finalPos);
-            entity.doneWithAction();
+            target.doneWithAction();
         }
     }
     public void Dispose()

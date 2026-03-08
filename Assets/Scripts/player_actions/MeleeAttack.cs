@@ -1,69 +1,36 @@
-using System.Linq;
-using Assets.Scripts;
-using Unity.VisualScripting;
+using Assets.Scripts.player_actions;
 using UnityEngine;
-//using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
+
 
 namespace Assets.Scripts.player_actions {
-    [CreateAssetMenu(menuName = "Scriptable Objects/Melee")]
-
-public class MeleeAttack :  AAction
+public class MeleeAttack : AAction
 {
-    int damage;
-    float spawnDistance = 0.75f;
-    GameObject slashInstance;
-    public GameObject slashPrefab;
-    public Vector3 spawnPos;
-    public Quaternion rotation;
-    float angle;
+    private GameObject slashInstance;
+    private Vector3 spawnPos;
+    private Quaternion rotation;
 
-    public void Initialize(Quaternion rotation, Vector3 spawnPos)
+    public MeleeAttack(ActionData actionData)
     {
-        this.slashPrefab = GameStateManager.Instance.GetSlashPrefab();
+        this.actionData = actionData;
+    }
+
+    public void Initialize(Vector3 spawnPos, Quaternion rotation)
+    {
         this.spawnPos = spawnPos;
         this.rotation = rotation;
     }
-    public override void CopyFrom(AAction source)
-        {
-            if (source is MeleeAttack src)  {
-                this.slashPrefab = src.slashPrefab;
-                this.spawnPos = src.spawnPos;
-                this.rotation = src.rotation;
-            }
-        }
 
-    public void OnEnable()
-	{
-        buttonInstruction = new MeleeButtonScript(this);
-	}
-
-    public ButtonInstruction getInstructions()
-        {
-            if (buttonInstruction == null) 
-                {
-                    buttonInstruction = new MeleeButtonScript(this);
-                }
-            return buttonInstruction;
-        }
-
-    public int getCooldown()
+    public override void execute()
     {
-        return 0;
-    }
-
-    public int getCost()
-    {
-        return 1;
-    }
-
-    public override void execute(EntityScript player)
-    {
+        GameObject slashPrefab = GameStateManager.Instance.GetSlashPrefab();
         slashInstance = GameObject.Instantiate(slashPrefab, spawnPos, rotation);
     }
 
     public void Dispose()
     {
-        Object.Destroy(slashInstance);
+        if (slashInstance != null) {
+            Object.Destroy(slashInstance);
+        }
     }
 }
 }

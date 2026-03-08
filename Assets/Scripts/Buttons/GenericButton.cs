@@ -5,27 +5,27 @@ public class GenericButton : MonoBehaviour
 {
     public Texture2D cursor;
     [SerializeField] int actionIndex;
-    [SerializeField] public AAction action;
+    [SerializeField] public ActionData action;
     [SerializeField] private SpriteRenderer cooldown;
     private ButtonInstruction instructions;
     public SpriteRenderer spriteRenderer;
 
-    private void ChangeAction(AAction newAction)
+    private void ChangeAction(ActionData newAction)
     {
         action = newAction;
         spriteRenderer.sprite = action.getSprite();
-        instructions = action.getInstructions();
+        instructions = action.createButtonInstruction();
         instructions.Instruct(this);
     }
     public void Start()
     {   
         PlayerScript player = GameObject.FindFirstObjectByType<PlayerScript>();
-        AAction act = player.getAction(actionIndex);
+        ActionData act = player.getAction(actionIndex);
         if (act != null)        {
             action = act;
         }
         
-        instructions = action.getInstructions();
+        instructions = action.createButtonInstruction();
         if (instructions == null)
         {
             Debug.LogError("Instructions is NULL at start");

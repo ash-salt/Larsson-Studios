@@ -1,138 +1,91 @@
 using Assets.Scripts.player_actions;
 using UnityEngine;
-
-[CreateAssetMenu(menuName = "Scriptable Objects/GoblinRanged")]
-public class GoblinRangedAttack : AAction 
+public class GoblinRangedAttack : AAction
 {
-    public bool prepared;
-    public PlayerScript player;
-    private LayerMask obstacleLayer = LayerMask.GetMask("Obstacles");
-    private LayerMask playerLayer = LayerMask.GetMask("Ignore Raycast");
-
-    public LineRenderer lineRenderer;
-    public Vector2 playerPos;
-
+    private bool prepared;
+    private Vector2 playerPos;
+    private LayerMask obstacleLayer;
+    private LayerMask playerLayer;
+    private LineRenderer lineRenderer;
     private SpriteRenderer spriteRenderer;
-    public Sprite attackSprite;
-    public Sprite defaultSprite;
-
     private float objectDistance;
     private float playerDistance;
 
-    /*
-    public GoblinRangedAttack(bool isPrepared, Vector3 pPos)
+    public GoblinRangedAttack(ActionData actionData)
     {
-        prepared = isPrepared;
-        playerPos = pPos;
-
-        attackSprite = GameStateManager.Instance.archerAttackSprite;
-        defaultSprite = GameStateManager.Instance.archerDefaultSprite;
-        
-    }*/
-
-    public void Initialize(bool isPrepared, Vector3 pPos)
-    {
-        prepared = isPrepared;
-        playerPos = pPos;
-
-        attackSprite = GameStateManager.Instance.archerAttackSprite;
-        defaultSprite = GameStateManager.Instance.archerDefaultSprite;    
+        this.actionData = actionData;
+        obstacleLayer = LayerMask.GetMask("Obstacles");
+        playerLayer = LayerMask.GetMask("Player");
     }
 
-    public override void CopyFrom(AAction source)
+    public void Initialize(bool isPrepared, Vector2 playerPos)
     {
-        if (source is GoblinRangedAttack src)
+        this.prepared = isPrepared;
+        this.playerPos = playerPos;
+    }
+
+    public override void execute()
+{
+    spriteRenderer = target.GetComponent<SpriteRenderer>();
+    GoblinRangedData data = (GoblinRangedData)actionData;
+
+    if (!prepared)
+    {
+        spriteRenderer.sprite = data.attackSprite;
+        target.doneWithAction();
+        return;
+    }
+
+    lineRenderer = target.GetComponent<LineRenderer>();
+    lineRenderer.useWorldSpace = true;
+    lineRenderer.enabled = true;
+
+    Vector2 origin = (Vector2)target.transform.position;
+    Vector2 direction = (playerPos - origin).normalized;
+    origin += direction * 0.5f;
+    float distance = Vector2.Distance(origin, playerPos) * 1.5f;
+
+    RaycastHit2D wallHit = Physics2D.Raycast(origin, direction, distance, obstacleLayer);
+    RaycastHit2D playerHit = Physics2D.Raycast(origin, direction, distance, playerLayer);
+
+    Vector3 startPos = new Vector3(target.transform.position.x, target.transform.position.y, -0.5f);
+    lineRenderer.positionCount = 2;
+    lineRenderer.SetPosition(0, startPos);
+
+    bool wallBlocking = wallHit.collider != null &&
+                        (playerHit.collider == null || wallHit.distance < playerHit.distance);
+
+    if (wallBlocking)
+    {
+        Debug.Log("Shot hit a wall");
+        lineRenderer.SetPosition(1, new Vector3(wallHit.point.x, wallHit.point.y, -0.5f));
+    }
+    else if (playerHit.collider != null)
+    {
+        lineRenderer.SetPosition(1, new Vector3(playerHit.point.x, playerHit.point.y, -0.5f));
+        EntityScript hitEntity = playerHit.collider.GetComponent<EntityScript>();
+        if (!hitEntity.isBlocking)
         {
-            prepared = src.prepared;
-            playerPos = src.playerPos;
-            attackSprite = src.attackSprite;
-            defaultSprite = src.defaultSprite;
-        }
-    }
-
-    public int getCost()
-    {
-        return 1;
-    }
-
-    public int getCooldown()
-    {
-        return 0;
-    }
-
-    public override void execute(EntityScript entity)
-    {
-        spriteRenderer = entity.GetComponent<SpriteRenderer>();
-        Debug.Log("prepared is " + prepared);
-        if (prepared == false)
-        {
-            spriteRenderer.sprite = attackSprite;
+            hitEntity.damage(25);
         }
         else
         {
-            lineRenderer = entity.GetComponent<LineRenderer>();
-            lineRenderer.useWorldSpace = true;
-            lineRenderer.enabled = true;
-            MonoBehaviour.print("firing!");
-            Vector2 origin = entity.transform.position;
-            Vector2 direction = (playerPos - origin).normalized;
-            origin = origin + direction*0.5f;
-            float distance = Vector2.Distance(origin, playerPos) * 1.5f;
-
-            RaycastHit2D hit = Physics2D.Raycast(
-                origin,
-                direction,
-                distance,
-                obstacleLayer
-            );
-            RaycastHit2D entityHit = Physics2D.Raycast(
-                    origin,
-                    direction,
-                    distance,
-                    playerLayer
-                );
-            if (hit.collider != null && (entityHit.collider == null || hit.distance < entityHit.distance))
-            {
-
-                // Hit wall/obstacle
-                objectDistance = Vector2.Distance(origin, hit.point);
-                Debug.Log("hit object");
-                lineRenderer.positionCount = 2;
-                lineRenderer.SetPosition(0, new Vector3(entity.transform.position.x, entity.transform.position.y, -0.5f));
-                lineRenderer.SetPosition(1, new Vector3(hit.point.x, hit.point.y, -0.5f));
-            }
-            else
-            {
-                Debug.DrawRay(origin, direction * distance, Color.red, 1f);
-                // No obstacle → check player
-
-                if (entityHit.collider != null)
-                {
-                    playerDistance = Vector2.Distance(origin, entityHit.point);
-                    lineRenderer.positionCount = 2;
-                    lineRenderer.SetPosition(0, new Vector3(entity.transform.position.x, entity.transform.position.y, -0.5f));
-                    lineRenderer.SetPosition(1, new Vector3(entityHit.point.x, entityHit.point.y, -0.5f));
-                    if (!entityHit.collider.GetComponent<EntityScript>().isBlocking)
-                    {
-                        Debug.Log("hit something named " + entityHit.collider.name);
-                        entityHit.collider.GetComponent<EntityScript>().damage(25);
-                    }
-                    else
-                    {
-                        Debug.Log("Shot was blocked!!!");
-                    }
-                }
-            }
-            spriteRenderer.sprite = defaultSprite;
+            Debug.Log("Shot was blocked!");
         }
     }
-    
+    else
+    {
+        Vector2 endpoint = origin + direction * distance;
+        lineRenderer.SetPosition(1, new Vector3(endpoint.x, endpoint.y, -0.5f));
+    }
+
+    spriteRenderer.sprite = data.defaultSprite;
+    target.doneWithAction();
+}
     public void Dispose()
     {
-        if (lineRenderer != null)
-        {
-            lineRenderer.enabled = false;  
+        if (lineRenderer != null) {
+            lineRenderer.enabled = false;
         }
-        
     }
 }

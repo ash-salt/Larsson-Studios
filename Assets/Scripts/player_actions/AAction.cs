@@ -1,29 +1,31 @@
 using UnityEngine;
 namespace Assets.Scripts.player_actions {
-public abstract class AAction : ScriptableObject
+public abstract class AAction
 {
-    [SerializeField] protected int cost = 1;
-    [SerializeField] public int cooldown = 0;
-    [SerializeField] protected Sprite actionSprite;
-    protected ButtonInstruction buttonInstruction;
+    public ActionData actionData;
+    public EntityScript target;
     public int getCost()
     {
-        return cost;
+        return actionData.cost;
     }
     public int getCooldown()
     {
-        return cooldown;
+        return actionData.cooldown;
     }
     public Sprite getSprite()
     {
-        return actionSprite;
+        return actionData.actionSprite;
     }
+    /*
     public ButtonInstruction getInstructions()
     {
-        return buttonInstruction;
-    }
-    public abstract void CopyFrom(AAction source);
-    public abstract void execute(EntityScript target);
+            if (buttonInstruction is null)
+            {
+                buttonInstruction = actionData.createButtonInstruction();
+            }
+            return buttonInstruction;
+    }*/
+    public abstract void execute();
 }
 
 }

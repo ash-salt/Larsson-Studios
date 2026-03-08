@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c24c7fd5e1c473488f2830897137903, type: 3}
-  m_Name: MoveAction
+  m_Script: {fileID: 11500000, guid: 4bfa1af5586ca7a4b9db419913bd2cd1, type: 3}
+  m_Name: MeleeActionData
   m_EditorClassIdentifier: 
   cost: 1
   cooldown: 0
-  actionSprite: {fileID: 21300000, guid: 8dee59cc7290d3e45b5712d5b9ade2e9, type: 3}
+  actionSprite: {fileID: 21300000, guid: 2ed112cea7042e24eae1ba7f8baf98a5, type: 3}

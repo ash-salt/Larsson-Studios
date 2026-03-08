@@ -1,51 +1,43 @@
 using Assets.Scripts;
 using UnityEngine;
 using Assets.Scripts.player_actions;
-
 public class GoblinArcherScript : GoblinScript
 {
-    [SerializeField] GoblinRangedAttack RangedAttack;
+    private void QueueRangedAttack(bool prepared)
+    {
+        GoblinRangedAttack attack = (GoblinRangedAttack) attackActionData.createAction();
+        attack.Initialize(prepared, player.transform.position);
+        EnqueueAction(attack);
+    }
+
     public override void PlanTurn()
-    {   
-        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position); 
-
+    {
+        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
         Vector3 direction = (player.transform.position - transform.position).normalized * -1;
-        Vector3 targetPosition = direction*maxMoveDistance;
-
+        Vector3 targetPosition = direction * maxMoveDistance;
 
         if (distanceToPlayer < attackDistance)
         {
             QueueMove(targetPosition);
-            RangedAttack.Initialize(false, player.transform.position);
-            EnqueueAction(RangedAttack);
-            RangedAttack.Initialize(true, player.transform.position);
-            EnqueueAction(RangedAttack);
+            QueueRangedAttack(false);
+            QueueRangedAttack(true);
         }
-        else if (shortDistance > distanceToPlayer && distanceToPlayer > attackDistance)
+        else if (distanceToPlayer > attackDistance && distanceToPlayer < shortDistance)
         {
             QueueMove(targetPosition);
-            RangedAttack.Initialize(false, player.transform.position);
-            EnqueueAction(RangedAttack);
-            RangedAttack.Initialize(true, player.transform.position);
-            EnqueueAction(RangedAttack);
+            QueueRangedAttack(false);
+            QueueRangedAttack(true);
         }
-        else if (mediumDistance > distanceToPlayer && distanceToPlayer > shortDistance)
+        else if (distanceToPlayer > shortDistance && distanceToPlayer < mediumDistance)
         {
-            RangedAttack.Initialize(false, player.transform.position);
-            EnqueueAction(RangedAttack);
-            RangedAttack.Initialize(true, player.transform.position);
-            EnqueueAction(RangedAttack);
+            QueueRangedAttack(false);
+            QueueRangedAttack(true);
             QueueMove(targetPosition);
         }
-        else if (farAway > distanceToPlayer && distanceToPlayer > mediumDistance)
+        else if (distanceToPlayer > mediumDistance && distanceToPlayer < farAway)
         {
-            RangedAttack.Initialize(false, player.transform.position);
-            EnqueueAction(RangedAttack);
-            RangedAttack.Initialize(true, player.transform.position);
-            EnqueueAction(RangedAttack);
+            QueueRangedAttack(false);
+            QueueRangedAttack(true);
         }
-        
     }
-
-
 }
