@@ -445,8 +445,8 @@ MonoBehaviour:
   shortDistance: 2
   attackDistance: 0.5
   randomRadius: 1
-  goblinPrefab: {fileID: 0}
-  goblinArcherPrefab: {fileID: 0}
+  goblinPrefab: {fileID: 5973251486355101074, guid: 03c4697ac04cb33418d23c08305f6cae, type: 3}
+  goblinArcherPrefab: {fileID: 993249494861531238, guid: db4f9d241959686419bee8c1f56ecd62, type: 3}
 --- !u!1 &4212491820884652819
 GameObject:
   m_ObjectHideFlags: 0

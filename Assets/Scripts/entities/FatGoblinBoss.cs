@@ -10,8 +10,8 @@ public class FatGoblinBoss : Assets.Scripts.GoblinScript
     {
         if (readyToSpawn)
         {
-            EnqueueAction(null);
-            EnqueueAction(null);
+            EnqueueAction(ScriptableObject.CreateInstance<EmptyAction>());
+            EnqueueAction(ScriptableObject.CreateInstance<EmptyAction>());
             EnqueueAction(new FatGoblinSummonAction(goblinPrefab, goblinArcherPrefab));
         }
         readyToSpawn = !readyToSpawn;

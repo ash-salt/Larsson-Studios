@@ -11,6 +11,11 @@ public class FatGoblinSummonAction : AAction
         this.goblinPrefab = goblinPrefab;
         this.goblinArcherPrefab = goblinArcherPrefab;
     }
+    public void Init(GameObject goblinPrefab, GameObject goblinArcherPrefab)
+    {
+        this.goblinPrefab = goblinPrefab;
+        this.goblinArcherPrefab = goblinArcherPrefab;
+    }
     public int getCost()
     {
         return 1;
