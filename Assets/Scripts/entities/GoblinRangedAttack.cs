@@ -29,6 +29,7 @@ public class GoblinRangedAttack : AAction
     {
      
     GoblinRangedData data = ((GoblinRangedData) actionData);
+    spriteRenderer = target.GetComponent<SpriteRenderer>();
     if (!prepared)
     {
         if (spriteRenderer != null)
@@ -38,7 +39,6 @@ public class GoblinRangedAttack : AAction
         target.doneWithAction();
         return;
     }
-    spriteRenderer = target.GetComponent<SpriteRenderer>();
 
     Vector2 origin = (Vector2)target.transform.position;
     Vector2 direction = (playerPos - origin).normalized;
