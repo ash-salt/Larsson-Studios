@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5771700565938950360}
   - component: {fileID: 5792172829537211947}
   - component: {fileID: 1703501274073837534}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 2464630660827263206}
   - component: {fileID: 318156012025768893}
   - component: {fileID: 882779041854845362}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 39455635957661927}
   - component: {fileID: 249989952573597964}
   - component: {fileID: 8149463687485256503}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: GoblinArcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -363,7 +363,6 @@ MonoBehaviour:
   shortDistance: 2
   attackDistance: 0.5
   randomRadius: 1
-  attackActionData: {fileID: 0}
 --- !u!120 &249989952573597964
 LineRenderer:
   serializedVersion: 2
@@ -497,7 +496,7 @@ GameObject:
   - component: {fileID: 4689109856416072190}
   - component: {fileID: 397069458061396629}
   - component: {fileID: 2856991191828991521}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -596,7 +595,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8201816154977732726}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -634,7 +633,7 @@ GameObject:
   - component: {fileID: 5241398472959668192}
   - component: {fileID: 3937359391288538303}
   - component: {fileID: 9209882481651893607}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}

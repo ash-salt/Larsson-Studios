@@ -1989,7 +1989,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61364b3ec9b9dcd4ca5f4d47c2957176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item: {fileID: 11400000, guid: b4ac756a22710bb4b938f0f88b794242, type: 2}
   defaultsprite: {fileID: 21300000, guid: 2873365a7f7fa684cbc275ab695f37db, type: 3}
   itemImage: {fileID: 1938061720}
 --- !u!114 &1209597879

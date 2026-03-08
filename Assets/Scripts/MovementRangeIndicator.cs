@@ -10,6 +10,7 @@ public class MovementRangeIndicator : MonoBehaviour
     private MeshRenderer meshRenderer;
     private bool isActive;
     private Vector2 originPosition;
+    private float maxRange;
 
     void Awake()
     {
@@ -34,6 +35,17 @@ public class MovementRangeIndicator : MonoBehaviour
         isActive = true;
         meshRenderer.enabled = true;
         transform.position = originPosition;
+        maxRange = entityScript.maxMoveDistance;
+        BuildMesh();
+    }
+
+    public void Show(Vector2 from, float maxRange)
+    {
+        originPosition = from;
+        isActive = true;
+        meshRenderer.enabled = true;
+        transform.position = originPosition;
+        this.maxRange = maxRange;
         BuildMesh();
     }
 
@@ -52,7 +64,6 @@ public class MovementRangeIndicator : MonoBehaviour
 
     private void BuildMesh()
     {
-        float maxRange = entityScript.maxMoveDistance;
         int vertCount = rayCount + 2;
         Vector3[] vertices = new Vector3[vertCount];
         int[] triangles = new int[rayCount * 3];

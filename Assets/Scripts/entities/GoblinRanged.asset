@@ -17,3 +17,4 @@ MonoBehaviour:
   actionSprite: {fileID: 0}
   attackSprite: {fileID: 21300000, guid: e98406f853f8073eaba220e3024867c6, type: 3}
   defaultSprite: {fileID: 21300000, guid: c2ecd356200764ca4bc0bfe6c39e09e8, type: 3}
+  ArrowPrefab: {fileID: 679447868725350734, guid: ed2d3a68430e95446b7433b2b70c6b89, type: 3}

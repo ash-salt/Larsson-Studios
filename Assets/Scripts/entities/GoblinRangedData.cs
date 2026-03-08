@@ -5,6 +5,7 @@ public class GoblinRangedData : ActionData
 {
     public Sprite attackSprite;
     public Sprite defaultSprite;
+    [SerializeField] public GameObject ArrowPrefab;
 
     public override AAction createAction()
     {

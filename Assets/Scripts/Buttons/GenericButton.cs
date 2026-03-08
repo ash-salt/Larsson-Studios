@@ -9,29 +9,12 @@ public class GenericButton : MonoBehaviour
     [SerializeField] private SpriteRenderer cooldown;
     private ButtonInstruction instructions;
     public SpriteRenderer spriteRenderer;
-
-    private void ChangeAction(ActionData newAction)
-    {
-        action = newAction;
-        spriteRenderer.sprite = action.getSprite();
-        instructions = action.createButtonInstruction();
-        instructions.Instruct(this);
-    }
+    private PlayerScript player;
     public void Start()
     {   
-        PlayerScript player = GameObject.FindFirstObjectByType<PlayerScript>();
-        ActionData act = player.getAction(actionIndex);
-        if (act != null)        {
-            action = act;
-        }
-        
-        instructions = action.createButtonInstruction();
-        if (instructions == null)
-        {
-            Debug.LogError("Instructions is NULL at start");
-            return;
-        }
-        instructions.Instruct(this);
+        player = GameObject.FindFirstObjectByType<PlayerScript>();
+        Refresh();
+        player.OnActionsChanged += Refresh;
     }
 
     private void OnMouseDown()
@@ -69,5 +52,26 @@ public class GenericButton : MonoBehaviour
         Debug.Log(onCooldown);
         cooldown.enabled = onCooldown;
     }
+    public void Refresh()
+{
+
+    ActionData act = player.getAction(actionIndex);
+    
+    if (act == null) {
+        Debug.LogError("Action null");
+        return; 
+    }
+
+    action = act;
+    spriteRenderer.sprite = action.getSprite();
+    
+    instructions = action.createButtonInstruction();
+    if (instructions == null)
+    {
+        Debug.LogError("Instructions is null at start");
+        return;
+    }
+    instructions.Instruct(this);
+}
     
 }

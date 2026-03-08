@@ -32,8 +32,13 @@ public class PlayerScript: EntityScript
 			if (selectedItem != null)
 			{
 				selectedItem.UseItem(this);
+				NotifyActionsChanged(); 
 			}
         }
+		public event Action OnActionsChanged;
+		public void NotifyActionsChanged()
+	{		OnActionsChanged?.Invoke();
+	}
 	
 	}
 }

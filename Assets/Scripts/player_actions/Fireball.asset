@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ebd1614b55ebdb48983098838629a0f, type: 3}
+  m_Name: Fireball
+  m_EditorClassIdentifier: 
+  cost: 1
+  cooldown: 0
+  actionSprite: {fileID: 21300000, guid: 50aa3dc4913d82c4d833d16c81b9ec02, type: 3}
+  maxRange: 6

@@ -6,16 +6,17 @@ public class GoblinRangedAttack : AAction
     private Vector2 playerPos;
     private LayerMask obstacleLayer;
     private LayerMask playerLayer;
-    private LineRenderer lineRenderer;
     private SpriteRenderer spriteRenderer;
     private float objectDistance;
     private float playerDistance;
+    private GameObject arrowPrefab;
 
     public GoblinRangedAttack(ActionData actionData)
     {
-        this.actionData = actionData;
+        this.actionData = (GoblinRangedData) actionData;
         obstacleLayer = LayerMask.GetMask("Obstacles");
-        playerLayer = LayerMask.GetMask("Player");
+        playerLayer = LayerMask.GetMask("Player");  
+        arrowPrefab = ((GoblinRangedData) actionData).ArrowPrefab;
     }
 
     public void Initialize(bool isPrepared, Vector2 playerPos)
@@ -25,67 +26,48 @@ public class GoblinRangedAttack : AAction
     }
 
     public override void execute()
-{
-    spriteRenderer = target.GetComponent<SpriteRenderer>();
-    GoblinRangedData data = (GoblinRangedData)actionData;
-
+    {
+     
+    GoblinRangedData data = ((GoblinRangedData) actionData);
     if (!prepared)
     {
-        spriteRenderer.sprite = data.attackSprite;
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sprite = data.attackSprite;
+        }
         target.doneWithAction();
         return;
     }
-
-    lineRenderer = target.GetComponent<LineRenderer>();
-    lineRenderer.useWorldSpace = true;
-    lineRenderer.enabled = true;
+    spriteRenderer = target.GetComponent<SpriteRenderer>();
 
     Vector2 origin = (Vector2)target.transform.position;
     Vector2 direction = (playerPos - origin).normalized;
-    origin += direction * 0.5f;
-    float distance = Vector2.Distance(origin, playerPos) * 1.5f;
 
-    RaycastHit2D wallHit = Physics2D.Raycast(origin, direction, distance, obstacleLayer);
-    RaycastHit2D playerHit = Physics2D.Raycast(origin, direction, distance, playerLayer);
+    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+    Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    Vector3 spawnPos = new Vector3(origin.x, origin.y, -0.5f);
 
-    Vector3 startPos = new Vector3(target.transform.position.x, target.transform.position.y, -0.5f);
-    lineRenderer.positionCount = 2;
-    lineRenderer.SetPosition(0, startPos);
+    arrowPrefab = Object.Instantiate(data.ArrowPrefab, spawnPos, rotation);
 
-    bool wallBlocking = wallHit.collider != null &&
-                        (playerHit.collider == null || wallHit.distance < playerHit.distance);
-
-    if (wallBlocking)
+    Collider2D[] goblinColliders = target.GetComponents<Collider2D>();
+    Collider2D arrowCollider = arrowPrefab.GetComponent<Collider2D>();
+    foreach (Collider2D col in goblinColliders)
     {
-        Debug.Log("Shot hit a wall");
-        lineRenderer.SetPosition(1, new Vector3(wallHit.point.x, wallHit.point.y, -0.5f));
+        Physics2D.IgnoreCollision(arrowCollider, col);
     }
-    else if (playerHit.collider != null)
+
+    ArcherArrow projectile = arrowPrefab.GetComponent<ArcherArrow>();
+    if (projectile != null)
     {
-        lineRenderer.SetPosition(1, new Vector3(playerHit.point.x, playerHit.point.y, -0.5f));
-        EntityScript hitEntity = playerHit.collider.GetComponent<EntityScript>();
-        if (!hitEntity.isBlocking)
-        {
-            hitEntity.damage(25);
-        }
-        else
-        {
-            Debug.Log("Shot was blocked!");
-        }
+        projectile.Launch(direction, obstacleLayer, playerLayer, () => target.doneWithAction());
     }
     else
     {
-        Vector2 endpoint = origin + direction * distance;
-        lineRenderer.SetPosition(1, new Vector3(endpoint.x, endpoint.y, -0.5f));
+        target.doneWithAction();
     }
-
-    spriteRenderer.sprite = data.defaultSprite;
-    target.doneWithAction();
-}
-    public void Dispose()
+    if (spriteRenderer != null)
     {
-        if (lineRenderer != null) {
-            lineRenderer.enabled = false;
-        }
+        spriteRenderer.sprite = data.defaultSprite;
     }
+}
 }

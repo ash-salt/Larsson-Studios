@@ -243,7 +243,7 @@ public class GameStateManager : MonoBehaviour
     {
         foreach (var a in queuedActions)
         {
-            if (!(a.Value is MeleeAttack || a.Value is GoblinAttackAction || a.Value is GoblinRangedAttack || a.Value is FatGoblinSummonAction)) continue;
+            if (!(a.Value is MeleeAttack || a.Value is GoblinAttackAction || a.Value is GoblinRangedAttack || a.Value is FatGoblinSummonAction || a.Value is FireballAction || a.Value is MagicMissile)) continue;
             a.Value.execute();
         }
         return;
@@ -275,25 +275,9 @@ public class GameStateManager : MonoBehaviour
         foreach (KeyValuePair<EntityScript, AAction> unit in currentActions)
         {
             AAction action = unit.Value;
-            if (action is MeleeAttack)
+            if (action is Disposable act)
             {
-                MeleeAttack attack = (MeleeAttack) action;
-                attack.Dispose();
-            }
-            if (action is GoblinAttackAction)
-            {
-                GoblinAttackAction attack = (GoblinAttackAction) action;
-                attack.Dispose();
-            }
-            if (action is BlockAction)
-            {
-                BlockAction act = (BlockAction) action;
                 act.Dispose();
-            }
-             if (action is GoblinRangedAttack)
-            {
-                GoblinRangedAttack attack = (GoblinRangedAttack) action;
-                attack.Dispose();
             }
         }
     }

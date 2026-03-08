@@ -4,8 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable Objects/Mage Rod")]
 public class MageRod : Item
 {
-    [SerializeField] private AAction MageAttack;
-    [SerializeField] private AAction MageUtil;
+    [SerializeField] private ActionData MageAttack;
+    [SerializeField] private ActionData MageUtil;
+    [SerializeField] private Sprite mageSprite;
 
     public void Awake()
     {
@@ -15,8 +16,8 @@ public class MageRod : Item
     {   
         player.maxHealth -= 25;
         player.maxMoveDistance -= 1f;
-        player.spriteRenderer.color = new Color(0.5f, 0.5f, 1f);
-        //player.attackAction = MageAttack;
-        //player.utilAction = MageUtil;
+        player.spriteRenderer.sprite = mageSprite;
+        player.attackAction = MageAttack;
+        player.utilAction = MageUtil;
     }
 }

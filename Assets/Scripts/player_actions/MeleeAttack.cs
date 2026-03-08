@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 namespace Assets.Scripts.player_actions {
-public class MeleeAttack : AAction
+public class MeleeAttack : AAction, Disposable
 {
     private GameObject slashInstance;
     private Vector3 spawnPos;

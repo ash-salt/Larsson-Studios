@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.Rendering;
 namespace Assets.Scripts.player_actions {
-public class BlockAction: AAction
+public class BlockAction: AAction, Disposable
 	{
 		public GameObject shieldInstance;
 

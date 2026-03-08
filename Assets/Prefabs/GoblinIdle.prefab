@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8339824230997093584}
   - component: {fileID: 687448922231604924}
   - component: {fileID: -1516822357042980752}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GoblinIdle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

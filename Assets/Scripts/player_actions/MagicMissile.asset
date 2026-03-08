@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8887139187b5cac488aa89674614ba2d, type: 3}
+  m_Name: MagicMissile
+  m_EditorClassIdentifier: 
+  cost: 1
+  cooldown: 0
+  actionSprite: {fileID: 21300000, guid: 5c64dcbe04c886047bdc70fdd117590d, type: 3}
+  MagicPrefab: {fileID: 679447868725350734, guid: d1e595666ba695c42bae1bfb2dcf92c2, type: 3}
+  maxRange: 10
