@@ -15,5 +15,5 @@ MonoBehaviour:
   cost: 1
   cooldown: 0
   actionSprite: {fileID: 0}
-  goblinPrefab: {fileID: 5519989177851678993, guid: 6703c188e75b329428c7ab6bec1bb665, type: 3}
+  goblinPrefab: {fileID: 5519989177851678993, guid: f4e1fd3670e28c946b30d4cb51ff58e6, type: 3}
   goblinArcherPrefab: {fileID: 993249494861531238, guid: db4f9d241959686419bee8c1f56ecd62, type: 3}

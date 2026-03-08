@@ -210,7 +210,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -2.352, y: 0.992, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7707104242645977892}
@@ -336,7 +336,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -446,8 +446,8 @@ MonoBehaviour:
   shortDistance: 2
   attackDistance: 0.5
   randomRadius: 1
-  idleSprite: {fileID: 0}
-  castingSprite: {fileID: 0}
+  idleSprite: {fileID: 21300000, guid: 390627e25c1748e419b92eeb9835c224, type: 3}
+  castingSprite: {fileID: 21300000, guid: 6d60e93b1c841b44f8e7aa28d1dc13e0, type: 3}
 --- !u!1 &4212491820884652819
 GameObject:
   m_ObjectHideFlags: 0

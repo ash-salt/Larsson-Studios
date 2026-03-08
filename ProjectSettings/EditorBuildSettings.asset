@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Inventory.unity
     guid: 4d92b7a58c1cf4322a99da266288aa10
   - enabled: 1
-    path: Assets/Scenes/larsson.unity
+    path: Assets/Scenes/Level1.unity
     guid: 1172bb09e2de0ef219c2b96633682f5d
   - enabled: 1
     path: Assets/Scenes/Overworld.unity

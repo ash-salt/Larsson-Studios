@@ -332,8 +332,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.011873156, y: -0.045991004}
-  m_Size: {x: 0.4009803, y: 0.908018}
+  m_Offset: {x: 0.044393063, y: -0.11842179}
+  m_Size: {x: 0.5665364, y: 0.7631564}
   m_Direction: 0
 --- !u!114 &39455635957661927
 MonoBehaviour:
@@ -356,12 +356,12 @@ MonoBehaviour:
   maxMoveDistance: 3
   moveActionData: {fileID: 11400000, guid: d4b47dc7a3843474ba09ddd355688a9c, type: 2}
   attackActionData: {fileID: 11400000, guid: 99776d5c63043374bbae6dec63d794dd, type: 2}
-  player: {fileID: 1358357364004153695, guid: d78b54189ceb77e8b98b6278ec623d13, type: 3}
+  player: {fileID: 0}
   healthBar: {fileID: 0}
   farAway: 5
   mediumDistance: 4
   shortDistance: 2
-  attackDistance: 0.5
+  attackDistance: 1
   randomRadius: 1
 --- !u!120 &249989952573597964
 LineRenderer:
