@@ -5293,6 +5293,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 453698859258010290, guid: 1d398fee65d6fa54891d9b4689139b5e, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2293779220068556481, guid: 1d398fee65d6fa54891d9b4689139b5e, type: 3}
       propertyPath: m_Name
       value: FatGoblin
@@ -5363,6 +5367,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8608273476567938317, guid: 1d398fee65d6fa54891d9b4689139b5e, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8677920433190494097, guid: 1d398fee65d6fa54891d9b4689139b5e, type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
