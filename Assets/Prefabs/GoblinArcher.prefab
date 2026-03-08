@@ -356,7 +356,7 @@ MonoBehaviour:
   maxMoveDistance: 3
   moveActionData: {fileID: 11400000, guid: d4b47dc7a3843474ba09ddd355688a9c, type: 2}
   attackActionData: {fileID: 11400000, guid: 99776d5c63043374bbae6dec63d794dd, type: 2}
-  player: {fileID: 0}
+  player: {fileID: 1358357364004153695, guid: d78b54189ceb77e8b98b6278ec623d13, type: 3}
   healthBar: {fileID: 0}
   farAway: 5
   mediumDistance: 4

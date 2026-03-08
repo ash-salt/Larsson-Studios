@@ -16,7 +16,7 @@ public class GameStateManager : MonoBehaviour
     private List<EntityScript> enemies = new List<EntityScript>();
     private WorldManager worldManager;
     [SerializeField] public CooldownManager cd;
-    private PlayerScript player;
+    public PlayerScript player;
 
     public Dictionary<EntityScript, CharacterSnapshot> snapshot;
 
@@ -173,6 +173,10 @@ public class GameStateManager : MonoBehaviour
                 {
                     Destroy(entity.gameObject);
                     removeList.Add(entity);
+                }
+                if (entity is FatGoblinBoss boss)
+                {
+                    boss.idle();
                 }
             }
             foreach (EntityScript entity in removeList)

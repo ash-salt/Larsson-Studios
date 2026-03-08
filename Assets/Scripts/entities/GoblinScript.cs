@@ -22,6 +22,7 @@ namespace Assets.Scripts
     {
         GameStateManager.Instance.AddToEnemyList(this);
         GameStateManager.Instance.AddToEntityList(this);
+        player = GameStateManager.Instance.player.gameObject;
     }
 
     private new void Awake()

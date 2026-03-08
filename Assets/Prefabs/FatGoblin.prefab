@@ -437,7 +437,8 @@ MonoBehaviour:
   isBlocking: 0
   healthBarControl: {fileID: 0}
   maxMoveDistance: 3
-  moveAction: {fileID: 0}
+  moveActionData: {fileID: 0}
+  attackActionData: {fileID: 0}
   player: {fileID: 0}
   healthBar: {fileID: 0}
   farAway: 5
@@ -445,8 +446,8 @@ MonoBehaviour:
   shortDistance: 2
   attackDistance: 0.5
   randomRadius: 1
-  goblinPrefab: {fileID: 0}
-  goblinArcherPrefab: {fileID: 0}
+  idleSprite: {fileID: 0}
+  castingSprite: {fileID: 0}
 --- !u!1 &4212491820884652819
 GameObject:
   m_ObjectHideFlags: 0
