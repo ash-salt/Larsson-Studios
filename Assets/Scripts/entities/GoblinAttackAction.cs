@@ -1,7 +1,7 @@
 using Assets.Scripts.player_actions;
 using UnityEngine;
 
-public class GoblinAttackAction : AAction
+public class GoblinAttackAction : AAction, Disposable
 {
     private float spawnDistance = 0.5f;
     private GameObject slashInstance;
