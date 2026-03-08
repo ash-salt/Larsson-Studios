@@ -14,4 +14,16 @@ public class ToolTipManager : MonoBehaviour
         other1.SetActive(false);
         other2.SetActive(false);
     }
+    void Update()
+    {
+        if (main.activeSelf && Input.GetMouseButtonDown(0))
+        {
+            HideTooltip();
+        }
+    }
+
+    void HideTooltip()
+    {
+        main.SetActive(false);
+    }
 }
