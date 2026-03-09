@@ -17,4 +17,4 @@ MonoBehaviour:
   description: Unlocks the power of the mage hidden within.
   MageAttack: {fileID: 11400000, guid: 9e737b55de1925a4e87eb8e77badcbb5, type: 2}
   MageUtil: {fileID: 11400000, guid: 72310fec80d27f845bfbdcb411303fee, type: 2}
-  mageSprite: {fileID: 21300000, guid: 0c34e3a4e31f1dd4298d265f57349813, type: 3}
+  characterSprite: {fileID: 21300000, guid: 0c34e3a4e31f1dd4298d265f57349813, type: 3}

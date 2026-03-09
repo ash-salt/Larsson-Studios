@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Inventory.unity
     guid: 4d92b7a58c1cf4322a99da266288aa10
   - enabled: 1
-    path: Assets/Scenes/Level1.unity
+    path: Assets/Scenes/Level12.unity
     guid: 1172bb09e2de0ef219c2b96633682f5d
   - enabled: 1
     path: Assets/Scenes/Overworld.unity
@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 21375e55b3ab576458ccb5a43c869565
   - enabled: 1
-    path: Assets/Scenes/EvilLevel1.unity
+    path: Assets/Scenes/Level1.unity
     guid: d45385e99ea22b5ce9b15138013b6fa2
   - enabled: 1
     path: Assets/Scenes/Tutorial.unity

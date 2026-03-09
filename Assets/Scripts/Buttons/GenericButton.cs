@@ -7,6 +7,7 @@ public class GenericButton : MonoBehaviour
     [SerializeField] int actionIndex;
     [SerializeField] public ActionData action;
     [SerializeField] private SpriteRenderer cooldown;
+    private Type actionType;
     private ButtonInstruction instructions;
     public SpriteRenderer spriteRenderer;
     private PlayerScript player;
@@ -47,13 +48,13 @@ public class GenericButton : MonoBehaviour
     public void SetCooldown(Type act, bool onCooldown)
     {
         Debug.Log("Setting!");
-        if (act != action.GetType()) return;
+        if (act != actionType) return;
         Debug.Log("Enabling or disabling!");
         Debug.Log(onCooldown);
         cooldown.enabled = onCooldown;
     }
     public void Refresh()
-{
+    {
 
     ActionData act = player.getAction(actionIndex);
     
@@ -63,6 +64,7 @@ public class GenericButton : MonoBehaviour
     }
 
     action = act;
+    actionType = action.createAction().GetType();
     spriteRenderer.sprite = action.getSprite();
     
     instructions = action.createButtonInstruction();

@@ -71,6 +71,7 @@ public class TutorialManager : MonoBehaviour
         ShowNextDialogue();
 
         GameStateManager.Instance.roundFinished += MeleeDialogue;
+        player.transform.position = new Vector3(1, -1.2f, -1e-06f);
         goblin.transform.position = new Vector3(1, -2, 0);
         move.SetActive(false);
     }

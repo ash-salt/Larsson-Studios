@@ -9,7 +9,7 @@ public class WorldManager : MonoBehaviour
 
     private List<string> completedWorlds = new List<string>();
 
-    private string worldID = "tutorial";
+    private string worldID;
 
     //temporary references
     public Item item;
@@ -43,6 +43,7 @@ public class WorldManager : MonoBehaviour
     public void setWorld(string worldID)
     {
         this.worldID = worldID;
+        Debug.Log(worldID);
     }
 
     public void victory()

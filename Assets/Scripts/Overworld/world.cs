@@ -24,7 +24,7 @@ public class World: MonoBehaviour {
     private bool completed;
 
     void Start()
-    {   
+    {           
         worldManager = WorldManager.Instance;
         completed = worldManager.isCompleted(worldID);
         Debug.Log(completed);
@@ -32,16 +32,13 @@ public class World: MonoBehaviour {
         {
             setToCompleted();
         }
-        if (IsUnlocked())
+        else if (IsUnlocked())
         {
             setToUnlocked();
         }
         else
         {
             setToLocked();
-        }
-        if (!completed && IsUnlocked()) {        
-            StartCoroutine(SwapRoutine());
         }
     }
 
@@ -67,12 +64,13 @@ public class World: MonoBehaviour {
     public void setToUnlocked()
     {
         currentSprite.sprite = unlockedSprite;
+        StartCoroutine(SwapRoutine());
     }
 
     public void setToCompleted()
     {
         completed = true;
-        setToUnlocked();
+        completedSprite.enabled = true;
     }
 
     public void swapSprite()
@@ -88,19 +86,25 @@ public class World: MonoBehaviour {
     }
     public bool IsUnlocked()
     {
+        Debug.Log("check");
         if (prerequisite == null)
         {
+            Debug.Log(worldID + "check2");
             return true;
         }
         else
         {
+            Debug.Log(worldID + "check3");
+            
+            Debug.Log(prerequisite.isCompleted());
+            
             return prerequisite.isCompleted();
         }
     }
 
     public bool isCompleted()
     {
-        return completed;
+        return WorldManager.Instance.isCompleted(worldID);
     }
 
     public void loadWorld()
@@ -112,6 +116,7 @@ public class World: MonoBehaviour {
     public void OnMouseDown()
     {
         print("clicked");
+        Debug.Log(worldID);
         if (IsUnlocked() && !isCompleted())
         {
             loadWorld();
