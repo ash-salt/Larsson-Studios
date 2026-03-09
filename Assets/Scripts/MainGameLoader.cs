@@ -16,4 +16,5 @@ public class MainGameLoader: MonoBehaviour {
     {
         Application.LoadLevel("Inventory");
     }
+    
 }

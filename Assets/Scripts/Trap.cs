@@ -6,7 +6,7 @@ public class Trap : MonoBehaviour
 {
     private bool enabled;
     private AudioSource audioSource;
-    private SpriteRenderer sprite;
+    [SerializeField] private SpriteRenderer sprite;
     public void Start()
     {
         enabled = true;

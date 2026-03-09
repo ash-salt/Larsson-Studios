@@ -12,6 +12,8 @@ public class MovementRangeIndicator : MonoBehaviour
     private Vector2 originPosition;
     private float maxRange;
     private float colliderRadius;
+    [SerializeField] private SpriteRenderer cursorSpriteRenderer;
+    private Vector2[] meshWorldPolygon;
 
     void Awake()
     {
@@ -57,13 +59,55 @@ public class MovementRangeIndicator : MonoBehaviour
     {
         isActive = false;
         meshRenderer.enabled = false;
+        cursorSpriteRenderer.enabled = false; 
     }
 
     void Update()
     {
         if (isActive)
+        {
             BuildMesh();
+            UpdateCursorIndicator();
+        }
+    }
 
+    private void ChangeCursor(Sprite newCursor)
+    {
+        cursorSpriteRenderer.sprite = newCursor;
+    }
+
+    private void UpdateCursorIndicator()
+    {
+        Vector2 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        if (meshWorldPolygon != null && IsPointInPolygon(mouseWorld, meshWorldPolygon))
+        {
+            cursorSpriteRenderer.enabled = (true);
+            cursorSpriteRenderer.transform.position = mouseWorld;
+        }
+        else
+        {
+            cursorSpriteRenderer.enabled = (false);
+        }
+    }
+
+    private bool IsPointInPolygon(Vector2 point, Vector2[] polygon)
+    {
+        int count = polygon.Length;
+        bool inside = false;
+
+        for (int i = 0, j = count - 1; i < count; j = i++)
+        {
+            float xi = polygon[i].x, yi = polygon[i].y;
+            float xj = polygon[j].x, yj = polygon[j].y;
+
+            bool intersects = ((yi > point.y) != (yj > point.y))
+                && (point.x < (xj - xi) * (point.y - yi) / (yj - yi) + xi);
+
+            if (intersects) inside = !inside;
+        }
+
+        return inside;
     }
 
     private void BuildMesh()
@@ -71,6 +115,7 @@ public class MovementRangeIndicator : MonoBehaviour
         int vertCount = rayCount + 2;
         Vector3[] vertices = new Vector3[vertCount];
         int[] triangles = new int[rayCount * 3];
+        meshWorldPolygon = new Vector2[rayCount + 1];
 
         vertices[0] = Vector3.zero;
 
@@ -94,6 +139,8 @@ public class MovementRangeIndicator : MonoBehaviour
 
             Vector2 localPoint = worldPoint - originPosition;
             vertices[i + 1] = localPoint;
+            if (i < rayCount)
+                meshWorldPolygon[i] = worldPoint;
         }
 
         for (int i = 0; i < rayCount; i++)

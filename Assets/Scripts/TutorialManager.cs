@@ -11,6 +11,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject melee;
     [SerializeField] private Trap trap;
     [SerializeField] private GameObject goblin;
+    [SerializeField] private Sprite newSprite;
     private PlayerScript player;
     private int cheat = 0;
 
@@ -55,6 +56,7 @@ public class TutorialManager : MonoBehaviour
         trap.OnTrapTrigger -= ShieldDialogue;
         trap.OnTrapTrigger += EnemyEncounter;
         trap.move(new Vector3(1, -2, 0));
+        trap.changeSprite(newSprite);
         move.SetActive(true);
         block.SetActive(true);
 
