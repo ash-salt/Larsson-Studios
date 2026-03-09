@@ -11,6 +11,7 @@ public class MovementRangeIndicator : MonoBehaviour
     private bool isActive;
     private Vector2 originPosition;
     private float maxRange;
+    private float colliderRadius;
 
     void Awake()
     {
@@ -36,16 +37,19 @@ public class MovementRangeIndicator : MonoBehaviour
         meshRenderer.enabled = true;
         transform.position = originPosition;
         maxRange = entityScript.maxMoveDistance;
+        CircleCollider2D circleCollider = entityScript.GetComponent<CircleCollider2D>();
+        colliderRadius = circleCollider.radius;
         BuildMesh();
     }
 
-    public void Show(Vector2 from, float maxRange)
+    public void Show(Vector2 from, float maxRange, float collider)
     {
         originPosition = from;
         isActive = true;
         meshRenderer.enabled = true;
         transform.position = originPosition;
         this.maxRange = maxRange;
+        this.colliderRadius = collider;
         BuildMesh();
     }
 
@@ -68,8 +72,6 @@ public class MovementRangeIndicator : MonoBehaviour
         Vector3[] vertices = new Vector3[vertCount];
         int[] triangles = new int[rayCount * 3];
 
-        CircleCollider2D circleCollider = entityScript.GetComponent<CircleCollider2D>();
-        float colliderRadius = circleCollider.radius;
         vertices[0] = Vector3.zero;
 
         for (int i = 0; i <= rayCount; i++)

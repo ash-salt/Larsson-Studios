@@ -9,12 +9,12 @@ public class Inventory : MonoBehaviour
 
     public static Inventory Instance { get; private set; }
     private PlayerScript player;
-    [SerializeField] private Sprite playersprite;
+    [SerializeField] private Sprite defaultSprite;
+    [SerializeField] private Image playersprite;
     [SerializeField] private ItemSlot[] slots;
     [SerializeField] private ItemSlot selectedItem;
     [SerializeField] private Image selectedItemImage;
     [SerializeField] private TextMeshProUGUI descriptionText;
-
     private void Awake()
     {
 
@@ -39,6 +39,7 @@ public class Inventory : MonoBehaviour
         Debug.Log("2");
         selectedItem.SetItem(itemeffect);
         updateDescriptionText(itemeffect);
+        updateCharacterImage(itemeffect);
         WorldManager.Instance.item = itemeffect;
     }
 
@@ -46,5 +47,14 @@ public class Inventory : MonoBehaviour
     {
         descriptionText.gameObject.SetActive(true);
         descriptionText.text = item.GetItemName() + ": " + item.GetDescription();
+    }
+    public void updateCharacterImage(Item item)
+    {
+        if (item is Characterable itim) {
+            playersprite.sprite = itim.GetSprite();
+        }
+        else {
+            playersprite.sprite = defaultSprite;
+        }
     }
 }

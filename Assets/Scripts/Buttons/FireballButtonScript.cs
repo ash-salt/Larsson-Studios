@@ -31,7 +31,7 @@ public class FireballButtonScript : ButtonInstruction
         buttonJustClicked = true;
         Vector2 startPos = actionUIManager.GetLastTargetPosition();
         if (rangeIndicator != null) {
-            rangeIndicator.Show(startPos, maxRange);
+            rangeIndicator.Show(startPos, maxRange, 0.1f);
         }
     }
 

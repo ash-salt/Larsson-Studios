@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 1
   cooldown: 0
-  actionSprite: {fileID: 21300000, guid: 5c64dcbe04c886047bdc70fdd117590d, type: 3}
+  actionSprite: {fileID: 21300000, guid: b4125f507f00a734b8eb5049da9e4d8e, type: 3}
   MagicPrefab: {fileID: 679447868725350734, guid: d1e595666ba695c42bae1bfb2dcf92c2, type: 3}
   maxRange: 10

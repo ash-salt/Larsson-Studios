@@ -2530,8 +2530,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Hello there! \nI'm Mr Tutorial. \nIt seems you're in quite a rough situation."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
-  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2d7f663827c0df148b65f53b79e80d46, type: 2}
+  m_sharedMaterial: {fileID: 6414514785157430506, guid: 2d7f663827c0df148b65f53b79e80d46, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

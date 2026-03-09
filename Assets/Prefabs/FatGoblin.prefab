@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8677920433190494097}
   - component: {fileID: 3863063560632972983}
   - component: {fileID: 5042605501813207301}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 8608273476567938317}
   - component: {fileID: 5776520519053833800}
   - component: {fileID: 5015184675140780416}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 8041766372009610607}
   - component: {fileID: 6029114981758689212}
   - component: {fileID: 2592902721743377450}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: FatGoblin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -457,7 +457,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3975545514617080463}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -496,7 +496,7 @@ GameObject:
   - component: {fileID: 453698859258010290}
   - component: {fileID: 3366400602794147226}
   - component: {fileID: 9025886541590753709}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -597,7 +597,7 @@ GameObject:
   - component: {fileID: 7097519649139816535}
   - component: {fileID: 1745081092243445716}
   - component: {fileID: 8550442235052952747}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}

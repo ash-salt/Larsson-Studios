@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdad68cfa6d720d4297dc612372fb070, type: 3}
   m_Name: MageRod
   m_EditorClassIdentifier: 
-  itemName: Mage Rod
-  itemSprite: {fileID: 21300000, guid: 5c64dcbe04c886047bdc70fdd117590d, type: 3}
+  itemName: Essence of Magic
+  itemSprite: {fileID: 21300000, guid: 7c810c4d3fd562a409776221eacff00e, type: 3}
   description: Unlocks the power of the mage hidden within.
   MageAttack: {fileID: 11400000, guid: 9e737b55de1925a4e87eb8e77badcbb5, type: 2}
   MageUtil: {fileID: 11400000, guid: 72310fec80d27f845bfbdcb411303fee, type: 2}

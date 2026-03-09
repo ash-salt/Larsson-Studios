@@ -26,8 +26,8 @@ public class World: MonoBehaviour {
     void Start()
     {   
         worldManager = WorldManager.Instance;
-
-        if (worldManager.isCompleted(worldID))
+        completed = worldManager.isCompleted(worldID);
+        if (completed)
         {
             setToCompleted();
         }
@@ -111,10 +111,9 @@ public class World: MonoBehaviour {
     public void OnMouseDown()
     {
         print("clicked");
-        loadWorld();
         if (IsUnlocked() && !isCompleted())
         {
-            return;
+            loadWorld();
         }
         else
         {
