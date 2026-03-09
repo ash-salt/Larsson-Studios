@@ -15,6 +15,7 @@ public class MageRod : Item
     public override void UseItem(PlayerScript player)
     {   
         player.maxHealth -= 25;
+        player.currentHealth -= 25;
         player.maxMoveDistance -= 1f;
         player.spriteRenderer.sprite = mageSprite;
         player.attackAction = MageAttack;

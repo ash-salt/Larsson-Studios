@@ -36,9 +36,11 @@ public class PlayerScript: EntityScript
 			}
         }
 		public event Action OnActionsChanged;
+
 		public void NotifyActionsChanged()
-	{		OnActionsChanged?.Invoke();
-	}
+		{		
+			OnActionsChanged?.Invoke();
+		}
 	
 	}
 }
