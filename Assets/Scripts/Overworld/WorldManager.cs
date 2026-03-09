@@ -9,7 +9,7 @@ public class WorldManager : MonoBehaviour
 
     private List<string> completedWorlds = new List<string>();
 
-    private string worldID;
+    private string worldID = "tutorial";
 
     //temporary references
     public Item item;

@@ -200,7 +200,14 @@ public class GameStateManager : MonoBehaviour
             }
         state = "prep";
         actionUIManager.updateMove();
+        NotifyRoundFinish();
     }
+
+    public event Action roundFinished;
+	public void NotifyRoundFinish()
+	{		
+			roundFinished?.Invoke();
+	}
 
     
 

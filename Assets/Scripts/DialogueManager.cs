@@ -129,7 +129,6 @@ public class DialogueManager : MonoBehaviour
     }
 
     public event Action queueFinished;
-
 	public void NotifyDialogue()
 	{		
 			queueFinished?.Invoke();

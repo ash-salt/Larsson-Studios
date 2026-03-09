@@ -12,6 +12,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private Trap trap;
     [SerializeField] private GameObject goblin;
     private PlayerScript player;
+    private int cheat = 0;
 
 
     public void Start()
@@ -69,14 +70,20 @@ public class TutorialManager : MonoBehaviour
         ShowNextDialogue();
         ShowNextDialogue();
 
+        GameStateManager.Instance.roundFinished += MeleeDialogue;
         goblin.transform.position = new Vector3(1, -2, 0);
         move.SetActive(false);
     }
 
     //trigger this after a block
     public void MeleeDialogue() {
+        cheat++;
+        if (cheat < 2) return;
+        GameStateManager.Instance.roundFinished -= MeleeDialogue;
+        ShowNextDialogue();
         ShowNextDialogue();
         melee.SetActive(true);
+        move.SetActive(true);
     }
 
     private void EndTutorial() {
