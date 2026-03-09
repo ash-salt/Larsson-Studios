@@ -27,6 +27,7 @@ public class World: MonoBehaviour {
     {   
         worldManager = WorldManager.Instance;
         completed = worldManager.isCompleted(worldID);
+        Debug.Log(completed);
         if (completed)
         {
             setToCompleted();

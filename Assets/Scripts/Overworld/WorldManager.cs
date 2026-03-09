@@ -31,7 +31,6 @@ public class WorldManager : MonoBehaviour
     {
         if (!completedWorlds.Contains(worldID))
         {
-            Debug.Log("now we are adding the level to completed");
             completedWorlds.Add(worldID);
         }
     }
