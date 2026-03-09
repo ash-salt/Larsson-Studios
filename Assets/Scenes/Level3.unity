@@ -5023,6 +5023,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4977260125403023166, guid: a337414c3375d4549bb5c1b71d0ed7b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1476452699}
+    - target: {fileID: 4977260125403023166, guid: a337414c3375d4549bb5c1b71d0ed7b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: return_to_overworld
+      objectReference: {fileID: 0}
     - target: {fileID: 5079870056601042296, guid: a337414c3375d4549bb5c1b71d0ed7b0, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6

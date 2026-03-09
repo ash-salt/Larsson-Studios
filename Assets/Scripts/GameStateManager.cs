@@ -302,4 +302,10 @@ public class GameStateManager : MonoBehaviour
             }
         }
     }
+
+    public void return_to_overworld()
+    {
+        worldManager = WorldManager.Instance;
+        worldManager.defeat();
+    }
 }

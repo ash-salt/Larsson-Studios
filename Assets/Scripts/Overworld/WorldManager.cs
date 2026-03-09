@@ -54,6 +54,6 @@ public class WorldManager : MonoBehaviour
 
     public void defeat()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("Overworld");
     }
 }

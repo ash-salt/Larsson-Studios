@@ -67,7 +67,7 @@ namespace Assets.Scripts
             QueueMove(finalTarget);
             QueueAttack();
         }
-        else if (distanceToPlayer < farAway)
+        else
         {
             QueueMove(finalTarget);
             QueueMove(finalTarget);
