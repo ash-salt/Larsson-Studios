@@ -7,6 +7,11 @@ public class MainGameLoader: MonoBehaviour {
         Application.LoadLevel("Overworld");
     }
 
+    public void LoadTutorial()
+    {
+        Application.LoadLevel("Tutorial");
+    }
+
     public void LoadInventory()
     {
         Application.LoadLevel("Inventory");

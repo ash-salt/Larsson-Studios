@@ -31,6 +31,7 @@ public class WorldManager : MonoBehaviour
     {
         if (!completedWorlds.Contains(worldID))
         {
+            Debug.Log("now we are adding the level to completed");
             completedWorlds.Add(worldID);
         }
     }
@@ -47,6 +48,7 @@ public class WorldManager : MonoBehaviour
 
     public void victory()
     {
+        Debug.Log(worldID);
         CompleteWorld(worldID);
         SceneManager.LoadScene("Overworld");
         
