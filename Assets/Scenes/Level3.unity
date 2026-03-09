@@ -403,7 +403,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: bfa46355d94e3e745b3688ef38e9c08e, type: 3}
+  m_Resource: {fileID: 8300000, guid: c456142cb02e5694ea8fad41cd31311c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -2035,6 +2035,14 @@ PrefabInstance:
     - target: {fileID: 2293779220068556481, guid: 1d398fee65d6fa54891d9b4689139b5e, type: 3}
       propertyPath: m_Name
       value: FatGoblin
+      objectReference: {fileID: 0}
+    - target: {fileID: 2592902721743377450, guid: 1d398fee65d6fa54891d9b4689139b5e, type: 3}
+      propertyPath: maxHealth
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 2592902721743377450, guid: 1d398fee65d6fa54891d9b4689139b5e, type: 3}
+      propertyPath: currentHealth
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 2592902721743377450, guid: 1d398fee65d6fa54891d9b4689139b5e, type: 3}
       propertyPath: attackActionData
