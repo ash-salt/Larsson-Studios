@@ -60,6 +60,7 @@ public class MissileScript : ButtonInstruction
             MagicMissile action = (MagicMissile) actionData.createAction();
             action.Initialize(targetPosition);
             GameStateManager.Instance.newAction(action);
+            GameStateManager.Instance.Indicate(targetPosition, ((MagicMissileData) actionData).indicator);
         }
     }
 }

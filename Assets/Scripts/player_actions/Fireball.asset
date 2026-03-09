@@ -15,4 +15,5 @@ MonoBehaviour:
   cost: 1
   cooldown: 0
   actionSprite: {fileID: 21300000, guid: 50aa3dc4913d82c4d833d16c81b9ec02, type: 3}
+  indicator: {fileID: 3561715170237992212, guid: 1cb5efd92dde40141b147049ec8fc6f6, type: 3}
   maxRange: 6

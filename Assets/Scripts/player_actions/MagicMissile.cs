@@ -1,7 +1,7 @@
 using Assets.Scripts.player_actions;
 using UnityEngine;
 
-public class MagicMissile : AAction
+public class MagicMissile : AAction, Indicatable
 {
     private Vector2 targetPos;
     private LayerMask obstacleLayer;
@@ -9,7 +9,7 @@ public class MagicMissile : AAction
     private float objectDistance;
     private float enemyDistance;
     private GameObject spawnedMissile;
-
+    private GameObject indicator;
     private Quaternion rotation;
 
     public MagicMissile(ActionData actionData)
@@ -17,11 +17,17 @@ public class MagicMissile : AAction
         this.actionData = actionData;
         obstacleLayer = LayerMask.GetMask("Obstacles");
         enemyLayer = LayerMask.GetMask("Enemy");
+        this.indicator = ((MagicMissileData) actionData).indicator;
     }
 
     public void Initialize(Vector2 targetPos)
     {
         this.targetPos = targetPos;
+    }
+
+    public GameObject getIndicator()
+    {
+        return indicator;
     }
 
     public override void execute()

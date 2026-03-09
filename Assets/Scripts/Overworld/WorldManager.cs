@@ -10,8 +10,6 @@ public class WorldManager : MonoBehaviour
     private List<string> completedWorlds = new List<string>();
 
     private string worldID;
-
-    //temporary references
     public Item item;
 
     private void Awake()

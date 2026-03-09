@@ -4,6 +4,7 @@ namespace Assets.Scripts.player_actions {
     [CreateAssetMenu(menuName = "Scriptable Objects/FireballAction")]
 public class FireballActionData : ActionData
 {
+    [SerializeField] public GameObject indicator;
     [SerializeField] public float maxRange;
     public override AAction createAction()
     {

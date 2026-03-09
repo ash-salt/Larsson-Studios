@@ -23,6 +23,7 @@ public class GameStateManager : MonoBehaviour
     private Dictionary<EntityScript, AAction> currentActions;
 
     [SerializeField] public GameObject slashPrefab;
+    [SerializeField] public GameObject explosionPrefab;
     [SerializeField] public GameObject shieldPrefab;
     [SerializeField] public GameObject goblinSlashPrefab;
     [SerializeField] public GameObject moveAnimationPrefab;
@@ -87,6 +88,10 @@ public class GameStateManager : MonoBehaviour
     {
         return slashPrefab;
     }
+    public GameObject GetExplosionPrefab()
+    {
+        return explosionPrefab;
+    }
 
     public GameObject GetShieldPrefab()
     {
@@ -123,6 +128,11 @@ public class GameStateManager : MonoBehaviour
             cd.addCooldown(action);
         }
         actionUIManager.UpdateActionUI(action.getSprite());
+    }
+
+    public void Indicate(Vector3 targetPosition, GameObject indicator)
+    {
+        actionUIManager.Indicate(targetPosition, indicator);
     }
 
     public void newMove(MoveAction action)

@@ -5,6 +5,7 @@ namespace Assets.Scripts.player_actions {
 public class MagicMissileData : ActionData
 {
     [SerializeField] public GameObject MagicPrefab;
+    [SerializeField] public GameObject indicator;
     public float maxRange = 99f;
     public override AAction createAction()
     {

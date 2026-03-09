@@ -41,6 +41,13 @@ public class ActionUIManager : MonoBehaviour
         indicator.transform.position = targetPosition;
         indicators.Add(indicator);
     }
+
+    public void Indicate(Vector2 targetPosition, GameObject indicate)
+    {
+        GameObject indicator = Instantiate(indicate);
+        indicator.transform.position = targetPosition;
+        indicators.Add(indicator);
+    }
     
     public void updateMove()
     {
@@ -52,7 +59,7 @@ public class ActionUIManager : MonoBehaviour
     AAction action = playerScript.lastAction();
     if (action == null) return;
 
-    if (indicators.Count > 0 && action is MoveAction)
+    if (indicators.Count > 0 && (action is MoveAction))
     {
         playerPosition = (action as MoveAction).getStartPosition();
         GameObject lastIndicator = indicators[indicators.Count - 1];
@@ -61,7 +68,14 @@ public class ActionUIManager : MonoBehaviour
 
         indicators.RemoveAt(indicators.Count - 1);    
     }
-
+    if (indicators.Count > 0 && (action is Indicatable))
+        {
+            GameObject lastIndicator = indicators[indicators.Count - 1];
+            Destroy(lastIndicator);
+            Debug.Log(lastIndicator.name);
+            indicators.RemoveAt(indicators.Count - 1);   
+        }
+ 
     if (cooldownManager.onCooldown(action))
     {
         cooldownManager.removeCooldown(action);

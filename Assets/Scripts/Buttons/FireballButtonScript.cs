@@ -69,6 +69,7 @@ public class FireballButtonScript : ButtonInstruction
             FireballAction action = (FireballAction) actionData.createAction();
             action.Initialize(validatedTarget);
             GameStateManager.Instance.newAction(action);
+            GameStateManager.Instance.Indicate(validatedTarget, ((FireballActionData) actionData).indicator);
         }
     }
 }
