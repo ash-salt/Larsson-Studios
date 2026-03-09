@@ -6,26 +6,26 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Inventory.unity
-    guid: 4d92b7a58c1cf4322a99da266288aa10
-  - enabled: 1
-    path: Assets/Scenes/Level12.unity
-    guid: 1172bb09e2de0ef219c2b96633682f5d
+    path: Assets/Scenes/MainMenu.unity
+    guid: 21375e55b3ab576458ccb5a43c869565
   - enabled: 1
     path: Assets/Scenes/Overworld.unity
     guid: 4a13cd4456c6fe144ab5693eacb96730
   - enabled: 1
-    path: Assets/Scenes/Level3.unity
-    guid: 872985f74c2a2e24a902863559e49f92
+    path: Assets/Scenes/Inventory.unity
+    guid: 4d92b7a58c1cf4322a99da266288aa10
+  - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: d45385e99ea22b5ce9b15138013b6fa2
   - enabled: 1
     path: Assets/Scenes/Level2.unity
     guid: ed5a84d8aa7c91e4ebcc225ff17a1510
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
-    guid: 21375e55b3ab576458ccb5a43c869565
+    path: Assets/Scenes/Level3.unity
+    guid: 872985f74c2a2e24a902863559e49f92
   - enabled: 1
-    path: Assets/Scenes/Level1.unity
-    guid: d45385e99ea22b5ce9b15138013b6fa2
+    path: Assets/Scenes/Level12.unity
+    guid: 1172bb09e2de0ef219c2b96633682f5d
   - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: 13b1343a1411fcb46a548bc5d85bb432

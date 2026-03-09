@@ -63,19 +63,24 @@ public class TutorialManager : MonoBehaviour
     }
 
     public void EnemyEncounter() {
-        
         trap.OnTrapTrigger -= EnemyEncounter;
         trap.gameObject.SetActive(false);
-        //GameStateManager.player
-        //Use shenanigans to force a move action to a little further behind
-        //add a little delay here
+        
         ShowNextDialogue();
         ShowNextDialogue();
-
+        
         GameStateManager.Instance.roundFinished += MeleeDialogue;
+        move.SetActive(false);
+        
+        // Wait before repositioning
+        StartCoroutine(RepositionCharacters());
+    }
+
+    private System.Collections.IEnumerator RepositionCharacters() {
+        yield return new WaitForSeconds(3f);  // Adjust timing as needed
+        
         player.transform.position = new Vector3(1, -1.2f, -1e-06f);
         goblin.transform.position = new Vector3(1, -2, 0);
-        move.SetActive(false);
     }
 
     //trigger this after a block
@@ -90,7 +95,7 @@ public class TutorialManager : MonoBehaviour
     }
 
     private void EndTutorial() {
-        ShowNextDialogue();
-        //WorldManager.victory();
+        //ShowNextDialogue();
+        WorldManager.Instance.victory();
     }
 }
