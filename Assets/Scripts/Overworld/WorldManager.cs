@@ -48,7 +48,14 @@ public class WorldManager : MonoBehaviour
     {
         Debug.Log(worldID);
         CompleteWorld(worldID);
-        SceneManager.LoadScene("Overworld");
+        if (worldID == "Level3")
+        {
+            SceneManager.LoadScene("YouWin!");
+        }
+        else
+        {
+            SceneManager.LoadScene("Overworld");
+        }
         
     }
 
